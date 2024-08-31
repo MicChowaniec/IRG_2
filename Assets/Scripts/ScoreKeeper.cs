@@ -12,11 +12,15 @@ public class ScoreKeeper : MonoBehaviour
 
     public MapManager mapManager;
 
+
     public int redScore;
+    public float redScoreP;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        MapManager mapManager = GameObject.FindObjectOfType<MapManager>();
         // Get the TextMeshProUGUI component from the textObject
         textMeshPro = textObject.GetComponent<TextMeshProUGUI>();
 
@@ -32,22 +36,23 @@ public class ScoreKeeper : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     public void UpdateScore()
     {
-        int temp=0;
+        int tempInt = 0;
+
         foreach (TileScript g in mapManager.tiles.Values)
         {
             if (g != null)
             {
                 if (g.owner == 1)
                 {
-                    temp++;
+                    tempInt++;
                 }
 
             }
         }
-        redScore = temp;
+        redScore = tempInt;
+        redScoreP = tempInt / mapManager.rootables;
         textMeshPro.text = redScore.ToString();
     }
 }

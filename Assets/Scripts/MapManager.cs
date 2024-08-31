@@ -38,6 +38,7 @@ public class MapManager : MonoBehaviour
     public int numberOfPlayers;
     [SerializeField]
     public Player[] players;
+    public int rootables;
 
 
 
@@ -113,6 +114,9 @@ public class MapManager : MonoBehaviour
 
         }
         Debug.Log("Neighbours Added");
+        rootables = CountRootables();
+        Debug.Log($"Rootables Counted: {rootables}");
+
 
 
     }
@@ -167,7 +171,7 @@ public class MapManager : MonoBehaviour
         }
     }
     public void ClearStanders(int despiteThisId)
-        {
+    {
         foreach (int id in posAndIds.Values)
         {
             if (id != despiteThisId)
@@ -175,5 +179,17 @@ public class MapManager : MonoBehaviour
                 GameObject.Find(id.ToString()).GetComponent<TileScript>().stander = 0;
             }
         }
+    }
+    public int CountRootables()
+    {
+        int temp = 0;
+        foreach (TileScript t in tiles.Values)
+        {
+            if (t.rootable == true)
+            {
+                temp++;
+            }
         }
+        return temp;
+    }
 }
