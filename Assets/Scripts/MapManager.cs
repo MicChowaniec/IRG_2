@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class MapManager : MonoBehaviour
 {
     [SerializeField]
-    [Range(1, 10)]
+    [Range(3, 25)]
     private int sizeOfMap;
     [SerializeField]
     private GameObject rockTilePrefab;
@@ -57,7 +57,10 @@ public class MapManager : MonoBehaviour
     {
 
     }
-
+    /// <summary>
+    /// Creating map with given size
+    /// </summary>
+    /// <param name="size"></param>
     public void CreateMap(int size)
     {
         int id = 0;
@@ -71,12 +74,20 @@ public class MapManager : MonoBehaviour
 
                 z = ((float)j + Mathf.Abs((float)i) / 2) * Mathf.Sqrt(3.0f) / 4 * scale;
                 fieldPosition = new Vector3(x, y, z);
-                // Grass to the center
-                if (i < 2 && i > -2 && j < 1 && j > -2)
+                // Grass to the center star
+                if (i == 0)
                 {
                     InstatiateField(grassTilePrefab, id, i, j);
                 }
-                else if (i == 0 && j == 1)
+                else if (j == 0)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else if (i == j)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else if (i == -j)
                 {
                     InstatiateField(grassTilePrefab, id, i, j);
                 }
@@ -156,6 +167,10 @@ public class MapManager : MonoBehaviour
         tiles.Add(id, tileScript);
 
     }
+    /// <summary>
+    /// Allocating number of players
+    /// </summary>
+    /// <param name="numPlayers"></param>
     public void AllocatePlayers(int numPlayers)
     {
 
@@ -170,16 +185,24 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-    public void ClearStanders(int despiteThisId)
+    /// <summary>
+    /// Clearing fields where current player stands, except given one
+    /// </summary>
+    /// <param name="exceptThisId"></param>
+    public void ClearStanders(int exceptThisId)
     {
         foreach (int id in posAndIds.Values)
         {
-            if (id != despiteThisId)
+            if (id != exceptThisId)
             {
                 GameObject.Find(id.ToString()).GetComponent<TileScript>().stander = 0;
             }
         }
     }
+    /// <summary>
+    /// Counting rootables fields on map
+    /// </summary>
+    /// <returns></returns>
     public int CountRootables()
     {
         int temp = 0;

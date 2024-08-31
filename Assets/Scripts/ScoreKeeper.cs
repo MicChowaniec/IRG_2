@@ -51,8 +51,10 @@ public class ScoreKeeper : MonoBehaviour
 
             }
         }
+        
         redScore = tempInt;
-        redScoreP = tempInt / mapManager.rootables;
-        textMeshPro.text = redScore.ToString();
+        redScoreP = (float)tempInt / (float)mapManager.rootables*100;
+        Debug.Log(redScoreP);
+        textMeshPro.text = redScore.ToString()+"("+redScoreP.ToString("F0")+"%)";
     }
 }
