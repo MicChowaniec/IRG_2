@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -443,7 +442,7 @@ MonoBehaviour:
   sandTilePrefab: {fileID: 1785028746914359239, guid: 48ded8e860f51d841a23397e63468298, type: 3}
   tileParent: {fileID: 631253411}
   scale: 2
-  numberOfPlayers: 0
+  numberOfPlayers: 2
   players:
   - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
   rootables: 0
@@ -1517,7 +1516,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7e5bbe8d72e9b4b968e1c5188d5b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turns: []
+  turns:
+  - {fileID: 11400000, guid: 668627204154b7146b1c68656a353a16, type: 2}
+  - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
   ActivePlayer: 0
 --- !u!1 &2142114372
 GameObject:

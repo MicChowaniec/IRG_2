@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequence: 4
   itsName: Blue
-  itsDescription: Enemy
+  itsDescription: Blue is water and speach related
   startPos: {x: -0.6666667, y: 0.2, z: -0.4330127}
   startRot: {x: 0, y: 0, z: 0, w: 1}
   picked: 1
