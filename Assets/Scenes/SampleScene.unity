@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140179efda640d34391c9c688a4d6e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeOfMap: 20
+  sizeOfMap: 25
   rockTilePrefab: {fileID: 1785028746914359239, guid: 960a82232ebf31549891f0ebcb4076a1, type: 3}
   grassTilePrefab: {fileID: 1785028746914359239, guid: e1e212d076696d14aa2783b1f9f823c3, type: 3}
   waterTilePrefab: {fileID: 1785028746914359239, guid: 823af1dcd5614334e91c996fe362f37b, type: 3}
