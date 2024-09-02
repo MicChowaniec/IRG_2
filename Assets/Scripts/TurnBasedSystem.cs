@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnBasedSystem : MonoBehaviour
 {
@@ -9,11 +10,6 @@ public class TurnBasedSystem : MonoBehaviour
     public Turn ActiveTurn { get; private set; } // Property to access the active turn
     private int activeTurnIndex;
     private int numberOfTurns;
-    [SerializeField]
-    public Button firstAction;
-    public Button secondAction;
-    public Button thirdAction;
-    public Button fourthAction;
 
     void Start()
     {

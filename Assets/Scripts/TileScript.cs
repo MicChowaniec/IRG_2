@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour
 {
@@ -19,12 +20,13 @@ public class TileScript : MonoBehaviour
     public Material litMaterial;
     PlayerMovement playerMovement;
     public int activePlayer;
-    public bool rootable=true;
-    public bool passable=true;
+    public bool rootable= true;
+    public bool passable = true;
+    public MovementSystem ms;
 
     private void Start()
     {
-
+        ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();
     }
     void Update()
@@ -93,7 +95,11 @@ public class TileScript : MonoBehaviour
     }
     private void OnMouseOver()
     {
-
+        if (IsPointerOverUI())
+        {
+            OnMouseExit();
+            return; // Exit early if over UI
+        }
         Material[] materials = new Material[2];
         materials[0] = this.GetComponent<MeshRenderer>().material;
         materials[1] = litMaterial;
@@ -109,16 +115,28 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //TODO add other players to move.
-        if (passable==true)
-                {
-            Debug.Log("Click");
-            playerMovement =GameObject.Find("RedPlayer").GetComponent<PlayerMovement>();
-            //Call function "Move" from "Player Movement"
-            playerMovement.destination = coordinates;
-            playerMovement.tileIdDestination = id;
-            playerMovement.doYouWantToMove = true;
+        if (ms.movable==true)
+            {
+            if (IsPointerOverUI())
+            {
+                OnMouseExit();
+                return; // Exit early if over UI
+            }
+            //TODO add other players to move.
+            if (passable == true)
+            {
+                Debug.Log("Click");
+                playerMovement = GameObject.Find("RedPlayer").GetComponent<PlayerMovement>();
+                //Call function "Move" from "Player Movement"
+                playerMovement.destination = coordinates;
+                playerMovement.tileIdDestination = id;
+                playerMovement.doYouWantToMove = true;
+            }
         }
+    }
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
 }
