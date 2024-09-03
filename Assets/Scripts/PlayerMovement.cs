@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (distance <= range)
         {
-            if (distance > 0.1f) // Only move if not at the destination
+            if (distance > 0.01f) // Only move if not at the destination
             {
                 // Move towards the destination with Translate
                 transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);

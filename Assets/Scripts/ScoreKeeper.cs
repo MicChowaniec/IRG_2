@@ -6,15 +6,20 @@ using UnityEngine;
 public class ScoreKeeper : MonoBehaviour
 {
     [SerializeField]
-    public GameObject textObject; // Reference to the UI Text object
+    public GameObject redTextObject; // Reference to the UI Text object
+    [SerializeField]
+    public GameObject blueTextObject; // Reference to the UI Text object
 
-    private TextMeshProUGUI textMeshPro; // Cache the TextMeshProUGUI component
+    private TextMeshProUGUI blueTextMeshPro; // Cache the TextMeshProUGUI component
+    private TextMeshProUGUI redTextMeshPro; // Cache the TextMeshProUGUI component
 
     public MapManager mapManager;
 
 
     public int redScore;
     public float redScoreP;
+    public int blueScore;
+    public float blueScoreP;
 
 
     // Start is called before the first frame update
@@ -22,23 +27,34 @@ public class ScoreKeeper : MonoBehaviour
     {
         MapManager mapManager = GameObject.FindObjectOfType<MapManager>();
         // Get the TextMeshProUGUI component from the textObject
-        textMeshPro = textObject.GetComponent<TextMeshProUGUI>();
+        redTextMeshPro = redTextObject.GetComponent<TextMeshProUGUI>();
+        blueTextMeshPro = blueTextObject.GetComponent<TextMeshProUGUI>();
 
-        if (textMeshPro == null)
+        if (redTextMeshPro == null)
         {
             Debug.LogError("TextMeshProUGUI component not found on the textObject!");
             return;
         }
         else
         {
-            textMeshPro.text = "0(0%)";
+            redTextMeshPro.text = "0(0%)";
+        }
+        if (redTextMeshPro == null)
+        {
+            Debug.LogError("TextMeshProUGUI component not found on the textObject!");
+            return;
+        }
+        else
+        {
+            blueTextMeshPro.text = "0(0%)";
         }
 
     }
 
     public void UpdateScore()
     {
-        int tempInt = 0;
+        int tempIntRed = 0;
+        int tempIntBlue = 0;
 
         foreach (TileScript g in mapManager.tiles.Values)
         {
@@ -46,15 +62,23 @@ public class ScoreKeeper : MonoBehaviour
             {
                 if (g.owner == 1)
                 {
-                    tempInt++;
+                    tempIntRed++;
+                }
+                else if (g.owner == 4)
+                {
+                    tempIntBlue++;
                 }
 
             }
         }
-        
-        redScore = tempInt;
-        redScoreP = (float)tempInt / (float)mapManager.rootables*100;
+        redScore = tempIntRed;
+        redScoreP = (float)tempIntRed / (float)mapManager.rootables * 100;
         Debug.Log(redScoreP);
-        textMeshPro.text = redScore.ToString()+"("+redScoreP.ToString("F0")+"%)";
+        redTextMeshPro.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
+       
+        blueScore = tempIntBlue;
+        blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
+        Debug.Log(blueScoreP);
+        blueTextMeshPro.text = blueScore.ToString() + "(" + blueScoreP.ToString("F0") + "%)";
     }
 }

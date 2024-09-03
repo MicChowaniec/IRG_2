@@ -338,9 +338,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: f0cd475bf55896f4187d8611f749729d, type: 3}
-        m_TargetAssemblyTypeName: Rooting, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1836004884}
+        m_TargetAssemblyTypeName: MovementSystem, Assembly-CSharp
+        m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -432,10 +432,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff1648b4263ae42b5f30698c9915ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textObject: {fileID: 1326070640}
+  redTextObject: {fileID: 1326070640}
+  blueTextObject: {fileID: 922320736}
   mapManager: {fileID: 631253412}
   redScore: 0
   redScoreP: 0
+  blueScore: 0
+  blueScoreP: 0
 --- !u!1 &576203490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,7 +1699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e923c6f63b13ac546a72318141768c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treePrefab: {fileID: 917251808456883119, guid: a842ee5e6b2366b41b2881e5d9cee2e9, type: 3}
+  RedPlayerTreePrefab: {fileID: 917251808456883119, guid: 08a396699b388a145872544145a628f3, type: 3}
+  OriginalTreePrefab: {fileID: 917251808456883119, guid: a842ee5e6b2366b41b2881e5d9cee2e9, type: 3}
 --- !u!1 &1326070640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,6 +2393,8 @@ MonoBehaviour:
   turns:
   - {fileID: 11400000, guid: 668627204154b7146b1c68656a353a16, type: 2}
   - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
+  dayUI: {fileID: 0}
+  nightUI: {fileID: 0}
 --- !u!1 &1721787787
 GameObject:
   m_ObjectHideFlags: 0
