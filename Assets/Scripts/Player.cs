@@ -12,6 +12,7 @@ public class Player : ScriptableObject
     public Quaternion startRot = Quaternion.identity;
     public bool picked = false;
     public GameObject Prefab;
+    public GameObject TreePrefab;
     public Material material;
 
 }

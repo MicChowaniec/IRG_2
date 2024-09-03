@@ -6,9 +6,11 @@ using UnityEngine;
 public class Rooting : MonoBehaviour
 {
     [SerializeField]
-    GameObject treePrefab;
-    MapManager mapManager;
-    ScoreKeeper scoreKeeper;
+    public GameObject RedPlayerTreePrefab;
+    [SerializeField]
+    public GameObject OriginalTreePrefab;
+    private MapManager mapManager;
+    private ScoreKeeper scoreKeeper;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,7 @@ public class Rooting : MonoBehaviour
         TileScript tileScript = GameObject.Find(playerMovement.tileIdLocation.ToString()).GetComponent<TileScript>();
         if (tileScript.rootable == true)
         {
-            Instantiate(treePrefab, playerMovement.position3, Quaternion.identity);
+            Instantiate(RedPlayerTreePrefab, playerMovement.position3, Quaternion.identity);
             tileScript.rootable = false;
             tileScript.passable = false;
             tileScript.owner = playerMovement.seqId;
@@ -89,7 +91,7 @@ public class Rooting : MonoBehaviour
         if (tileScript.rootable)
         {
             // Instantiate the first tree and scale it up
-            GameObject firstTree = Instantiate(treePrefab, tileScript.transform.position, Quaternion.identity);
+            GameObject firstTree = Instantiate(OriginalTreePrefab, tileScript.transform.position, Quaternion.identity);
             firstTree.transform.localScale = new Vector3(2, 2, 2);
 
             if (firstTree == null)

@@ -19,4 +19,5 @@ MonoBehaviour:
   startRot: {x: 0, y: 0, z: 0, w: 1}
   picked: 1
   Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
+  TreePrefab: {fileID: 917251808456883119, guid: 08a396699b388a145872544145a628f3, type: 3}
   material: {fileID: 2100000, guid: c1846bb18311031489fe63550620be48, type: 2}
