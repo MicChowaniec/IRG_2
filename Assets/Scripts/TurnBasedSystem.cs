@@ -25,20 +25,13 @@ public class TurnBasedSystem : MonoBehaviour
         solarPointer = 1;
         numberOfTurns = turns.Count;
         activeTurnIndex = 0;
-        if (solarPointer % 181 == 0)
-        {
-            SolarSet();
-        }
-        else if (numberOfTurns > 0)
-        {
-            ActiveTurn = turns[activeTurnIndex];
-            solarPointer += 5;
-        }
+        
 
     }
 
     void Update()
     {
+       
         // Add logic to handle turn updates or player inputs here
     }
 
@@ -47,7 +40,8 @@ public class TurnBasedSystem : MonoBehaviour
         // Advance to the next turn and loop back if at the end
         activeTurnIndex = (activeTurnIndex + 1) % numberOfTurns;
         ActiveTurn = turns[activeTurnIndex];
-        solarPointer++;
+        solarPointer += 5;
+        CheckTurn();
         // TODO implement buttons managament for turns
     }
     public void SolarSet()
@@ -61,5 +55,18 @@ public class TurnBasedSystem : MonoBehaviour
         dayUI.SetActive(false);
         nightUI.SetActive(true);
         solarPointer = 1;
+    }
+    public void CheckTurn()
+        
+    {
+        if (solarPointer % 181 == 0)
+        {
+            SolarSet();
+        }
+        else if (numberOfTurns > 0)
+        {
+            ActiveTurn = turns[activeTurnIndex];
+            solarPointer += 5;
+        }
     }
 }
