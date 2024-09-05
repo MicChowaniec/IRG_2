@@ -16,9 +16,12 @@ public class TurnBasedSystem : MonoBehaviour
     public GameObject dayUI;
     [SerializeField]
     public GameObject nightUI;
+    [SerializeField]
+    public Light Light;
 
     void Start()
     {
+        //TODO Set Light
         solarPointer = 1;
         numberOfTurns = turns.Count;
         activeTurnIndex = 0;
