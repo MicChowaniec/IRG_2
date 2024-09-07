@@ -8,8 +8,8 @@ public class TurnBasedSystem : MonoBehaviour
 {
     [SerializeField]
     public List<Turn> turns = new List<Turn>(); // List of turns, serialized for Unity Editor
-    
-    public Turn ActiveTurn { get; private set; } // Property to access the active turn
+
+    public Turn ActiveTurn; // Property to access the active turn
     public int activeTurnIndex; //Value between 0 and Length of turns
     private int numberOfTurns;
 
@@ -32,17 +32,23 @@ public class TurnBasedSystem : MonoBehaviour
 
     public int totalTurns;
 
+    [SerializeField]
+    StrategyCameraControl scc;
+
     void Start()
     {
         totalTurns = 0;
+        signature = 1;
+        solarMaximum = 45;
 
         SolarRise();
-        numberOfTurns = turns.Count;
+        
         activeTurnIndex = 0;
 
-        numberOfPlayers = players.Count;
+       
         activePlayerIndex = 0;
-        solarMaximum = 45;
+        
+        
         
 
         CheckTurn();
@@ -50,19 +56,28 @@ public class TurnBasedSystem : MonoBehaviour
 
     void Update()
     {
-      
+        activePlayer = players[activePlayerIndex];
 
     }
     public void ChangePlayer()
     {
+        numberOfPlayers = players.Count;
+        if (activePlayerIndex==numberOfPlayers-1)
+        {
+            SetNextTurn();
+        }
         activePlayerIndex = (activePlayerIndex + 1) % numberOfPlayers;
-    }
-    public void SetNextDayTurn()
-    {
+        activePlayer = players[activePlayerIndex];
+        scc.CenterOnObject(activePlayer);
+        totalTurns++;
 
-        // Advance to the next turn and loop back if at the end
+    }
+    public void SetNextTurn()
+    {
+        numberOfTurns = turns.Count;
         activeTurnIndex = (activeTurnIndex + 1) % numberOfTurns;
         ActiveTurn = turns[activeTurnIndex];
+        // Advance to the next turn and loop back if at the end
         solarPointer += 5;
         //Sun position check for zenit during year
         if (signature != -1 && solarMaximum < 90)
@@ -78,19 +93,14 @@ public class TurnBasedSystem : MonoBehaviour
         CheckTurn();
         // TODO implement buttons managament for turns
     }
-    public void SolarSet()
-    {
-        dayUI.SetActive(false);
-        nightUI.SetActive(true);
-        solarPointer = -90;
-    }
+   
     /// <summary>
     /// Function Called externally by button, or sequence
     /// </summary>
     public void SolarRise()
     {
-        dayUI.SetActive(false);
-        nightUI.SetActive(true);
+        dayUI.SetActive(true);
+        nightUI.SetActive(false);
         solarPointer = 1;
     }
     public void CheckTurn()
@@ -105,7 +115,12 @@ public class TurnBasedSystem : MonoBehaviour
         }
         else
         {
-            SolarSet();
+            dayUI.SetActive(false);
+            nightUI.SetActive(true);
+            solarPointer = -90;
+            float x = -90;
+            float y = (float)solarPointer / 2;
+            Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
         }
 
     }

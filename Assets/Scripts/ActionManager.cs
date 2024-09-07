@@ -17,15 +17,24 @@ public class ActionManager : MonoBehaviour
     public List<Button> OrangeButtons = new List<Button>();
     [SerializeField]
     public List<Button> RedButtons = new List<Button>();
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
+    public void CheckTurnAndPlayer()
+    {
+       
+    }
+
+    
 }

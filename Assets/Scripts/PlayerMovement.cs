@@ -39,13 +39,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Checking position
+    /// </summary>
     public void CheckPosition()
     {
         position3 = this.transform.position;
         SearchForTileWithRaycast();
     }
-
+    /// <summary>
+    /// Checking for tile ID (raycast Down)
+    /// </summary>
     public void SearchForTileWithRaycast()
     {
         RaycastHit hit;

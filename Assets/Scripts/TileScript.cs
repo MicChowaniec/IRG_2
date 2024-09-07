@@ -23,9 +23,11 @@ public class TileScript : MonoBehaviour
     public bool rootable= true;
     public bool passable = true;
     public MovementSystem ms;
+    public TurnBasedSystem tbs;
 
     private void Start()
     {
+        tbs = FindAnyObjectByType<TurnBasedSystem>();
         ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();
     }
@@ -115,22 +117,25 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (ms.movable==true)
+        if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
+        {
+            if (ms.movable == true)
             {
-            if (IsPointerOverUI())
-            {
-                OnMouseExit();
-                return; // Exit early if over UI
-            }
-            //TODO add other players to move.
-            if (passable == true)
-            {
-                Debug.Log("Click");
-                playerMovement = GameObject.Find("RedPlayer").GetComponent<PlayerMovement>();
-                //Call function "Move" from "Player Movement"
-                playerMovement.destination = coordinates;
-                playerMovement.tileIdDestination = id;
-                playerMovement.doYouWantToMove = true;
+                if (IsPointerOverUI())
+                {
+                    OnMouseExit();
+                    return; // Exit early if over UI
+                }
+                //TODO add other players to move.
+                if (passable == true)
+                {
+                    Debug.Log("Click");
+                    playerMovement = tbs.activePlayer.GetComponent<PlayerMovement>();
+                    //Call function "Move" from "Player Movement"
+                    playerMovement.destination = coordinates;
+                    playerMovement.tileIdDestination = id;
+                    playerMovement.doYouWantToMove = true;
+                }
             }
         }
     }

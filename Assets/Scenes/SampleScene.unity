@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 117203904}
   - component: {fileID: 117203903}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RootButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 150957096}
   - component: {fileID: 150957095}
   m_Layer: 5
-  m_Name: Button
+  m_Name: MoveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 170470488}
   - component: {fileID: 170470487}
   m_Layer: 5
-  m_Name: Button
+  m_Name: WaterButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -909,7 +909,7 @@ GameObject:
   - component: {fileID: 475964859}
   - component: {fileID: 475964858}
   m_Layer: 5
-  m_Name: Button
+  m_Name: FotoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1190,6 +1190,7 @@ MonoBehaviour:
   numberOfPlayers: 2
   players:
   - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
+  - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
   rootables: 0
   tbs: {fileID: 1697207773}
 --- !u!4 &631253413
@@ -1220,7 +1221,7 @@ GameObject:
   - component: {fileID: 698912176}
   - component: {fileID: 698912175}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PushButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2140,7 +2141,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 892147229}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1697207773}
+        m_TargetAssemblyTypeName: TurnBasedSystem, Assembly-CSharp
+        m_MethodName: ChangePlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &892147229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2421,13 +2434,14 @@ MonoBehaviour:
   panSpeed: 20
   scrollSpeed: 20
   rotateSpeed: 100
-  fixedHeight: 10
+  fixedHeight: 4
   zoomSmoothness: 5
   spaceMoveHeight: 10
   nonLinearFactor: 2
   minY: 5
   maxY: 80
   objectToCenterOn: {fileID: 0}
+  tbs: {fileID: 1697207773}
 --- !u!1 &1024903160
 GameObject:
   m_ObjectHideFlags: 0
@@ -3650,6 +3664,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1607636496}
+  - component: {fileID: 1607636497}
   m_Layer: 0
   m_Name: ActionManager
   m_TagString: Untagged
@@ -3672,6 +3687,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607636497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607636495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6eb6485b927dea4ba70ebf1fb7a98a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PurpleButtons:
+  - {fileID: 1961208071}
+  BlueButtons:
+  - {fileID: 170470487}
+  GreenButtons:
+  - {fileID: 475964858}
+  YellowButtons:
+  - {fileID: 150957095}
+  OrangeButtons:
+  - {fileID: 698912175}
+  RedButtons:
+  - {fileID: 117203903}
 --- !u!1 &1620855338
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,13 +4030,15 @@ MonoBehaviour:
   turns:
   - {fileID: 11400000, guid: 668627204154b7146b1c68656a353a16, type: 2}
   - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
-  - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
+  ActiveTurn: {fileID: 0}
   activeTurnIndex: 0
   dayUI: {fileID: 576203490}
   nightUI: {fileID: 91447564}
   Light: {fileID: 705507994}
   players: []
   activePlayer: {fileID: 0}
+  totalTurns: 0
+  scc: {fileID: 963194229}
 --- !u!1 &1721787787
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,7 +4926,7 @@ GameObject:
   - component: {fileID: 1961208072}
   - component: {fileID: 1961208071}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SendScoutButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
