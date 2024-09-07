@@ -18,6 +18,9 @@ public class ActionManager : MonoBehaviour
     [SerializeField]
     public List<Button> RedButtons = new List<Button>();
 
+    [SerializeField]
+    TurnBasedSystem tbs;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +36,15 @@ public class ActionManager : MonoBehaviour
 
     public void CheckTurnAndPlayer()
     {
-       
+        
+        if (tbs.ActiveTurn.nameOfTurn == "solarTurn")
+        {
+            
+        }
+        else
+        {
+
+        }
     }
 
     

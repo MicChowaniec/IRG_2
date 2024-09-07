@@ -33,6 +33,9 @@ public class TurnBasedSystem : MonoBehaviour
     public int totalTurns;
 
     [SerializeField]
+    public Image image;
+
+    [SerializeField]
     StrategyCameraControl scc;
 
     void Start()
@@ -42,10 +45,11 @@ public class TurnBasedSystem : MonoBehaviour
         solarMaximum = 45;
 
         SolarRise();
-        
-        activeTurnIndex = 0;
 
-       
+        activeTurnIndex = 0;
+        ActiveTurn = turns[activeTurnIndex];
+
+
         activePlayerIndex = 0;
         
         
@@ -92,6 +96,7 @@ public class TurnBasedSystem : MonoBehaviour
         solarMaximum += 1 * signature;
         CheckTurn();
         // TODO implement buttons managament for turns
+
     }
    
     /// <summary>
