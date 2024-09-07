@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mapManager = FindAnyObjectByType<MapManager>();
         position3 = this.transform.position;
         CheckPosition();
         tileIdDestination = tileIdLocation;

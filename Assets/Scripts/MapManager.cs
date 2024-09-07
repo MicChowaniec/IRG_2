@@ -39,6 +39,8 @@ public class MapManager : MonoBehaviour
     [SerializeField]
     public Player[] players;
     public int rootables;
+    [SerializeField]
+    TurnBasedSystem tbs;
 
 
 
@@ -48,6 +50,7 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
+       
         CreateMap(sizeOfMap);
         AllocatePlayers(numberOfPlayers);
     }
@@ -178,15 +181,19 @@ public class MapManager : MonoBehaviour
         {
             if (p.picked == true)
             {
+                
                 GameObject player = Instantiate(p.Prefab, p.startPos, p.startRot);
                 player.name = p.name;
                 player.GetComponent<PlayerMovement>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
+                tbs.players.Add(player);
+
+
             }
         }
     }
     /// <summary>
-    /// Clearing fields where current player stands, except given one
+    /// Clearing information about fields where current player stands, except given one
     /// </summary>
     /// <param name="exceptThisId"></param>
     public void ClearStanders(int exceptThisId)
