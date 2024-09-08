@@ -12,6 +12,9 @@ public class WaterSystem : MonoBehaviour
     public TileScript ts;
     [SerializeField]
     public MapManager mm;
+    [SerializeField]
+    public GameObject notEnoughEnergy;
+
 
 
     public int WaterFieldCount()
@@ -44,11 +47,30 @@ public class WaterSystem : MonoBehaviour
         ts = mm.tiles[pm.tileIdLocation];
         if (pm.rooted == true)
         {
-            pm.UpdateWater((GrassFieldCount()+WaterFieldCount())*6);
+            if (pm.CheckForEnergy(10))
+            {
+                pm.UpdateWater((GrassFieldCount() + WaterFieldCount()) * 6);
+                pm.UpdateEnergy(-10);
+            }
+            else
+            {
+                notEnoughEnergy.SetActive(true);
+            }
+
         }
         else
         {
-            pm.UpdateWater(WaterFieldCount()*6);
+            if (pm.CheckForEnergy(50))
+            {
+                pm.UpdateWater(WaterFieldCount() * 6);
+                pm.UpdateEnergy(-50);
+
+            }
+            else
+            {
+                notEnoughEnergy.SetActive(true);
+            }
         }
+            
     }
 }

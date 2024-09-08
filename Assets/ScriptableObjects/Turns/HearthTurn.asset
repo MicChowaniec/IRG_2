@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edceae283b48ace4e82fe2bbc7cf1c7c, type: 3}
   m_Name: HearthTurn
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  nameOfTurn: 
-  description: 
+  icon: {fileID: 21300000, guid: 6ade7236e29cd034d81724dd47beb981, type: 3}
+  nameOfTurn: HearthTurn
+  description: Hearth Turn
   actions: []

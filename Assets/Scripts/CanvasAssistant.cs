@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Assistant : MonoBehaviour
+public class CanvasAssistant : MonoBehaviour
 {
     public string[] narration = new string[20];
     public string[] responses = new string[20];

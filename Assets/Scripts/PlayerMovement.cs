@@ -35,7 +35,11 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        mapManager = FindAnyObjectByType<MapManager>();
         bioMass = 100;
+        position3 = this.transform.position;
+        CheckPosition();
+        tileIdDestination = tileIdLocation;
         energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
         if (energyUpdateText != null)
         {
@@ -54,10 +58,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Didn't find WaterCounter Object");
         }
-        mapManager = FindAnyObjectByType<MapManager>();
-        position3 = this.transform.position;
-        CheckPosition();
-        tileIdDestination = tileIdLocation;
+        
+       
 
 
     }
