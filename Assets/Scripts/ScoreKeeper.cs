@@ -7,17 +7,17 @@ using UnityEngine.UIElements;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    [SerializeField]
+
     public GameObject redTextObject; // Reference to the UI Text object
-    [SerializeField]
+
     public GameObject blueTextObject; // Reference to the UI Text object
 
     private TextMeshProUGUI blueTextMeshPro; // Cache the TextMeshProUGUI component
     private TextMeshProUGUI redTextMeshPro; // Cache the TextMeshProUGUI component
 
-    [SerializeField]
+
     public MapManager mapManager;
-    [SerializeField]
+
     public TurnBasedSystem tbs;
 
 
@@ -26,13 +26,12 @@ public class ScoreKeeper : MonoBehaviour
     public int blueScore;
     public float blueScoreP;
 
-    [SerializeField]
+
     public GameObject WinnerPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        MapManager mapManager = GameObject.FindObjectOfType<MapManager>();
         // Get the TextMeshProUGUI component from the textObject
         redTextMeshPro = redTextObject.GetComponent<TextMeshProUGUI>();
         blueTextMeshPro = blueTextObject.GetComponent<TextMeshProUGUI>();

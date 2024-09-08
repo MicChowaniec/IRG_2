@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class TurnBasedSystem : MonoBehaviour
 {
-    [SerializeField]
-    public List<Turn> turns = new List<Turn>(); // List of turns, serialized for Unity Editor
+    public List<Turn> turns; // List of turns, serialized for Unity Editor
 
     public Turn ActiveTurn; // Property to access the active turn
     public int activeTurnIndex; //Value between 0 and Length of turns
@@ -17,36 +16,36 @@ public class TurnBasedSystem : MonoBehaviour
     private int solarPointer;
     private int solarMaximum;
     private int signature;
-    [SerializeField]
+
     [Range(1, 15)]
     public int step;
 
-    [SerializeField]
+
     public GameObject dayUI;
-    [SerializeField]
+
     public GameObject nightUI;
-    [SerializeField]
+  
     public Light Light;
 
-    [SerializeField]
-    public List<GameObject> players = new List<GameObject>();
+
+    public List<GameObject> players;
     public GameObject activePlayer;
     private int numberOfPlayers;
     private int activePlayerIndex;
 
-    [SerializeField]
+ 
     public MovementSystem ms;
 
 
     public int totalTurns;
 
-    [SerializeField]
+
     public Image image;
 
-    [SerializeField]
-    StrategyCameraControl scc;
-    [SerializeField]
-    ActionManager am;
+
+    public StrategyCameraControl scc;
+
+    public ActionManager am;
    
 
     void Start()

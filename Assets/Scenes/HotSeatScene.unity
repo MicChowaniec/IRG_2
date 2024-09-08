@@ -956,7 +956,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Not Enough Water!
+  m_text: Not enough water.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1405,9 +1405,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovementSystem, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1746216697}
+        m_TargetAssemblyTypeName: PhotosynthesisSystem, Assembly-CSharp
+        m_MethodName: ClickToGrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1827,6 +1827,12 @@ MonoBehaviour:
   waterTilePrefab: {fileID: 1785028746914359239, guid: 823af1dcd5614334e91c996fe362f37b, type: 3}
   sandTilePrefab: {fileID: 1785028746914359239, guid: 48ded8e860f51d841a23397e63468298, type: 3}
   tileParent: {fileID: 631253411}
+  x: 0
+  y: 0
+  z: 0
+  fieldPosition: {x: 0, y: 0, z: 0}
+  fieldRotation: {x: 0, y: 0, z: 0, w: 1}
+  numberOfTypesOfTiles: 0
   scale: 2
   numberOfPlayers: 2
   players:
@@ -1834,7 +1840,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
   rootables: 0
   tbs: {fileID: 1697207773}
-  assistant: {fileID: 1637323968}
+  assistant: {fileID: 1637323965}
 --- !u!4 &631253413
 Transform:
   m_ObjectHideFlags: 0
@@ -2155,6 +2161,98 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707863558}
   m_CullTransparentMesh: 0
+--- !u!1 &723493277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 723493278}
+  - component: {fileID: 723493279}
+  m_Layer: 0
+  m_Name: Assistant
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &723493278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723493277}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3371089, y: 0.2, z: 0.8684777}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &723493279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723493277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a81e91efdc0094e9f846b67da5251c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narration:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  responses:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  AssistantTalks: {fileID: 571064294}
+  PlayerTalks: {fileID: 1667477999}
+  btn: {fileID: 740210146}
+  scenario: 0
 --- !u!1 &740210144
 GameObject:
   m_ObjectHideFlags: 0
@@ -4106,7 +4204,7 @@ MonoBehaviour:
   pm: {fileID: 0}
   ts: {fileID: 0}
   mm: {fileID: 631253412}
-  notEnoughEnergy: {fileID: 0}
+  notEnoughEnergy: {fileID: 80055550}
 --- !u!1 &1237686149
 GameObject:
   m_ObjectHideFlags: 0
@@ -7210,7 +7308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You cannot move, when you are rooted!
+  m_text: Not enough energy.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8635,3 +8733,4 @@ SceneRoots:
   - {fileID: 1637323969}
   - {fileID: 1171022489}
   - {fileID: 1746216696}
+  - {fileID: 723493278}

@@ -9,40 +9,40 @@ using UnityEngine.UIElements;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField]
+
     [Range(3, 25)]
-    private int sizeOfMap;
-    [SerializeField]
-    private GameObject rockTilePrefab;
-    [SerializeField]
-    private GameObject grassTilePrefab;
-    [SerializeField]
-    private GameObject waterTilePrefab;
-    [SerializeField]
-    private GameObject sandTilePrefab;
-    [SerializeField]
-    private GameObject tileParent;
-    private float x;
-    private float y;
-    private float z;
-    private Vector3 fieldPosition;
-    private Quaternion fieldRotation = Quaternion.identity;
-    private int numberOfTypesOfTiles;
+    public int sizeOfMap;
+
+    public GameObject rockTilePrefab;
+
+    public GameObject grassTilePrefab;
+
+    public GameObject waterTilePrefab;
+
+    public GameObject sandTilePrefab;
+
+    public GameObject tileParent;
+    public float x;
+    public float y;
+    public float z;
+    public Vector3 fieldPosition;
+    public Quaternion fieldRotation = Quaternion.identity;
+    public int numberOfTypesOfTiles;
     public Dictionary<Vector2, int> posAndIds = new Dictionary<Vector2, int>();
     public Dictionary<int, TileScript> tiles = new Dictionary<int, TileScript>();
-    [SerializeField]
+
     [Range(1, 10)]
     public int scale;
-    [SerializeField]
+
     [Range(2, 6)]
     public int numberOfPlayers;
-    [SerializeField]
+
     public Player[] players;
     public int rootables;
-    [SerializeField]
-    TurnBasedSystem tbs;
-    [SerializeField]
-    public Canvas assistant;
+
+    public TurnBasedSystem tbs;
+
+    public GameObject assistant;
 
 
 
@@ -55,21 +55,20 @@ public class MapManager : MonoBehaviour
         if (sizeOfMap > 3)
         {
             CreateMap(sizeOfMap);
-            AllocatePlayers(numberOfPlayers);
+            AllocatePlayers();
+            Debug.Log(sizeOfMap);
         }
         else if (sizeOfMap==3)
         {
             CreateTutorialMap();
-            AllocatePlayers(1);
-            assistant.enabled = true;
+            AllocatePlayers();
+            assistant.SetActive(true);
+            Debug.Log(sizeOfMap);
         }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
+  
     public void CreateTutorialMap()
     {
         int id = 0;
@@ -253,7 +252,7 @@ public class MapManager : MonoBehaviour
     /// Allocating number of players
     /// </summary>
     /// <param name="numPlayers"></param>
-    public void AllocatePlayers(int numPlayers)
+    public void AllocatePlayers()
     {
 
         foreach (Player p in players)

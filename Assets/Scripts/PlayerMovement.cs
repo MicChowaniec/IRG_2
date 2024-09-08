@@ -43,16 +43,16 @@ public class PlayerMovement : MonoBehaviour
         energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
         if (energyUpdateText != null)
         {
-            UpdateEnergy(50);
+            UpdateEnergy(51);
         }
         else
         {
             Debug.Log("Didn't find EnergyCounter Object");
         }
         waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
-        if (energyUpdateText != null)
+        if (waterUpdateText != null)
         {
-            UpdateWater(50);
+            UpdateWater(51);
         }
         else
         {
@@ -152,15 +152,21 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="energy"></param>
     public void UpdateEnergy(int actionEnergy)
     {
-
         energy += actionEnergy;
         if (energy > bioMass)
         {
             energy = bioMass;
         }
         energyPercent = (float)energy / (float)bioMass * 100;
-        energyUpdateText.text = energyPercent + "%";
 
+        if (energyUpdateText != null)
+        {
+            energyUpdateText.text = energyPercent + "%";
+        }
+        else
+        {
+            Debug.LogWarning("energyUpdateText is not assigned.");
+        }
     }
     public bool CheckForWater(int actionWater)
     {

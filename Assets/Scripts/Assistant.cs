@@ -4,15 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasAssistant : MonoBehaviour
+public class Assistant : MonoBehaviour
 {
-    public string[] narration = new string[20];
-    public string[] responses = new string[20];
-    [SerializeField]
+    public string[] narration;
+    public string[] responses;
     public TextMeshProUGUI AssistantTalks;
-    [SerializeField]
     public TextMeshProUGUI PlayerTalks;
-    [SerializeField]
     public Button btn;
     public int scenario;
     public void Start()
@@ -74,17 +71,25 @@ public class CanvasAssistant : MonoBehaviour
         narration[18] = "Okay good, lets go to the next round";
         responses[18] = "";
 
-        //narration[19] = "Now we are in Power Turn, you can attack something!, use this punch button, to attack nearby animal";
-        //responses[19] = "";
+        narration[19] = "Now we are in Power Turn, you can attack something!, use this punch button, to attack nearby animal";
+        responses[19] = "";
        
-        //narration[20] = "Woops this animal was too strong to you..."
         narration[20] = "Now you are in the root turn. Be carefull. You can only root once per day... Yes it means to you once per life. You don't want to root somewhere where is no water.";
         responses[20] = "'Listen'";
     }
     public void NextScenario()
     {
         scenario++;
+
+        // Ensure scenario does not exceed the bounds of the array
+        if (scenario >= narration.Length)
+        {
+            scenario = narration.Length - 1; // Optionally, set it to the last valid index or handle as needed
+            Debug.LogWarning("Scenario index out of range. Adjusting to maximum valid index.");
+        }
+
         AssistantTalks.text = narration[scenario];
+
         if (responses[scenario] != "")
         {
             btn.enabled = true;
@@ -94,6 +99,5 @@ public class CanvasAssistant : MonoBehaviour
         {
             btn.enabled = false;
         }
-
     }
 }
