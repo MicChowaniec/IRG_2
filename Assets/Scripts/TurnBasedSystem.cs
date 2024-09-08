@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,9 @@ public class TurnBasedSystem : MonoBehaviour
     private int solarPointer;
     private int solarMaximum;
     private int signature;
+    [SerializeField]
+    [Range(1, 15)]
+    public int step;
 
     [SerializeField]
     public GameObject dayUI;
@@ -30,6 +34,10 @@ public class TurnBasedSystem : MonoBehaviour
     private int numberOfPlayers;
     private int activePlayerIndex;
 
+    [SerializeField]
+    public MovementSystem ms;
+
+
     public int totalTurns;
 
     [SerializeField]
@@ -37,6 +45,9 @@ public class TurnBasedSystem : MonoBehaviour
 
     [SerializeField]
     StrategyCameraControl scc;
+    [SerializeField]
+    ActionManager am;
+   
 
     void Start()
     {
@@ -48,23 +59,22 @@ public class TurnBasedSystem : MonoBehaviour
 
         activeTurnIndex = 0;
         ActiveTurn = turns[activeTurnIndex];
-
-
-        activePlayerIndex = 0;
-        
-        
-        
-
-        CheckTurn();
+        image.sprite = ActiveTurn.icon;
     }
-
-    void Update()
+    /// <summary>
+    /// Start function, called externally
+    /// </summary>
+    public void Prepare()
     {
+        activePlayerIndex = 0;
         activePlayer = players[activePlayerIndex];
-
+        CheckTurn();
+        am.CheckTurnAndPlayer();
+        scc.CenterOnObject(activePlayer);
     }
     public void ChangePlayer()
     {
+        ms.movable = false;
         numberOfPlayers = players.Count;
         if (activePlayerIndex==numberOfPlayers-1)
         {
@@ -73,6 +83,7 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayerIndex = (activePlayerIndex + 1) % numberOfPlayers;
         activePlayer = players[activePlayerIndex];
         scc.CenterOnObject(activePlayer);
+        activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(0);
         totalTurns++;
 
     }
@@ -81,8 +92,9 @@ public class TurnBasedSystem : MonoBehaviour
         numberOfTurns = turns.Count;
         activeTurnIndex = (activeTurnIndex + 1) % numberOfTurns;
         ActiveTurn = turns[activeTurnIndex];
+        image.sprite = ActiveTurn.icon;
         // Advance to the next turn and loop back if at the end
-        solarPointer += 5;
+        solarPointer += step;
         //Sun position check for zenit during year
         if (signature != -1 && solarMaximum < 90)
         {
@@ -108,6 +120,9 @@ public class TurnBasedSystem : MonoBehaviour
         nightUI.SetActive(false);
         solarPointer = 1;
     }
+    /// <summary>
+    /// Adjust Sun position and UI to the existing Sun position
+    /// </summary>
     public void CheckTurn()
 
     {
@@ -117,6 +132,15 @@ public class TurnBasedSystem : MonoBehaviour
             float x = Mathf.Abs((float)solarPointer - 1 / 2 * solarMaximum) - 1 / 2 * solarMaximum;
             float y = (float)solarPointer / 2;
             Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
+            am.CheckTurnAndPlayer();
+            foreach(GameObject p in players)
+            {
+                PlayerMovement pm = p.GetComponent<PlayerMovement>();
+                pm.UpdateEnergy((int)x);
+                pm.UpdateWater(-6);
+
+            }
+            Debug.Log("Energy added:" + x);
         }
         else
         {
@@ -127,6 +151,7 @@ public class TurnBasedSystem : MonoBehaviour
             float y = (float)solarPointer / 2;
             Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
         }
+
 
     }
 }

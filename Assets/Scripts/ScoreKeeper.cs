@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class ScoreKeeper : MonoBehaviour
 {
@@ -13,7 +15,10 @@ public class ScoreKeeper : MonoBehaviour
     private TextMeshProUGUI blueTextMeshPro; // Cache the TextMeshProUGUI component
     private TextMeshProUGUI redTextMeshPro; // Cache the TextMeshProUGUI component
 
+    [SerializeField]
     public MapManager mapManager;
+    [SerializeField]
+    public TurnBasedSystem tbs;
 
 
     public int redScore;
@@ -21,6 +26,8 @@ public class ScoreKeeper : MonoBehaviour
     public int blueScore;
     public float blueScoreP;
 
+    [SerializeField]
+    public GameObject WinnerPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +58,7 @@ public class ScoreKeeper : MonoBehaviour
 
     }
 
+
     public void UpdateScore()
     {
         int tempIntRed = 0;
@@ -75,10 +83,21 @@ public class ScoreKeeper : MonoBehaviour
         redScoreP = (float)tempIntRed / (float)mapManager.rootables * 100;
         Debug.Log(redScoreP);
         redTextMeshPro.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
-       
+        if (redScoreP >= 51)
+        {
+            WinnerPanel.SetActive(true);
+            tbs.dayUI.SetActive(false);
+            tbs.nightUI.SetActive(false);
+
+        }
+
         blueScore = tempIntBlue;
         blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
         Debug.Log(blueScoreP);
         blueTextMeshPro.text = blueScore.ToString() + "(" + blueScoreP.ToString("F0") + "%)";
+    }
+    public void FinishGameClick()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

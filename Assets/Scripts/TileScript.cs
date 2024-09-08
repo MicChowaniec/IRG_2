@@ -18,7 +18,7 @@ public class TileScript : MonoBehaviour
     public MapManager mapManager;
     [SerializeField]
     public Material litMaterial;
-    PlayerMovement playerMovement;
+    PlayerMovement pm;
     public int activePlayer;
     public bool rootable= true;
     public bool passable = true;
@@ -33,7 +33,7 @@ public class TileScript : MonoBehaviour
     }
     void Update()
     {
-        activePlayer = 1;
+
     }
     public void AddNeighbours()
     {
@@ -117,6 +117,7 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseDown()
     {
+        pm = tbs.activePlayer.GetComponent<PlayerMovement>();
         if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
         {
             if (ms.movable == true)
@@ -129,12 +130,17 @@ public class TileScript : MonoBehaviour
                 //TODO add other players to move.
                 if (passable == true)
                 {
-                    Debug.Log("Click");
-                    playerMovement = tbs.activePlayer.GetComponent<PlayerMovement>();
-                    //Call function "Move" from "Player Movement"
-                    playerMovement.destination = coordinates;
-                    playerMovement.tileIdDestination = id;
-                    playerMovement.doYouWantToMove = true;
+                    
+                    if (pm.CheckForEnergy(50))
+                    {
+                        pm.UpdateEnergy(-50);
+                        Debug.Log("Click");
+                        
+                        //Call function "Move" from "Player Movement"
+                        pm.destination = coordinates;
+                        pm.tileIdDestination = id;
+                        pm.doYouWantToMove = true;
+                    }
                 }
             }
         }

@@ -41,6 +41,8 @@ public class MapManager : MonoBehaviour
     public int rootables;
     [SerializeField]
     TurnBasedSystem tbs;
+    [SerializeField]
+    public Canvas assistant;
 
 
 
@@ -50,14 +52,91 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-       
-        CreateMap(sizeOfMap);
-        AllocatePlayers(numberOfPlayers);
+        if (sizeOfMap > 3)
+        {
+            CreateMap(sizeOfMap);
+            AllocatePlayers(numberOfPlayers);
+        }
+        else if (sizeOfMap==3)
+        {
+            CreateTutorialMap();
+            AllocatePlayers(1);
+            assistant.enabled = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+    public void CreateTutorialMap()
+    {
+        int id = 0;
+        Debug.Log("Map Creation Started");
+        for (int i = -3 + 1; i < 3; i++)
+        {
+            x = (float)i / 3 * scale;
+
+            for (int j = -3 + 1; j < (3 - Mathf.Abs(i)); j++)
+            {
+
+                z = ((float)j + Mathf.Abs((float)i) / 2) * Mathf.Sqrt(3.0f) / 4 * scale;
+                fieldPosition = new Vector3(x, y, z);
+                // Grass to the center star
+                if (i == 0)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else if (j == 0)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else if (i == j)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else if (i == -j)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                }
+                else
+                {
+                    TileTypesEnum rtt = RandomTileType();
+                    if (rtt == TileTypesEnum.Rock)
+                    {
+                        InstatiateField(rockTilePrefab, id, i, j);
+
+                    }
+                    else if (rtt == TileTypesEnum.Sand)
+                    {
+                        InstatiateField(sandTilePrefab, id, i, j);
+                    }
+                    else if (rtt == TileTypesEnum.Grass)
+                    {
+                        InstatiateField(grassTilePrefab, id, i, j);
+                    }
+                    else if (rtt == TileTypesEnum.Water)
+                    {
+                        InstatiateField(waterTilePrefab, id, i, j);
+                    }
+
+                }
+                id++;
+            }
+        }
+
+        Debug.Log("Map Creation Finished");
+        foreach (int i in posAndIds.Values)
+        {
+            GameObject.Find(i.ToString()).GetComponent<TileScript>().AddNeighbours();
+
+        }
+        Debug.Log("Neighbours Added");
+        rootables = CountRootables();
+        Debug.Log($"Rootables Counted: {rootables}");
+
+
 
     }
     /// <summary>
@@ -187,10 +266,11 @@ public class MapManager : MonoBehaviour
                 player.GetComponent<PlayerMovement>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
                 tbs.players.Add(player);
-
+                
 
             }
         }
+        tbs.Prepare();
     }
     /// <summary>
     /// Clearing information about fields where current player stands, except given one

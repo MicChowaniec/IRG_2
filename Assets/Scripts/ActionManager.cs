@@ -31,21 +31,96 @@ public class ActionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void CheckTurnAndPlayer()
     {
-        
-        if (tbs.ActiveTurn.nameOfTurn == "solarTurn")
+        RefreshButtons();
+        if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
         {
             
+            foreach (Button b in PurpleButtons)
+            {
+                b.interactable = true;
+            }
+
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "ThroatTurn")
+        {
+ 
+            foreach (Button b in BlueButtons)
+            {
+                b.interactable = true;
+            }
+
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "HearthTurn")
+        {
+
+            foreach (Button b in GreenButtons)
+            {
+                b.interactable = true;
+            }
+
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
+        {
+ 
+            foreach (Button b in YellowButtons)
+            {
+                b.interactable = true;
+            }
+
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "PowerTurn")
+        {
+
+            foreach (Button b in OrangeButtons)
+            {
+                b.interactable = true;
+            }
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "RootTurn")
+        {
+
+            foreach (Button b in RedButtons)
+            {
+                b.interactable = true;
+            }
         }
         else
         {
-
+            Debug.Log("haven't found name of the turn: " + tbs.ActiveTurn.nameOfTurn);
+        }
+    }
+    public void RefreshButtons()
+    {
+        foreach (Button b in PurpleButtons)
+        {
+            b.interactable = false;
+        }
+        foreach (Button b in BlueButtons)
+        {
+            b.interactable = false;
+        }
+        foreach (Button b in GreenButtons)
+        {
+            b.interactable = false;
+        }
+        foreach (Button b in YellowButtons)
+        {
+            b.interactable = false;
+        }
+        foreach (Button b in OrangeButtons)
+        {
+            b.interactable = false;
+        }
+        foreach (Button b in RedButtons)
+        {
+            b.interactable = false;
         }
     }
 
-    
+
 }
