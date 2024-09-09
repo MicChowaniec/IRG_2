@@ -23,10 +23,14 @@ public class TileScript : MonoBehaviour
     public bool rootable= true;
     public bool passable = true;
     public MovementSystem ms;
+    public ScoutingSystem ss;
     public TurnBasedSystem tbs;
+    public bool hasBush = false;
+    public bool hasAnimal = false;
 
     private void Start()
     {
+        ss = FindAnyObjectByType<ScoutingSystem>();
         tbs = FindAnyObjectByType<TurnBasedSystem>();
         ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();
@@ -130,12 +134,12 @@ public class TileScript : MonoBehaviour
                 //TODO add other players to move.
                 if (passable == true)
                 {
-                    
+
                     if (pm.CheckForEnergy(50))
                     {
                         pm.UpdateEnergy(-50);
                         Debug.Log("Click");
-                        
+
                         //Call function "Move" from "Player Movement"
                         pm.destination = coordinates;
                         pm.tileIdDestination = id;
@@ -143,6 +147,37 @@ public class TileScript : MonoBehaviour
                     }
                 }
             }
+        }
+        else if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
+        {
+            
+                if (IsPointerOverUI())
+                {
+                    OnMouseExit();
+                    return; // Exit early if over UI
+                }
+            if (ss.canYouFly == true)
+            {
+                if (hasBush == true)
+                {
+                    if (pm.starlings >= 1)
+                    {
+                        if (pm.CheckForEnergy(10))
+                        {
+                            pm.UpdateEnergy(-10);
+
+
+                            //Call function "MoveStarling" from "Player Movement"
+                            pm.destination = coordinates;
+                            pm.tileIdDestination = id;
+                            pm.doYouWantToFly = true;
+                            pm.bioMass += 20;
+                            pm.starlings--;
+                        }
+                    }
+                }
+            }
+
         }
     }
     private bool IsPointerOverUI()

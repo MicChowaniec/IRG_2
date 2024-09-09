@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Assistant : MonoBehaviour
@@ -45,37 +46,40 @@ public class Assistant : MonoBehaviour
         responses[9] = "Continue...";
 
         narration[10] = "Hovewer, I can bring you some fruits if you want to. Do you see that bush with purple flowers? Click 'Scout' button on the purple field, and click on the bush to send me there";
-        responses[10] = "";
+        responses[10] = " ";
 
         narration[11] = "As you may see, Starling counter is one less now. Actually it is zero. I hope you enjoyed your food";
         responses[11] = "Yes, thank you";
 
         narration[12] = "Ok lets go to the next turn, and you won't be able to talk to me, but you can listen";
-        responses[12] = "";
+        responses[12] = " ";
 
         narration[13] = "Water is very important to all life, as you may know. You will use it regardless you do something or not, that is why this is very important to drink.";
         responses[13] = "'Listen'";
 
         narration[14] = "As long as you are not rooted into the ground, you must be nearby water to drink it. Fortunately, there is nice water tile, just next to you, use button 'Water' to drink";
-        responses[14] = "";
+        responses[14] = " ";
 
         narration[15] = "Good! In this turn your body can grow, using photosynthesis. You can also grow by eating other things, when you are in Leuk stadium. Now press the button and see what happed";
-        responses[15] = "";
+        responses[15] = " ";
 
         narration[16] = "Your body is bigger, you have more capacity for energy, and water, you are also stronger! Good! let's go to the next turn";
-        responses[16] = "";
+        responses[16] = " ";
 
         narration[17] = "Now you can finally move. Use move button, and click on the fields to move. Try to go to this grass between water and desert.";
-        responses[17] = "";
+        responses[17] = " ";
 
         narration[18] = "Okay good, lets go to the next round";
-        responses[18] = "";
+        responses[18] = " ";
 
-        narration[19] = "Now we are in Power Turn, you can attack something!, use this punch button, to attack nearby animal";
-        responses[19] = "";
-       
+        narration[19] = "Now we are in Power Turn, you can attack something in this turn, but there is noone to attack. Press 'End Turn'";
+        responses[19] = " ";
+
         narration[20] = "Now you are in the root turn. Be carefull. You can only root once per day... Yes it means to you once per life. You don't want to root somewhere where is no water.";
         responses[20] = "'Listen'";
+
+        narration[20] = "You need to root before day ends, otherwise you will lose, each day can be longer or shorter, in this day you will have two oportunities to root, now and one cycle after that. ";
+        responses[20] = "'Finish Tutorial'";
     }
     public void NextScenario()
     {
@@ -90,14 +94,16 @@ public class Assistant : MonoBehaviour
 
         AssistantTalks.text = narration[scenario];
 
-        if (responses[scenario] != "")
+        if (responses[scenario] != "'Finish Tutorial'")
         {
             btn.enabled = true;
             PlayerTalks.text = responses[scenario];
+
         }
+
         else
         {
-            btn.enabled = false;
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 }

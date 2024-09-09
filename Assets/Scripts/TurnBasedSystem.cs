@@ -83,6 +83,8 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayer = players[activePlayerIndex];
         scc.CenterOnObject(activePlayer);
         activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(0);
+        activePlayer.GetComponent<PlayerMovement>().UpdateWater(0);
+        activePlayer.GetComponent<PlayerMovement>().UpdateStarlings(0);
         totalTurns++;
 
     }
@@ -152,5 +154,17 @@ public class TurnBasedSystem : MonoBehaviour
         }
 
 
+    }
+    public void EndNightButton()
+    {
+        nightUI.SetActive(false);
+        dayUI.SetActive(true);
+        solarPointer = 1;
+        if (activePlayer.GetComponent<PlayerMovement>().rooted == false)
+        {
+
+            Destroy(activePlayer);
+            
+        }
     }
 }

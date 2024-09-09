@@ -22,6 +22,7 @@ public class PhotosynthesisSystem : MonoBehaviour
                 pm.UpdateEnergy(-50);
                 pm.UpdateWater(-50);
                 pm.bioMass += 100;
+                tbs.activePlayer.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
             }
             else
             {

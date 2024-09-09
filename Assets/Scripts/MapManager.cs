@@ -21,6 +21,8 @@ public class MapManager : MonoBehaviour
 
     public GameObject sandTilePrefab;
 
+    public GameObject bushPrefab;
+
     public GameObject tileParent;
     public float x;
     public float y;
@@ -99,6 +101,17 @@ public class MapManager : MonoBehaviour
                 {
                     InstatiateField(grassTilePrefab, id, i, j);
                 }
+                else if (i == 2 && j == -1)
+                {
+                    InstatiateField(waterTilePrefab, id, i, j);
+                }
+                else if (i == 1 && j == -2)
+                {
+                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstantiateBush(bushPrefab, id, i, j);
+                    tiles[id].hasBush = true;
+                    tiles[id].passable = false;
+                }
                 else
                 {
                     TileTypesEnum rtt = RandomTileType();
@@ -176,6 +189,7 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     TileTypesEnum rtt = RandomTileType();
+                    TileTypesEnum rnt = RandomTileType();
                     if (rtt == TileTypesEnum.Rock)
                     {
                         InstatiateField(rockTilePrefab, id, i, j);
@@ -188,6 +202,13 @@ public class MapManager : MonoBehaviour
                     else if (rtt == TileTypesEnum.Grass)
                     {
                         InstatiateField(grassTilePrefab, id, i, j);
+                        if (rnt == rtt)
+                        {
+                            InstantiateBush(bushPrefab, id, i, j);
+                            tiles[id].hasBush = true;
+                            tiles[id].passable = false;
+
+                        }
                     }
                     else if (rtt == TileTypesEnum.Water)
                     {
@@ -248,6 +269,12 @@ public class MapManager : MonoBehaviour
         tiles.Add(id, tileScript);
 
     }
+    public void InstantiateBush(GameObject prefab, int id, int i, int j)
+    {
+        GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tileParent.transform);
+       
+
+    }
     /// <summary>
     /// Allocating number of players
     /// </summary>
@@ -264,8 +291,9 @@ public class MapManager : MonoBehaviour
                 player.name = p.name;
                 player.GetComponent<PlayerMovement>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
+                player.GetComponent<PlayerMovement>().treePrefab = p.TreePrefab;
                 tbs.players.Add(player);
-                
+
 
             }
         }

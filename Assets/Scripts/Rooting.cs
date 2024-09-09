@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class Rooting : MonoBehaviour
 {
-    [SerializeField]
-    public GameObject RedPlayerTreePrefab;
-    [SerializeField]
+
+    public GameObject TreePrefab;
+
     public GameObject OriginalTreePrefab;
-    private MapManager mapManager;
-    private ScoreKeeper scoreKeeper;
+    public TurnBasedSystem tbs;
+    public MapManager mapManager;
+    public ScoreKeeper scoreKeeper;
+    PlayerMovement pm;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoreKeeper=GameObject.FindAnyObjectByType<ScoreKeeper>();
-        mapManager=GameObject.FindAnyObjectByType<MapManager>();    
+   
         Root(Vector2.zero);
     }
 
@@ -28,22 +29,24 @@ public class Rooting : MonoBehaviour
     public void Root()
     {
 
-        //TODO apply for all players
-        PlayerMovement playerMovement = GameObject.Find("RedPlayer").GetComponent<PlayerMovement>();
-        TileScript tileScript = GameObject.Find(playerMovement.tileIdLocation.ToString()).GetComponent<TileScript>();
+        
+        pm= tbs.activePlayer.GetComponent<PlayerMovement>();
+        TileScript tileScript = GameObject.Find(pm.tileIdLocation.ToString()).GetComponent<TileScript>();
         if (tileScript.rootable == true)
         {
-            Instantiate(RedPlayerTreePrefab, playerMovement.position3, Quaternion.identity);
+            TreePrefab = pm.treePrefab;
+            GameObject tree = Instantiate(TreePrefab, pm.position3, Quaternion.identity);
+            tree.transform.localScale = tbs.activePlayer.transform.localScale;
             tileScript.rootable = false;
             tileScript.passable = false;
-            tileScript.owner = playerMovement.seqId;
+            tileScript.owner = pm.seqId;
             foreach (int NeighbourId in tileScript.neighbours)
             {
                 tileScript = GameObject.Find(NeighbourId.ToString()).GetComponent<TileScript>();
                 tileScript.rootable = false;
                 if (tileScript.owner == 0)
                 {
-                    tileScript.owner = playerMovement.seqId;
+                    tileScript.owner = pm.seqId;
 
 
                 }

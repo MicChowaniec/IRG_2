@@ -11,7 +11,7 @@ public class MainMenuButtonsManager : MonoBehaviour
     }
     public void HotSeatButtonClick()
     {
-        SceneManager.LoadScene("HotSeat");
+        SceneManager.LoadScene("HotSeatScene");
     }
     public void ExitButtonClick()
     {

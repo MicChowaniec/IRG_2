@@ -6,6 +6,9 @@ MonoImporter:
   defaultReferences:
   - mapManager: {instanceID: 0}
   - treePrefab: {fileID: 917251808456883119, guid: a842ee5e6b2366b41b2881e5d9cee2e9, type: 3}
+  - energyUpdateText: {instanceID: 0}
+  - waterUpdateText: {instanceID: 0}
+  - starlingPrefab: {fileID: 6453030809495794182, guid: e72ef959d97246348a82c30ca4178b22, type: 3}
   executionOrder: 400
   icon: {instanceID: 0}
   userData: 

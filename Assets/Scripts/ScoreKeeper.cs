@@ -80,7 +80,10 @@ public class ScoreKeeper : MonoBehaviour
         }
         redScore = tempIntRed;
         redScoreP = (float)tempIntRed / (float)mapManager.rootables * 100;
-        Debug.Log(redScoreP);
+        blueScore = tempIntBlue;
+        blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
+        Debug.Log("Red: " + redScoreP);
+        Debug.Log("Blue: " + blueScoreP);
         redTextMeshPro.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
         if (redScoreP >= 51)
         {
