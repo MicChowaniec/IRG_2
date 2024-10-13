@@ -174,7 +174,7 @@ public class TileScript : MonoBehaviour
                             pm.tileIdDestination = id;
                             pm.doYouWantToFly = true;
                             pm.bioMass += 20;
-                            pm.starlings--;
+                            pm.UpdateStarlings(-1);
                         }
                     }
                 }

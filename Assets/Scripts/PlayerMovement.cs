@@ -19,14 +19,14 @@ public class PlayerMovement : MonoBehaviour
     public GameObject treePrefab;
 
     public int bioMass;
+    public TextMeshProUGUI bioMassUpdateText;
     public int energy;
-    public float energyPercent;
     public TextMeshProUGUI energyUpdateText;
 
-    public int water;
-    public float waterPercent;
-    public bool rooted;
+    public int water; 
     public TextMeshProUGUI waterUpdateText;
+
+    public bool rooted;
 
     public int starlings;
     public int maxStarlings;
@@ -208,11 +208,11 @@ public class PlayerMovement : MonoBehaviour
         {
             energy = bioMass;
         }
-        energyPercent = (float)energy / (float)bioMass * 100;
+        
 
         if (energyUpdateText != null)
         {
-            energyUpdateText.text = energyPercent + "%";
+            energyUpdateText.text = energy.ToString();
         }
         else
         {
@@ -244,8 +244,14 @@ public class PlayerMovement : MonoBehaviour
         {
             water = bioMass;
         }
-        waterPercent = (float)water / (float)bioMass * 100;
-        waterUpdateText.text = waterPercent + "%";
+        
+        waterUpdateText.text = water.ToString();
+    }
+
+    public void UpdateBioMass(int actionBioMass)
+    {
+        bioMass += actionBioMass;
+        bioMassUpdateText.text = bioMass.ToString();
     }
 
     public void UpdateStarlings(int addorRemove)

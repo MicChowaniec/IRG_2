@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 5560114512016090709}
   - component: {fileID: 9146370109655348321}
   m_Layer: 2
-  m_Name: BushPrefab
+  m_Name: RedBushPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
