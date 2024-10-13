@@ -131,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (distance > 0.01f)
         {
+            Debug.Log("Distance: " + distance);
             transform.position = Vector3.MoveTowards(transform.position, destination3, moveSpeed * Time.deltaTime);
         }
         else

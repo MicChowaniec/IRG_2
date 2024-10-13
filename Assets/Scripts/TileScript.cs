@@ -121,41 +121,43 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        pm = tbs.activePlayer.GetComponent<PlayerMovement>();
-        if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
-        {
-            if (ms.movable == true)
+        if (Vector3.Distance(tbs.activePlayer.transform.position, transform.position) < 1) {
+            pm = tbs.activePlayer.GetComponent<PlayerMovement>();
+            if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
             {
-                if (IsPointerOverUI())
+                if (ms.movable == true)
                 {
-                    OnMouseExit();
-                    return; // Exit early if over UI
-                }
-                //TODO add other players to move.
-                if (passable == true)
-                {
-
-                    if (pm.CheckForEnergy(50))
+                    if (IsPointerOverUI())
                     {
-                        pm.UpdateEnergy(-50);
-                        Debug.Log("Click");
+                        OnMouseExit();
+                        return; // Exit early if over UI
+                    }
+                    //TODO add other players to move.
+                    if (passable == true)
+                    {
+                        
+                            if (pm.CheckForEnergy(50))
+                            {
+                                pm.UpdateEnergy(-50);
+                                Debug.Log("Click");
 
-                        //Call function "Move" from "Player Movement"
-                        pm.destination = coordinates;
-                        pm.tileIdDestination = id;
-                        pm.doYouWantToMove = true;
+                                //Call function "Move" from "Player Movement"
+                                pm.destination = coordinates;
+                                pm.tileIdDestination = id;
+                                pm.doYouWantToMove = true;
+                            }
                     }
                 }
             }
         }
         else if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
         {
-            
-                if (IsPointerOverUI())
-                {
-                    OnMouseExit();
-                    return; // Exit early if over UI
-                }
+
+            if (IsPointerOverUI())
+            {
+                OnMouseExit();
+                return; // Exit early if over UI
+            }
             if (ss.canYouFly == true)
             {
                 if (hasBush == true)
