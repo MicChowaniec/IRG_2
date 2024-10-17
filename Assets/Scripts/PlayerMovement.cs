@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         maxStarlings=1;
         ss = FindAnyObjectByType<ScoutingSystem>();
-        starlingPrefab = ss.StarlignPrefab;
+        starlingPrefab = ss.StarlingPrefab;
         mapManager = FindAnyObjectByType<MapManager>();
         bioMass = 100;
         position3 = this.transform.position;
@@ -169,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Starling Reached the Destination");
 
         // Wait for 1 second
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         // Move back to the starting position
         while (Vector3.Distance(starling.transform.position, initialPosition) > 0.01f)
@@ -254,9 +254,9 @@ public class PlayerMovement : MonoBehaviour
         bioMassUpdateText.text = bioMass.ToString();
     }
 
-    public void UpdateStarlings(int addorRemove)
+    public void UpdateStarlings(int addOrRemove)
     {
-        starlings += addorRemove;
+        starlings += addOrRemove;
         starlingsCounterText.text = starlings + "/" + maxStarlings;
     }
 }

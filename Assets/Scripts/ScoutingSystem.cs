@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScoutingSystem : MonoBehaviour
 {
-    public GameObject StarlignPrefab;
+    public GameObject StarlingPrefab;
     public bool canYouFly =false;
     public void onClickPrepareStarling()
     {
