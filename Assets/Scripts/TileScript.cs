@@ -152,7 +152,7 @@ public class TileScript : MonoBehaviour
         }
         else if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
         {
-
+            pm = tbs.activePlayer.GetComponent<PlayerMovement>();
             if (IsPointerOverUI())
             {
                 OnMouseExit();

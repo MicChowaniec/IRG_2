@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
         initialPosition = position3; // Set the initial position
 
         energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
+        waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
+        starlingsCounterText = GameObject.Find("StarlingsCounter").GetComponent<TextMeshProUGUI>();
+
         if (energyUpdateText != null)
         {
             UpdateEnergy(51);
@@ -62,24 +65,24 @@ public class PlayerMovement : MonoBehaviour
             energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
         }
 
-        waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
+        
         if (waterUpdateText != null)
         {
-            UpdateWater(51);
+            UpdateWater(52);
         }
         else
         {
             waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
             Debug.Log("Didn't find WaterCounter Object");
         }
-        starlingsCounterText = GameObject.Find("StarlingsCounter").GetComponent<TextMeshProUGUI>();
-        if (waterUpdateText != null)
+       
+        if (starlingsCounterText != null)
         {
             UpdateStarlings(1);
         }
         else
         {
-            starlingsCounterText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
+            starlingsCounterText = GameObject.Find("StarlingCounter").GetComponent<TextMeshProUGUI>();
             Debug.Log("Didn't find StarlingsCounter Object");
         }
     }
@@ -244,8 +247,17 @@ public class PlayerMovement : MonoBehaviour
         {
             water = bioMass;
         }
-        
-        waterUpdateText.text = water.ToString();
+
+
+        if (waterUpdateText != null)
+        {
+            waterUpdateText.text = water.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("waterUpdateText is not assigned.");
+        }
+
     }
 
     public void UpdateBioMass(int actionBioMass)
