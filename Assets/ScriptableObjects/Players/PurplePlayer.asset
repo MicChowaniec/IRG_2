@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
-  m_Name: BluePlayer
+  m_Name: PurplePlayer
   m_EditorClassIdentifier: 
-  sequence: 2
-  itsName: Blue
-  itsDescription: Blue is water and speach related
-  startPos: {x: -0.6666667, y: 0.2, z: -0.4330127}
+  sequence: 1
+  itsName: Purple
+  itsDescription: Purlple is vision and it is mind
+  startPos: {x: 0, y: 0.2, z: 0.8660254}
   startRot: {x: 0, y: 0, z: 0, w: 1}
   picked: 0
   Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
-  TreePrefab: {fileID: 917251808456883119, guid: 1eb4576bbb8bb694ba054d8a215429f3, type: 3}
-  material: {fileID: 2100000, guid: 1a0af5b6ecec2ab42b912990707702e1, type: 2}
+  TreePrefab: {fileID: 917251808456883119, guid: 08a396699b388a145872544145a628f3, type: 3}
+  material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}

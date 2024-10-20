@@ -284,9 +284,7 @@ public class MapManager : MonoBehaviour
 
         foreach (Player p in players)
         {
-            if (p.picked == true)
-            {
-                
+            
                 GameObject player = Instantiate(p.Prefab, p.startPos, p.startRot);
                 player.name = p.name;
                 player.GetComponent<PlayerMovement>().seqId = p.sequence;
@@ -295,7 +293,7 @@ public class MapManager : MonoBehaviour
                 tbs.players.Add(player);
 
 
-            }
+            
         }
         tbs.Prepare();
     }
@@ -328,5 +326,20 @@ public class MapManager : MonoBehaviour
             }
         }
         return temp;
+    }
+    public void Pick(Player player)
+    {
+        foreach (Player p in players)
+        {
+
+            if(p != player)
+            {
+                p.GetComponent<PlayerMovement>().picked = false;
+            }
+            else
+            {
+                p.GetComponent<PlayerMovement>().picked = true;
+            }
+        }
     }
 }

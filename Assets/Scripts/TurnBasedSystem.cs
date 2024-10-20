@@ -71,7 +71,7 @@ public class TurnBasedSystem : MonoBehaviour
         am.CheckTurnAndPlayer();
         scc.CenterOnObject(activePlayer);
     }
-    public void ChangePlayer()
+    public void ChangePlayer(int energy, int water, int starlings)
     {
         ms.movable = false;
         numberOfPlayers = players.Count;
@@ -82,9 +82,10 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayerIndex = (activePlayerIndex + 1) % numberOfPlayers;
         activePlayer = players[activePlayerIndex];
         scc.CenterOnObject(activePlayer);
-        activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(0);
-        activePlayer.GetComponent<PlayerMovement>().UpdateWater(0);
-        activePlayer.GetComponent<PlayerMovement>().UpdateStarlings(0);
+        
+        activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(energy);
+        activePlayer.GetComponent<PlayerMovement>().UpdateWater(water);
+        activePlayer.GetComponent<PlayerMovement>().UpdateStarlings(starlings);
         totalTurns++;
 
     }

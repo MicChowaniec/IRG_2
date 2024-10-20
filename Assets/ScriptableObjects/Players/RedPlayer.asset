@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: RedPlayer
   m_EditorClassIdentifier: 
-  sequence: 1
+  sequence: 6
   itsName: Red
   itsDescription: Red is fire and red is blood
   startPos: {x: 0.6666667, y: 0.2, z: 0.4330127}
   startRot: {x: 0, y: 0, z: 0, w: 1}
-  picked: 1
+  picked: 0
   Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
   TreePrefab: {fileID: 917251808456883119, guid: 08a396699b388a145872544145a628f3, type: 3}
   material: {fileID: 2100000, guid: c1846bb18311031489fe63550620be48, type: 2}

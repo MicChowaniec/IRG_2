@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool picked;
+
     public Vector3 position3;
     public int seqId;
     public int tileIdLocation;
@@ -51,29 +54,29 @@ public class PlayerMovement : MonoBehaviour
         tileIdDestination = tileIdLocation;
         initialPosition = position3; // Set the initial position
 
-        energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
-        waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
-        starlingsCounterText = GameObject.Find("StarlingsCounter").GetComponent<TextMeshProUGUI>();
-
-        if (energyUpdateText != null)
-        {
-            UpdateEnergy(51);
-        }
-        else
+        if (energyUpdateText == null)
         {
             Debug.Log("Didn't find EnergyCounter Object");
             energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
         }
+        else
+        {
+            UpdateEnergy(51);
+        }
 
-        
+
         if (waterUpdateText != null)
         {
-            UpdateWater(52);
+            UpdateWater(51);
         }
         else
         {
-            waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
-            Debug.Log("Didn't find WaterCounter Object");
+            
+            
+                Debug.Log(". Didn't find WaterCounter Object");
+                waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
+                
+            
         }
        
         if (starlingsCounterText != null)
@@ -81,10 +84,12 @@ public class PlayerMovement : MonoBehaviour
             UpdateStarlings(1);
         }
         else
-        {
-            starlingsCounterText = GameObject.Find("StarlingCounter").GetComponent<TextMeshProUGUI>();
-            Debug.Log("Didn't find StarlingsCounter Object");
-        }
+            {
+                Debug.Log("Didn't find StarlingsCounter Object");
+                starlingsCounterText = GameObject.Find("StarlingsCounter").GetComponent<TextMeshProUGUI>();
+            }
+            
+       
     }
 
     // Update is called once per frame
