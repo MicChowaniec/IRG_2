@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
-  m_Name: PurplePlayer
+  m_Name: GreenPlayer
   m_EditorClassIdentifier: 
-  sequence: 1
-  itsName: Purple
-  itsDescription: Purlple is vision and it is mind
-  startPos: {x: 0, y: 0.2, z: 0.8660254}
+  sequence: 3
+  itsName: Red
+  itsDescription: Red is fire and red is blood
+  startPos: {x: 0, y: 0.2, z: -0.8660254}
   startRot: {x: 0, y: 0, z: 0, w: 1}
   picked: 0
   Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
-  TreePrefab: {fileID: 917251808456883119, guid: fb493796735c30b469885043da6b1e8e, type: 3}
-  material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}
+  TreePrefab: {fileID: 917251808456883119, guid: 02ba801ebc6725e4185382992396ed95, type: 3}
+  material: {fileID: 2100000, guid: 1717475dbaaa8924ea2328f699fb8a56, type: 2}

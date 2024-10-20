@@ -1838,10 +1838,12 @@ MonoBehaviour:
   scale: 2
   numberOfPlayers: 2
   players:
-  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
+  - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
   - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
-  - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
-  - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
+  - {fileID: 11400000, guid: e9a6d584ace65ee47859add22f65e8a7, type: 2}
+  - {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
+  - {fileID: 11400000, guid: fdf8d22f78bde194b962d7faa8d9b6b7, type: 2}
+  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
   rootables: 0
   tbs: {fileID: 1697207773}
   assistant: {fileID: 1637323965}
