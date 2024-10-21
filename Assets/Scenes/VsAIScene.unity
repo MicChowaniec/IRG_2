@@ -757,14 +757,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff1648b4263ae42b5f30698c9915ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redTextObject: {fileID: 1326070640}
-  blueTextObject: {fileID: 922320736}
+  bioMassUpdateText: {fileID: 0}
+  energyUpdateText: {fileID: 0}
+  waterUpdateText: {fileID: 0}
+  starlingsCounterText: {fileID: 0}
+  purpleText: {fileID: 0}
+  blueText: {fileID: 0}
+  greenText: {fileID: 0}
+  yellowText: {fileID: 0}
+  orangeText: {fileID: 0}
+  redText: {fileID: 0}
   mapManager: {fileID: 631253412}
   tbs: {fileID: 1697207773}
   redScore: 0
   redScoreP: 0
   blueScore: 0
   blueScoreP: 0
+  greenScore: 0
+  greenScoreP: 0
+  yellowScore: 0
+  yellowScoreP: 0
+  orangeScore: 0
+  orangeScoreP: 0
+  purpleScore: 0
+  purpleScoreP: 0
   WinnerPanel: {fileID: 1413346970}
 --- !u!1 &218120759
 GameObject:

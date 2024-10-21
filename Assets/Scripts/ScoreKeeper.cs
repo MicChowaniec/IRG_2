@@ -7,15 +7,18 @@ using UnityEngine.UIElements;
 
 public class ScoreKeeper : MonoBehaviour
 {
+    public TextMeshProUGUI bioMassUpdateText;
+    public TextMeshProUGUI energyUpdateText;
+    public TextMeshProUGUI waterUpdateText;
+    public TextMeshProUGUI starlingsCounterText;
 
-    public GameObject redTextObject; // Reference to the UI Text object
-
-    public GameObject blueTextObject; // Reference to the UI Text object
-
-    private TextMeshProUGUI blueTextMeshPro; // Cache the TextMeshProUGUI component
-    private TextMeshProUGUI redTextMeshPro; // Cache the TextMeshProUGUI component
-
-
+    public TextMeshProUGUI purpleText;
+    public TextMeshProUGUI blueText;
+    public TextMeshProUGUI greenText;
+    public TextMeshProUGUI yellowText;
+    public TextMeshProUGUI orangeText;
+    public TextMeshProUGUI redText;
+    
     public MapManager mapManager;
 
     public TurnBasedSystem tbs;
@@ -25,6 +28,14 @@ public class ScoreKeeper : MonoBehaviour
     public float redScoreP;
     public int blueScore;
     public float blueScoreP;
+    public int greenScore;
+    public float greenScoreP;
+    public int yellowScore;
+    public float yellowScoreP;
+    public int orangeScore;
+    public float orangeScoreP;
+    public int purpleScore;
+    public float purpleScoreP;
 
 
     public GameObject WinnerPanel;
@@ -32,27 +43,26 @@ public class ScoreKeeper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         // Get the TextMeshProUGUI component from the textObject
-        redTextMeshPro = redTextObject.GetComponent<TextMeshProUGUI>();
-        blueTextMeshPro = blueTextObject.GetComponent<TextMeshProUGUI>();
 
-        if (redTextMeshPro == null)
+        if (redText == null)
         {
             Debug.LogError("TextMeshProUGUI component not found on the textObject!");
             return;
         }
         else
         {
-            redTextMeshPro.text = "0(0%)";
+            redText.text = "0(0%)";
         }
-        if (redTextMeshPro == null)
+        if (redText == null)
         {
             Debug.LogError("TextMeshProUGUI component not found on the textObject!");
             return;
         }
         else
         {
-            blueTextMeshPro.text = "0(0%)";
+            blueText.text = "0(0%)";
         }
 
     }
@@ -60,8 +70,13 @@ public class ScoreKeeper : MonoBehaviour
 
     public void UpdateScore()
     {
+
         int tempIntRed = 0;
         int tempIntBlue = 0;
+        int tempIntGreen = 0;
+        int tempIntYellow = 0;
+        int tempIntOrange = 0;
+        int tempIntPurple = 0;
 
         foreach (TileScript g in mapManager.tiles.Values)
         {
@@ -69,11 +84,27 @@ public class ScoreKeeper : MonoBehaviour
             {
                 if (g.owner == 1)
                 {
-                    tempIntRed++;
+                    tempIntPurple++;
+                }
+                else if (g.owner == 2)
+                {
+                    tempIntBlue++;
+                }
+                else if (g.owner ==3)
+                {
+                    tempIntGreen++;
                 }
                 else if (g.owner == 4)
                 {
-                    tempIntBlue++;
+                    tempIntYellow++;
+                }
+                else if (g.owner ==5)
+                {
+                    tempIntOrange++;
+                }
+                else if (g.owner == 6)
+                {
+                    tempIntRed++;
                 }
 
             }
@@ -82,9 +113,17 @@ public class ScoreKeeper : MonoBehaviour
         redScoreP = (float)tempIntRed / (float)mapManager.rootables * 100;
         blueScore = tempIntBlue;
         blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
-        Debug.Log("Red: " + redScoreP);
-        Debug.Log("Blue: " + blueScoreP);
-        redTextMeshPro.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
+        greenScore = tempIntGreen;
+        greenScoreP = (float)tempIntGreen / (float)mapManager.rootables * 100;
+        yellowScore = tempIntYellow;
+        yellowScoreP = (float)tempIntYellow / (float)mapManager.rootables * 100;
+        orangeScore = tempIntOrange;
+        orangeScoreP = (float)tempIntOrange / (float)mapManager.rootables * 100;
+        purpleScore = tempIntPurple;
+        purpleScoreP = (float)tempIntPurple / (float)mapManager.rootables * 100;
+
+
+        redText.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
         if (redScoreP >= 51)
         {
             WinnerPanel.SetActive(true);
@@ -96,7 +135,7 @@ public class ScoreKeeper : MonoBehaviour
         blueScore = tempIntBlue;
         blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
         Debug.Log(blueScoreP);
-        blueTextMeshPro.text = blueScore.ToString() + "(" + blueScoreP.ToString("F0") + "%)";
+        blueText.text = blueScore.ToString() + "(" + blueScoreP.ToString("F0") + "%)";
     }
     public void FinishGameClick()
     {

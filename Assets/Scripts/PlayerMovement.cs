@@ -21,14 +21,10 @@ public class PlayerMovement : MonoBehaviour
     public int percent;
     public GameObject treePrefab;
 
+    public ScoreKeeper sk;
     public int bioMass;
-    public TextMeshProUGUI bioMassUpdateText;
     public int energy;
-    public TextMeshProUGUI energyUpdateText;
-
     public int water; 
-    public TextMeshProUGUI waterUpdateText;
-
     public bool rooted;
 
     public int starlings;
@@ -37,58 +33,27 @@ public class PlayerMovement : MonoBehaviour
     public GameObject starlingPrefab;
     private GameObject starling;
     public bool isThereABird = false;
-    public TextMeshProUGUI starlingsCounterText;
+    
 
     private Vector3 initialPosition; // To store the initial position of the starling
 
     // Start is called before the first frame update
     public void Start()
     {
-        maxStarlings=1;
-        ss = FindAnyObjectByType<ScoutingSystem>();
-        starlingPrefab = ss.StarlingPrefab;
         mapManager = FindAnyObjectByType<MapManager>();
+        ss = FindAnyObjectByType<ScoutingSystem>();
+        rooted = false;
+        maxStarlings=1;
+        starlingPrefab = ss.StarlingPrefab;
         bioMass = 100;
         position3 = this.transform.position;
         CheckPosition();
         tileIdDestination = tileIdLocation;
         initialPosition = position3; // Set the initial position
-
-        if (energyUpdateText == null)
-        {
-            Debug.Log("Didn't find EnergyCounter Object");
-            energyUpdateText = GameObject.Find("EnergyCounter").GetComponent<TextMeshProUGUI>();
-        }
-        else
-        {
-            UpdateEnergy(51);
-        }
-
-
-        if (waterUpdateText != null)
-        {
-            UpdateWater(51);
-        }
-        else
-        {
-            
-            
-                Debug.Log(". Didn't find WaterCounter Object");
-                waterUpdateText = GameObject.Find("WaterCounter").GetComponent<TextMeshProUGUI>();
-                
-            
-        }
-       
-        if (starlingsCounterText != null)
-        {
-            UpdateStarlings(1);
-        }
-        else
-            {
-                Debug.Log("Didn't find StarlingsCounter Object");
-                starlingsCounterText = GameObject.Find("StarlingsCounter").GetComponent<TextMeshProUGUI>();
-            }
-            
+        UpdateEnergy(100);
+        UpdateWater(100);
+        UpdateStarlings(1);
+      
        
     }
 
@@ -216,11 +181,11 @@ public class PlayerMovement : MonoBehaviour
         {
             energy = bioMass;
         }
-        
 
-        if (energyUpdateText != null)
+
+        if (picked == true)
         {
-            energyUpdateText.text = energy.ToString();
+            sk.energyUpdateText.text = energy.ToString();
         }
         else
         {
@@ -254,9 +219,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (waterUpdateText != null)
+        if (picked == true)
         {
-            waterUpdateText.text = water.ToString();
+            sk.waterUpdateText.text = water.ToString();
         }
         else
         {
@@ -268,12 +233,18 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateBioMass(int actionBioMass)
     {
         bioMass += actionBioMass;
-        bioMassUpdateText.text = bioMass.ToString();
+        if (picked == true)
+        {
+            sk.bioMassUpdateText.text = bioMass.ToString();
+        }
     }
 
     public void UpdateStarlings(int addOrRemove)
     {
         starlings += addOrRemove;
-        starlingsCounterText.text = starlings + "/" + maxStarlings;
+        if (picked == true)
+        {
+            sk.starlingsCounterText.text = starlings + "/" + maxStarlings;
+        }
     }
 }

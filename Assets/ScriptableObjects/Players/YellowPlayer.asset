@@ -15,7 +15,7 @@ MonoBehaviour:
   sequence: 4
   itsName: Red
   itsDescription: Red is fire and red is blood
-  startPos: {x: 0.6666667, y: 0.2, z: -0.4330127}
+  startPos: {x: 0, y: 0.2, z: -0.8660254}
   startRot: {x: 0, y: 0, z: 0, w: 1}
   picked: 0
   Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
