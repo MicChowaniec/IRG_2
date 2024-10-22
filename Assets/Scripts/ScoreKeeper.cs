@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,48 +24,27 @@ public class ScoreKeeper : MonoBehaviour
 
     public TurnBasedSystem tbs;
 
+    
+    private int redScore;
+    private float redScoreP;
+    private int blueScore;
+    private float blueScoreP;
+    private int greenScore;
+    private float greenScoreP;
+    private int yellowScore;
+    private float yellowScoreP;
+    private int orangeScore;
+    private float orangeScoreP;
+    private int purpleScore;
+    private float purpleScoreP;
 
-    public int redScore;
-    public float redScoreP;
-    public int blueScore;
-    public float blueScoreP;
-    public int greenScore;
-    public float greenScoreP;
-    public int yellowScore;
-    public float yellowScoreP;
-    public int orangeScore;
-    public float orangeScoreP;
-    public int purpleScore;
-    public float purpleScoreP;
-
-
+    public TextMeshProUGUI winnerLabel;
     public GameObject WinnerPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        // Get the TextMeshProUGUI component from the textObject
-
-        if (redText == null)
-        {
-            Debug.LogError("TextMeshProUGUI component not found on the textObject!");
-            return;
-        }
-        else
-        {
-            redText.text = "0(0%)";
-        }
-        if (redText == null)
-        {
-            Debug.LogError("TextMeshProUGUI component not found on the textObject!");
-            return;
-        }
-        else
-        {
-            blueText.text = "0(0%)";
-        }
-
+        UpdateScore();
     }
 
 
@@ -90,7 +70,7 @@ public class ScoreKeeper : MonoBehaviour
                 {
                     tempIntBlue++;
                 }
-                else if (g.owner ==3)
+                else if (g.owner == 3)
                 {
                     tempIntGreen++;
                 }
@@ -98,7 +78,7 @@ public class ScoreKeeper : MonoBehaviour
                 {
                     tempIntYellow++;
                 }
-                else if (g.owner ==5)
+                else if (g.owner == 5)
                 {
                     tempIntOrange++;
                 }
@@ -122,20 +102,68 @@ public class ScoreKeeper : MonoBehaviour
         purpleScore = tempIntPurple;
         purpleScoreP = (float)tempIntPurple / (float)mapManager.rootables * 100;
 
-
-        redText.text = redScore.ToString() + "(" + redScoreP.ToString("F0") + "%)";
         if (redScoreP >= 51)
         {
-            WinnerPanel.SetActive(true);
-            tbs.dayUI.SetActive(false);
-            tbs.nightUI.SetActive(false);
-
+            DisplayFinish("Red");
+        }
+        else
+        {
+            redText.text = DisplayText(redScore, redScoreP);
+        }
+        if (blueScoreP >= 51)
+        {
+            DisplayFinish("Blue");
+        }
+        else
+        {
+            blueText.text = DisplayText(blueScore, blueScoreP);
+        }
+        if (greenScoreP >= 51)
+        {
+            DisplayFinish("Green");
+        }
+        {
+            greenText.text = DisplayText(greenScore, greenScoreP);
+        }
+        if (yellowScoreP >= 51)
+        {
+            DisplayFinish("Yellow");
+        }
+        else
+        {
+            yellowText.text = DisplayText(yellowScore, yellowScoreP);
+        }
+        if (orangeScoreP >= 51)
+        {
+            DisplayFinish("Orange");
+        }
+        else
+        {
+            orangeText.text = DisplayText(orangeScore, orangeScoreP);
+        }
+        if (purpleScoreP >= 51)
+        {
+            DisplayFinish("Purple");
+        }
+        else
+        {
+            purpleText.text  = DisplayText(purpleScore, purpleScoreP);
         }
 
-        blueScore = tempIntBlue;
-        blueScoreP = (float)tempIntBlue / (float)mapManager.rootables * 100;
-        Debug.Log(blueScoreP);
-        blueText.text = blueScore.ToString() + "(" + blueScoreP.ToString("F0") + "%)";
+    }
+    public string DisplayText(int i, float f)
+    {
+        
+        
+        return i+"("+f+"%)";
+    }
+
+    public void DisplayFinish(string winner)
+    {
+        winnerLabel.text = winner + " player victory!";
+        tbs.dayUI.SetActive(false);
+        tbs.nightUI.SetActive(false);
+        WinnerPanel.SetActive(true);
     }
     public void FinishGameClick()
     {

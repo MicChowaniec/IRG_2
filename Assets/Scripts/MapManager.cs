@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
 
     public GameObject sandTilePrefab;
 
-    public GameObject bushPrefab;
+    public GameObject[] bushPrefabs;
 
     public GameObject tileParent;
     public float x;
@@ -35,9 +35,6 @@ public class MapManager : MonoBehaviour
 
     [Range(1, 10)]
     public int scale;
-
-    [Range(2, 6)]
-    public int numberOfPlayers;
 
     public Player[] players;
     public int rootables;
@@ -108,7 +105,7 @@ public class MapManager : MonoBehaviour
                 else if (i == 1 && j == -2)
                 {
                     InstatiateField(grassTilePrefab, id, i, j);
-                    InstantiateBush(bushPrefab, id, i, j);
+                    InstantiateBush(bushPrefabs[2], id, i, j);
                     tiles[id].hasBush = true;
                     tiles[id].passable = false;
                 }
@@ -204,7 +201,8 @@ public class MapManager : MonoBehaviour
                         InstatiateField(grassTilePrefab, id, i, j);
                         if (rnt == rtt)
                         {
-                            InstantiateBush(bushPrefab, id, i, j);
+                            int random = new System.Random().Next(0, bushPrefabs.Length);
+                            InstantiateBush(bushPrefabs[random], id, i, j);
                             tiles[id].hasBush = true;
                             tiles[id].passable = false;
 
