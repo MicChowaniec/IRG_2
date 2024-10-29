@@ -27,6 +27,7 @@ public class TileScript : MonoBehaviour
     public TurnBasedSystem tbs;
     public bool hasBush = false;
     public bool hasAnimal = false;
+    public bool hasRock = false;
 
     private void Start()
     {

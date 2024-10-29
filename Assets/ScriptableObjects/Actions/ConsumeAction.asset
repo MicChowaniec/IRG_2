@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e4cb6346077550458bc7d3dc7433e44, type: 3}
-  m_Name: RootAction
+  m_Name: ConsumeAction
   m_EditorClassIdentifier: 
-  Name: Root
-  Description: 'Cost: 0, Root yourslef'
-  Type: 0
-  Range: 0
-  EnergyChange: 0
+  Name: Consume
+  Description: Eat or Drink whatever you click on
+  Type: 1
+  Sprite: {fileID: 0}
+  Range: 1
+  EnergyChange: -50
   WaterChange: 0
+  NeedsWaterTile: 1
+  NeedsBush: 0
   BioMassChange: 0
   Move: 0
-  TargetSelf: 1
+  TargetSelf: 0
   FireChange: 0
   StarlingChange: 0
-  Sprite: {fileID: 21300000, guid: 1706227072d5f0a44b578946f45fd404, type: 3}
+  DestroyTarget: 0
+  SingleTarget: 1
   DiseaseChange: 0
   Damage: 0

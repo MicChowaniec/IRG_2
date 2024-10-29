@@ -23,6 +23,8 @@ public class MapManager : MonoBehaviour
 
     public GameObject[] bushPrefabs;
 
+    public GameObject rockPrefab;
+
     public GameObject tileParent;
     public float x;
     public float y;
@@ -186,11 +188,18 @@ public class MapManager : MonoBehaviour
                 else
                 {
                     TileTypesEnum rtt = RandomTileType();
-                    TileTypesEnum rnt = RandomTileType();
+                   
                     if (rtt == TileTypesEnum.Rock)
                     {
                         InstatiateField(rockTilePrefab, id, i, j);
+                        if (2 > new System.Random().Next(0, 4))
+                        {
+                            //int random = new System.Random().Next(0, bushPrefabs.Length);
+                            Instantiate(rockPrefab, fieldPosition, fieldRotation, tileParent.transform);
+                            tiles[id].hasRock = true;
+                            tiles[id].passable = false;
 
+                        }
                     }
                     else if (rtt == TileTypesEnum.Sand)
                     {
@@ -199,7 +208,7 @@ public class MapManager : MonoBehaviour
                     else if (rtt == TileTypesEnum.Grass)
                     {
                         InstatiateField(grassTilePrefab, id, i, j);
-                        if (rnt == rtt)
+                        if (2 >= new System.Random().Next(0,4))
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
                             InstantiateBush(bushPrefabs[random], id, i, j);
