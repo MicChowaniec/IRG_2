@@ -70,6 +70,7 @@ public class TurnBasedSystem : MonoBehaviour
         CheckTurn();
         am.CheckTurnAndPlayer();
         scc.CenterOnObject(activePlayer);
+        activePlayer.GetComponent<VisionSystem>().ScanForVisible();
     }
     public void ChangePlayer()
     {
@@ -86,6 +87,7 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(0);
         activePlayer.GetComponent<PlayerMovement>().UpdateWater(0);
         activePlayer.GetComponent<PlayerMovement>().UpdateStarlings(0);
+        
         totalTurns++;
 
     }

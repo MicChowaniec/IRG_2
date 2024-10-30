@@ -16,6 +16,8 @@ public class GameAction : ScriptableObject
     public int WaterChange;
     public bool NeedsWaterTile;
     public bool NeedsBush;
+    public bool NeedsRock;
+    public bool NeedsTree;
     public int BioMassChange;
     public bool Move;
     public bool TargetSelf;
