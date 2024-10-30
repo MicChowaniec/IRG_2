@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2900706499041045246}
   - component: {fileID: 5164558283486041364}
   - component: {fileID: 6957211493536830559}
+  - component: {fileID: 6082841666728804916}
   m_Layer: 2
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -134,19 +135,16 @@ MonoBehaviour:
   moveSpeed: 5
   percent: 0
   treePrefab: {fileID: 0}
+  sk: {fileID: 0}
   bioMass: 0
-  bioMassUpdateText: {fileID: 0}
   energy: 0
-  energyUpdateText: {fileID: 0}
   water: 0
-  waterUpdateText: {fileID: 0}
   rooted: 1
   starlings: 0
   maxStarlings: 0
   ss: {fileID: 0}
   starlingPrefab: {fileID: 1804244517720626782, guid: afa3e7f0baa04ae469ae7816c08b88f2, type: 3}
   isThereABird: 0
-  starlingsCounterText: {fileID: 0}
 --- !u!54 &6957211493536830559
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -174,3 +172,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &6082841666728804916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8738965356391052564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4cc110069ab36448650c7382dac3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 256
+  range: 1
