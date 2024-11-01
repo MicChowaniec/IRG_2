@@ -123,28 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cd475bf55896f4187d8611f749729d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  picked: 0
-  position3: {x: 0, y: 0, z: 0}
-  seqId: 0
-  tileIdLocation: 0
-  tileIdDestination: 0
-  mapManager: {fileID: 0}
-  destination: {x: 0, y: 0}
-  doYouWantToMove: 0
-  doYouWantToFly: 0
-  moveSpeed: 5
-  percent: 0
-  treePrefab: {fileID: 0}
-  sk: {fileID: 0}
-  bioMass: 0
-  energy: 0
-  water: 0
-  rooted: 1
-  starlings: 0
-  maxStarlings: 0
-  ss: {fileID: 0}
-  starlingPrefab: {fileID: 1804244517720626782, guid: afa3e7f0baa04ae469ae7816c08b88f2, type: 3}
-  isThereABird: 0
+  speed: 0
+  destinationPosition: {x: 0, y: 0, z: 0}
 --- !u!54 &6957211493536830559
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -191,7 +171,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   range: 0.7
-  pm: {fileID: 5164558283486041364}
+  ps: {fileID: 3680375677921663303}
 --- !u!114 &3680375677921663303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +184,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806ccb5e140c39d4391e504141c33eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  picked: 0
+  position3: {x: 0, y: 0, z: 0}
+  seqId: 0
+  tileIdLocation: 0
+  tileIdDestination: 0
+  mapManager: {fileID: 0}
+  destination: {x: 0, y: 0}
+  doYouWantToMove: 0
+  doYouWantToFly: 0
+  moveSpeed: 5
+  percent: 0
+  treePrefab: {fileID: 0}
+  sk: {fileID: 0}
+  bioMass: 0
+  energy: 0
+  water: 0
+  rooted: 0
+  starlings: 0
+  maxStarlings: 0
+  ss: {fileID: 0}
+  starlingPrefab: {fileID: 0}
+  isThereABird: 0
