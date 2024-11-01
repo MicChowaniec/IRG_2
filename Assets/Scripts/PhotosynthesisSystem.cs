@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PhotosynthesisSystem : MonoBehaviour
 {
-    public PlayerMovement pm;
+    public PlayerScript ps;
     [SerializeField]
     public TurnBasedSystem tbs;
     [SerializeField]
@@ -14,15 +14,15 @@ public class PhotosynthesisSystem : MonoBehaviour
     public GameObject notEnoughWater;
     public void ClickToGrow()
     {
-        pm = tbs.activePlayer.GetComponent<PlayerMovement>();
-        if (pm.CheckForEnergy(50))
+        ps = tbs.activePlayer.GetComponent<PlayerScript>();
+        if (ps.CheckForEnergy(50))
         {
-            if (pm.CheckForWater(50))
+            if (ps.CheckForWater(50))
             {
                 tbs.activePlayer.GetComponent<Rigidbody>().AddForce(0, 1, 0,ForceMode.Impulse);
-                pm.UpdateEnergy(-50);
-                pm.UpdateWater(-50);
-                pm.UpdateBioMass(100);
+                ps.UpdateEnergy(-50);
+                ps.UpdateWater(-50);
+                ps.UpdateBioMass(100);
                 tbs.activePlayer.transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
                 
             }

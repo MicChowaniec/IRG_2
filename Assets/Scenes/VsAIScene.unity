@@ -2495,7 +2495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &723493278
 Transform:
   m_ObjectHideFlags: 0
@@ -4549,7 +4549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4597,7 +4597,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 215
+    m_Bits: 87
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5889,7 +5889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tbs: {fileID: 1697207773}
-  pm: {fileID: 0}
+  ps: {fileID: 0}
   ts: {fileID: 0}
   mm: {fileID: 631253412}
   notEnoughEnergy: {fileID: 80055550}
@@ -8803,7 +8803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73696413e608cd24f8a08ec9d5f58da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pm: {fileID: 0}
+  ps: {fileID: 0}
   tbs: {fileID: 1697207773}
   notEnoughEnergy: {fileID: 80055550}
   notEnoughWater: {fileID: 886402946}

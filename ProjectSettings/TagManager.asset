@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - VisibleTile
-  - DiscoveredTile
+  - UnknownObject
   - UnknownTile
   - 
   - 

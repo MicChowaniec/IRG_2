@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5164558283486041364}
   - component: {fileID: 6957211493536830559}
   - component: {fileID: 6082841666728804916}
+  - component: {fileID: 3680375677921663303}
   m_Layer: 2
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -131,7 +132,6 @@ MonoBehaviour:
   destination: {x: 0, y: 0}
   doYouWantToMove: 0
   doYouWantToFly: 0
-  range: 1
   moveSpeed: 5
   percent: 0
   treePrefab: {fileID: 0}
@@ -187,4 +187,20 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
-  range: 1
+  finalLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  range: 0.7
+  pm: {fileID: 5164558283486041364}
+--- !u!114 &3680375677921663303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8738965356391052564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806ccb5e140c39d4391e504141c33eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

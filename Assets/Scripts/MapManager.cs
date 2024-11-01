@@ -298,9 +298,9 @@ public class MapManager : MonoBehaviour
             
                 GameObject player = Instantiate(p.Prefab, p.startPos, p.startRot);
                 player.name = p.name;
-                player.GetComponent<PlayerMovement>().seqId = p.sequence;
+                player.GetComponent<PlayerScript>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
-                player.GetComponent<PlayerMovement>().treePrefab = p.TreePrefab;
+                player.GetComponent<PlayerScript>().treePrefab = p.TreePrefab;
                 tbs.players.Add(player);
 
 
@@ -345,11 +345,11 @@ public class MapManager : MonoBehaviour
 
             if(p != player)
             {
-                p.GetComponent<PlayerMovement>().picked = false;
+                p.GetComponent<PlayerScript>().picked = false;
             }
             else
             {
-                p.GetComponent<PlayerMovement>().picked = true;
+                p.GetComponent<PlayerScript>().picked = true;
             }
         }
     }

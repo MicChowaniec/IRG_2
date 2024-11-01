@@ -18,6 +18,7 @@ public class TileScript : MonoBehaviour
     public MapManager mapManager;
     [SerializeField]
     public Material litMaterial;
+    PlayerScript ps;
     PlayerMovement pm;
     public int activePlayer;
     public bool rootable= true;
@@ -123,6 +124,7 @@ public class TileScript : MonoBehaviour
     private void OnMouseDown()
     {
         if (Vector3.Distance(tbs.activePlayer.transform.position, transform.position) < 1) {
+
             pm = tbs.activePlayer.GetComponent<PlayerMovement>();
             if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
             {
@@ -137,15 +139,13 @@ public class TileScript : MonoBehaviour
                     if (passable == true)
                     {
                         
-                            if (pm.CheckForEnergy(50))
+                            if (ps.CheckForEnergy(50))
                             {
-                                pm.UpdateEnergy(-50);
+                                ps.UpdateEnergy(-50);
                                 Debug.Log("Click");
 
                                 //Call function "Move" from "Player Movement"
-                                pm.destination = coordinates;
-                                pm.tileIdDestination = id;
-                                pm.doYouWantToMove = true;
+                                pm.GetComponent<PlayerMovement>().Move(transform.position);
                             }
                     }
                 }
@@ -153,7 +153,7 @@ public class TileScript : MonoBehaviour
         }
         else if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
         {
-            pm = tbs.activePlayer.GetComponent<PlayerMovement>();
+            ps = tbs.activePlayer.GetComponent<PlayerScript>();
             if (IsPointerOverUI())
             {
                 OnMouseExit();
@@ -163,19 +163,19 @@ public class TileScript : MonoBehaviour
             {
                 if (hasBush == true)
                 {
-                    if (pm.starlings >= 1)
+                    if (ps.starlings >= 1)
                     {
-                        if (pm.CheckForEnergy(10))
+                        if (ps.CheckForEnergy(10))
                         {
-                            pm.UpdateEnergy(-10);
+                            ps.UpdateEnergy(-10);
 
 
                             //Call function "MoveStarling" from "Player Movement"
-                            pm.destination = coordinates;
-                            pm.tileIdDestination = id;
-                            pm.doYouWantToFly = true;
-                            pm.bioMass += 20;
-                            pm.UpdateStarlings(-1);
+                            ps.destination = coordinates;
+                            ps.tileIdDestination = id;
+                            ps.doYouWantToFly = true;
+                            ps.bioMass += 20;
+                            ps.UpdateStarlings(-1);
                         }
                     }
                 }

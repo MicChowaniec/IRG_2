@@ -12,7 +12,7 @@ public class Rooting : MonoBehaviour
     public TurnBasedSystem tbs;
     public MapManager mapManager;
     public ScoreKeeper scoreKeeper;
-    PlayerMovement pm;
+    PlayerScript ps;
 
     // Start is called before the first frame update
     void Start()
@@ -30,23 +30,23 @@ public class Rooting : MonoBehaviour
     {
 
         
-        pm= tbs.activePlayer.GetComponent<PlayerMovement>();
-        TileScript tileScript = GameObject.Find(pm.tileIdLocation.ToString()).GetComponent<TileScript>();
+        ps= tbs.activePlayer.GetComponent<PlayerScript>();
+        TileScript tileScript = GameObject.Find(ps.tileIdLocation.ToString()).GetComponent<TileScript>();
         if (tileScript.rootable == true)
         {
-            TreePrefab = pm.treePrefab;
-            GameObject tree = Instantiate(TreePrefab, pm.position3, Quaternion.identity);
+            TreePrefab = ps.treePrefab;
+            GameObject tree = Instantiate(TreePrefab, ps.position3, Quaternion.identity);
             tree.transform.localScale = tbs.activePlayer.transform.localScale;
             tileScript.rootable = false;
             tileScript.passable = false;
-            tileScript.owner = pm.seqId;
+            tileScript.owner = ps.seqId;
             foreach (int NeighbourId in tileScript.neighbours)
             {
                 tileScript = GameObject.Find(NeighbourId.ToString()).GetComponent<TileScript>();
                 tileScript.rootable = false;
                 if (tileScript.owner == 0)
                 {
-                    tileScript.owner = pm.seqId;
+                    tileScript.owner = ps.seqId;
 
 
                 }

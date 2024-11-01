@@ -84,9 +84,9 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayer = players[activePlayerIndex];
         scc.CenterOnObject(activePlayer);
         
-        activePlayer.GetComponent<PlayerMovement>().UpdateEnergy(0);
-        activePlayer.GetComponent<PlayerMovement>().UpdateWater(0);
-        activePlayer.GetComponent<PlayerMovement>().UpdateStarlings(0);
+        activePlayer.GetComponent<PlayerScript>().UpdateEnergy(0);
+        activePlayer.GetComponent<PlayerScript>().UpdateWater(0);
+        activePlayer.GetComponent<PlayerScript>().UpdateStarlings(0);
         
         totalTurns++;
 
@@ -139,9 +139,9 @@ public class TurnBasedSystem : MonoBehaviour
             am.CheckTurnAndPlayer();
             foreach(GameObject p in players)
             {
-                PlayerMovement pm = p.GetComponent<PlayerMovement>();
-                pm.UpdateEnergy((int)x);
-                pm.UpdateWater(-6);
+                PlayerScript ps = p.GetComponent<PlayerScript>();
+                ps.UpdateEnergy((int)x);
+                ps.UpdateWater(-6);
 
             }
             Debug.Log("Energy added:" + x);
@@ -163,7 +163,7 @@ public class TurnBasedSystem : MonoBehaviour
         nightUI.SetActive(false);
         dayUI.SetActive(true);
         solarPointer = 1;
-        if (activePlayer.GetComponent<PlayerMovement>().rooted == false)
+        if (activePlayer.GetComponent<PlayerScript>().rooted == true)
         {
 
             Destroy(activePlayer);

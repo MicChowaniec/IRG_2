@@ -8,7 +8,7 @@ public class WaterSystem : MonoBehaviour
 {
 
     public TurnBasedSystem tbs;
-    public PlayerMovement pm;
+    public PlayerScript ps;
     public TileScript ts;
     public MapManager mm;
     public GameObject notEnoughEnergy;
@@ -41,14 +41,14 @@ public class WaterSystem : MonoBehaviour
     }
     public void ButtonClickDrink()
     {
-        pm = tbs.activePlayer.GetComponent<PlayerMovement>();
-        ts = mm.tiles[pm.tileIdLocation];
-        if (pm.rooted == true)
+        ps = tbs.activePlayer.GetComponent<PlayerScript>();
+        ts = mm.tiles[ps.tileIdLocation];
+        if (ps.rooted == true)
         {
-            if (pm.CheckForEnergy(10))
+            if (ps.CheckForEnergy(10))
             {
-                pm.UpdateWater((GrassFieldCount() + WaterFieldCount()) * 6);
-                pm.UpdateEnergy(-10);
+                ps.UpdateWater((GrassFieldCount() + WaterFieldCount()) * 6);
+                ps.UpdateEnergy(-10);
             }
             else
             {
@@ -58,13 +58,13 @@ public class WaterSystem : MonoBehaviour
         }
         else
         {
-            if (pm.CheckForEnergy(10))
+            if (ps.CheckForEnergy(10))
             {
 
                 if (WaterFieldCount() > 0)
                 {
-                    pm.UpdateWater(50);
-                    pm.UpdateEnergy(-10);
+                    ps.UpdateWater(50);
+                    ps.UpdateEnergy(-10);
                 }
             }
             else

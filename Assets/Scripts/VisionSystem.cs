@@ -5,11 +5,17 @@ using UnityEngine;
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
+    public LayerMask finalLayer;
     public float range;
+    public PlayerScript ps;
 
     void Start()
     {
-        ScanForVisible();
+        if (ps.picked==true)
+        {
+            ScanForVisible();
+        }
+        
     }
 
     void Update()

@@ -15,14 +15,20 @@ MonoBehaviour:
   Name: 
   Description: 
   Type: 0
+  Sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
   Range: 100
   EnergyChange: -50
   WaterChange: 0
+  NeedsWaterTile: 0
+  NeedsBush: 0
+  NeedsRock: 1
+  NeedsTree: 1
   BioMassChange: 0
   Move: 0
   TargetSelf: 0
   FireChange: 0
   StarlingChange: 1
-  Sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
+  DestroyTarget: 0
+  SingleTarget: 0
   DiseaseChange: 0
   Damage: 0

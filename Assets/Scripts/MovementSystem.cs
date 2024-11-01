@@ -15,7 +15,7 @@ public class MovementSystem : MonoBehaviour
     // Start is called before the first frame update
     public void OnButtonClick()
     {
-        if (tbs.activePlayer.GetComponent<PlayerMovement>().rooted == false)
+        if (tbs.activePlayer.GetComponent<PlayerScript>().rooted == false)
         {
             movable = true;
         }
