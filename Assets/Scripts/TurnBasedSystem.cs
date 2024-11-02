@@ -46,7 +46,8 @@ public class TurnBasedSystem : MonoBehaviour
     public StrategyCameraControl scc;
 
     public ActionManager am;
-   
+
+    public int diseaseLevel;
 
     void Start()
     {
