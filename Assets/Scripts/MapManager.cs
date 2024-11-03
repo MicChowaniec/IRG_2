@@ -302,7 +302,10 @@ public class MapManager : MonoBehaviour
                 player.GetComponent<MeshRenderer>().material = p.material;
                 player.GetComponent<PlayerScript>().treePrefab = p.TreePrefab;
                 tbs.players.Add(player);
-
+            foreach(GameAction ga in p.actions)
+            {
+                player.GetComponent<PlayerScript>().UpdateActions(ga);
+            }
 
             
         }

@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionManager : MonoBehaviour
 {
-    public List<Button> PurpleButtons = new List<Button>();
-  
-    public List<Button> BlueButtons = new List<Button>();
+    public GameObject PurplePanel;
 
-    public List<Button> GreenButtons = new List<Button>();
+    public GameObject BluePanel;
 
-    public List<Button> YellowButtons = new List<Button>();
+    public GameObject GreenPanel;
 
-    public List<Button> OrangeButtons = new List<Button>();
+    public GameObject YellowPanel;
 
-    public List<Button> RedButtons = new List<Button>();
+    public GameObject OrangePanel;
+
+    public GameObject RedPanel;
 
     [SerializeField]
     TurnBasedSystem tbs;
+
+    public GameObject ButtonPrefab;
 
 
     // Start is called before the first frame update
@@ -32,94 +35,33 @@ public class ActionManager : MonoBehaviour
     {
         
     }
-
+    public void CreateButton(GameAction ga,GameObject parent)
+    {
+        GameObject go = Instantiate(ButtonPrefab, parent.transform);
+        Button button = go.GetComponent<Button>();
+        button.onClick.AddListener(ga.OnClick);
+    }
+    public void RefreshButtons(Turn turn)
+    {
+        //Add cleaning
+        foreach (GameAction ga in tbs.activePlayer.GetComponent<PlayerScript>().actions)
+        {
+            //Add all cases
+            CreateButton(ga, PurplePanel);
+        }
+    }
     public void CheckTurnAndPlayer()
     {
-        RefreshButtons();
-        if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
+        if( tbs.ActiveTurn!=null)
         {
-            
-            foreach (Button b in PurpleButtons)
-            {
-                b.interactable = true;
-            }
-
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "ThroatTurn")
-        {
- 
-            foreach (Button b in BlueButtons)
-            {
-                b.interactable = true;
-            }
-
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "HearthTurn")
-        {
-
-            foreach (Button b in GreenButtons)
-            {
-                b.interactable = true;
-            }
-
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
-        {
- 
-            foreach (Button b in YellowButtons)
-            {
-                b.interactable = true;
-            }
-
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "PowerTurn")
-        {
-
-            foreach (Button b in OrangeButtons)
-            {
-                b.interactable = true;
-            }
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "RootTurn")
-        {
-
-            foreach (Button b in RedButtons)
-            {
-                b.interactable = true;
-            }
+            RefreshButtons(tbs.ActiveTurn);
         }
         else
         {
             Debug.Log("haven't found name of the turn: " + tbs.ActiveTurn.nameOfTurn);
         }
     }
-    public void RefreshButtons()
-    {
-        foreach (Button b in PurpleButtons)
-        {
-            b.interactable = false;
-        }
-        foreach (Button b in BlueButtons)
-        {
-            b.interactable = false;
-        }
-        foreach (Button b in GreenButtons)
-        {
-            b.interactable = false;
-        }
-        foreach (Button b in YellowButtons)
-        {
-            b.interactable = false;
-        }
-        foreach (Button b in OrangeButtons)
-        {
-            b.interactable = false;
-        }
-        foreach (Button b in RedButtons)
-        {
-            b.interactable = false;
-        }
-    }
+   
 
 
 }

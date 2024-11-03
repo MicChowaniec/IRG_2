@@ -6,9 +6,11 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Action", menuName = "Add Action", order = 3)]
 public class GameAction : ScriptableObject
 {
+    
     public string Name;
     public string Description;
-    public ActionTypeEnum Type;
+    public ActionTypeEnum Type1;
+    public ActionTypeEnum Type2;
     public Sprite Sprite;
 
     public float Range;
@@ -26,5 +28,9 @@ public class GameAction : ScriptableObject
     public bool SingleTarget;
     public int DiseaseChange;
     public int Damage;
+    public void OnClick()
+    {
+        //Add Event Listener
+    }
 
 }

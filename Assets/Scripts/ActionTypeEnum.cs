@@ -9,5 +9,6 @@ public enum ActionTypeEnum
     Green,
     Yellow,
     Orange,
-    Red
+    Red,
+    None
 }

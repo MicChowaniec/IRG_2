@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
 public class Player : ScriptableObject
 {
+    public GameAction[] actions;
     public int sequence;
     public string itsName;
     public string itsDescription;

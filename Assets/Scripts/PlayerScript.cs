@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -31,6 +32,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject starling;
     public bool isThereABird = false;
 
+    public List<GameAction> actions;
+
 
     private Vector3 initialPosition; // To store the initial position of the starling
 
@@ -50,6 +53,7 @@ public class PlayerScript : MonoBehaviour
         UpdateEnergy(100);
         UpdateWater(100);
         UpdateStarlings(1);
+
 
 
     }
@@ -179,4 +183,10 @@ public class PlayerScript : MonoBehaviour
             sk.starlingsCounterText.text = starlings + "/" + maxStarlings;
         }
     }
+
+    public void UpdateActions(GameAction action)
+    {
+        actions.Add(action);
+    }
+
 }
