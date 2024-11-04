@@ -106,8 +106,8 @@ public class MapManager : MonoBehaviour
                 }
                 else if (i == 1 && j == -2)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
-                    InstantiateBush(bushPrefabs[2], id, i, j);
+                    InstatiateField(grassTilePrefab, id,i,j);
+                    InstantiateBush(bushPrefabs[2], id);
                     tiles[id].hasBush = true;
                     tiles[id].passable = false;
                 }
@@ -195,7 +195,7 @@ public class MapManager : MonoBehaviour
                         if (2 > new System.Random().Next(0, 4))
                         {
                             //int random = new System.Random().Next(0, bushPrefabs.Length);
-                            GameObject rock = Instantiate(rockPrefab, fieldPosition, fieldRotation, tiles[id].transform);
+                            GameObject rock = Instantiate(rockPrefab, tiles[id].transform);
                             rock.transform.localScale = new Vector3(1, 20, 1);
                             
                             tiles[id].hasRock = true;
@@ -213,7 +213,7 @@ public class MapManager : MonoBehaviour
                         if (2 >= new System.Random().Next(0,4))
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
-                            InstantiateBush(bushPrefabs[random], id, i, j);
+                            InstantiateBush(bushPrefabs[random], id);
                             tiles[id].hasBush = true;
                             tiles[id].passable = false;
 
@@ -278,7 +278,7 @@ public class MapManager : MonoBehaviour
         tiles.Add(id, tileScript);
 
     }
-    public void InstantiateBush(GameObject prefab, int id, int i, int j)
+    public void InstantiateBush(GameObject prefab, int id)
     {
         GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tiles[id].transform);
         bushObject.transform.localScale = new Vector3(0.5f, 20, 0.5f);

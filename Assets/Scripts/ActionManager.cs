@@ -24,37 +24,53 @@ public class ActionManager : MonoBehaviour
     public GameObject ButtonPrefab;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void CreateButton(GameAction ga,GameObject parent)
+    public void CreateButton(GameAction ga, GameObject parent)
     {
         GameObject go = Instantiate(ButtonPrefab, parent.transform);
         Button button = go.GetComponent<Button>();
         button.onClick.AddListener(ga.OnClick);
+        go.GetComponent<Image>().sprite = ga.Sprite;
     }
-    public void RefreshButtons(Turn turn)
+    public void RefreshButtons()
     {
-        //Add cleaning
+        // Dictionary to map action types to their corresponding panels
+        var panelMapping = new Dictionary<ActionTypeEnum, GameObject>
+    {
+        { ActionTypeEnum.Purple, PurplePanel },
+        { ActionTypeEnum.Blue, BluePanel },
+        { ActionTypeEnum.Green, GreenPanel },
+        { ActionTypeEnum.Yellow, YellowPanel },
+        { ActionTypeEnum.Orange, OrangePanel },
+        { ActionTypeEnum.Red, RedPanel }
+    };
+
+        // Clear existing buttons from each panel
+        foreach (var panel in panelMapping.Values)
+        {
+            foreach (Transform child in panel.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Create buttons for each action based on its action type
         foreach (GameAction ga in tbs.activePlayer.GetComponent<PlayerScript>().actions)
         {
-            //Add all cases
-            CreateButton(ga, PurplePanel);
+            if (panelMapping.TryGetValue(ga.Type1, out GameObject panel))
+            {
+                CreateButton(ga, panel);  // Create button on the corresponding panel
+            }
+            else
+            {
+                Debug.LogWarning($"Unhandled action type: {ga.Type1}");  // Log if action type has no mapped panel
+            }
         }
     }
     public void CheckTurnAndPlayer()
     {
-        if( tbs.ActiveTurn!=null)
+        if (tbs.ActiveTurn != null && tbs.activePlayer.GetComponent<Player>().picked == true)
         {
-            RefreshButtons(tbs.ActiveTurn);
+            RefreshButtons();
         }
         else
         {
