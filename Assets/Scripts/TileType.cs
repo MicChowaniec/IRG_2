@@ -9,6 +9,7 @@ public class TileType : ScriptableObject
     public TileTypesEnum type;
     public bool passable;
     public bool rootable;
+    public GameObjectTypeEnum gameObjectType;
 
 }
 

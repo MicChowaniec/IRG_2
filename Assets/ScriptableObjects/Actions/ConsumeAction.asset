@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Consume
   Description: Eat or Drink whatever you click on
-  Type: 1
-  Sprite: {fileID: 0}
+  Type1: 1
+  Type2: 1
+  Sprite: {fileID: 21300000, guid: c6bc5d4cac03250458486e0459094a0b, type: 3}
   Range: 1
   EnergyChange: -50
   WaterChange: 0
-  NeedsWaterTile: 1
-  NeedsBush: 0
+  NeedsObject: 1
+  ObjectType1: 3
+  ObjectType2: 1
   BioMassChange: 0
   Move: 0
   TargetSelf: 0

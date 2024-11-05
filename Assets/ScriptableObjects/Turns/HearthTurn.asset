@@ -15,4 +15,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6ade7236e29cd034d81724dd47beb981, type: 3}
   nameOfTurn: HearthTurn
   description: Hearth Turn
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 68d2edc715a26a54b9be654e62f7819f, type: 2}

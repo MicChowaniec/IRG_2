@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4cb6346077550458bc7d3dc7433e44, type: 3}
   m_Name: ScoutAction
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  Type: 0
+  Name: Scout
+  Description: Set scout on a rock or tree to enhance vision.
+  Type1: 0
+  Type2: 0
   Sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
   Range: 100
   EnergyChange: -50
   WaterChange: 0
-  NeedsWaterTile: 0
-  NeedsBush: 0
-  NeedsRock: 1
-  NeedsTree: 1
+  NeedsObject: 0
+  ObjectType1: 0
+  ObjectType2: 2
   BioMassChange: 0
   Move: 0
   TargetSelf: 0
   FireChange: 0
-  StarlingChange: 1
+  StarlingChange: -1
   DestroyTarget: 0
-  SingleTarget: 0
+  SingleTarget: 1
   DiseaseChange: 0
   Damage: 0

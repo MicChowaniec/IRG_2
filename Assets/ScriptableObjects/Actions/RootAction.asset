@@ -13,16 +13,22 @@ MonoBehaviour:
   m_Name: RootAction
   m_EditorClassIdentifier: 
   Name: Root
-  Description: 'Cost: 0, Root yourslef'
-  Type: 0
+  Description: Root yourslef
+  Type1: 5
+  Type2: 5
+  Sprite: {fileID: 21300000, guid: 1706227072d5f0a44b578946f45fd404, type: 3}
   Range: 0
   EnergyChange: 0
   WaterChange: 0
+  NeedsObject: 0
+  ObjectType1: 4
+  ObjectType2: 4
   BioMassChange: 0
   Move: 0
   TargetSelf: 1
   FireChange: 0
   StarlingChange: 0
-  Sprite: {fileID: 21300000, guid: 1706227072d5f0a44b578946f45fd404, type: 3}
+  DestroyTarget: 0
+  SingleTarget: 0
   DiseaseChange: 0
   Damage: 0

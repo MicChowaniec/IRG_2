@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0881f80970c4533498f8eb2afdf81333, type: 3}
   m_Name: SandTile
   m_EditorClassIdentifier: 
-  i: 0
-  j: 0
   type: 2
   passable: 1
   rootable: 1
+  gameObjectType: 4

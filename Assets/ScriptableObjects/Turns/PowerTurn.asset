@@ -15,4 +15,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0190f9cecb113dc4d9602aa302ea3d08, type: 3}
   nameOfTurn: PowerTurn
   description: Be aggressive
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 37538f4346eb5fd4684156b2bc66d0a3, type: 2}

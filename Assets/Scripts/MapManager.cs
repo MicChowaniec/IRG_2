@@ -42,7 +42,7 @@ public class MapManager : MonoBehaviour
     public int rootables;
 
     public TurnBasedSystem tbs;
-
+    
     public GameObject assistant;
 
 
@@ -108,7 +108,7 @@ public class MapManager : MonoBehaviour
                 {
                     InstatiateField(grassTilePrefab, id,i,j);
                     InstantiateBush(bushPrefabs[2], id);
-                    tiles[id].hasBush = true;
+                    tiles[id].gote=GameObjectTypeEnum.Bush;
                     tiles[id].passable = false;
                 }
                 else
@@ -214,7 +214,7 @@ public class MapManager : MonoBehaviour
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
                             InstantiateBush(bushPrefabs[random], id);
-                            tiles[id].hasBush = true;
+                            tiles[id].gote = GameObjectTypeEnum.Bush;
                             tiles[id].passable = false;
 
                         }
@@ -301,6 +301,7 @@ public class MapManager : MonoBehaviour
                 player.GetComponent<PlayerScript>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
                 player.GetComponent<PlayerScript>().treePrefab = p.TreePrefab;
+                player.GetComponent<PlayerScript>().picked= p.picked;
                 tbs.players.Add(player);
             foreach(GameAction ga in p.actions)
             {

@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: BluePlayer
   m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 2dbd0b0777d1b52479cbbce19f2d5f42, type: 2}
+  - {fileID: 11400000, guid: d4f2a2b989ffc404dbd717c04fd53df0, type: 2}
+  - {fileID: 11400000, guid: 68d2edc715a26a54b9be654e62f7819f, type: 2}
+  - {fileID: 11400000, guid: d6d65fa3b8b43394495393f71a34b278, type: 2}
+  - {fileID: 11400000, guid: 37538f4346eb5fd4684156b2bc66d0a3, type: 2}
+  - {fileID: 11400000, guid: 504f4be5877224c48b6682aee5b16970, type: 2}
   sequence: 2
   itsName: Blue
   itsDescription: Blue is water and speach related

@@ -26,8 +26,7 @@ public class TileScript : MonoBehaviour
     public MovementSystem ms;
     public ScoutingSystem ss;
     public TurnBasedSystem tbs;
-    public bool hasBush = false;
-    public bool hasAnimal = false;
+    public GameObjectTypeEnum gote;
     public bool hasRock = false;
 
     private void Start()
@@ -161,7 +160,7 @@ public class TileScript : MonoBehaviour
             }
             if (ss.canYouFly == true)
             {
-                if (hasBush == true)
+                if (gote == GameObjectTypeEnum.Bush)
                 {
                     if (ps.starlings >= 1)
                     {
@@ -169,7 +168,7 @@ public class TileScript : MonoBehaviour
                         {
                             ps.UpdateEnergy(-10);
 
-
+                            //TODO: change it
                             //Call function "MoveStarling" from "Player Movement"
                             ps.destination = coordinates;
                             ps.tileIdDestination = id;

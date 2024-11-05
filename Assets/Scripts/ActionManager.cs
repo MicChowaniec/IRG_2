@@ -68,7 +68,7 @@ public class ActionManager : MonoBehaviour
     }
     public void CheckTurnAndPlayer()
     {
-        if (tbs.ActiveTurn != null && tbs.activePlayer.GetComponent<Player>().picked == true)
+        if (tbs.ActiveTurn != null && tbs.activePlayer.GetComponent<PlayerScript>().picked == true)
         {
             RefreshButtons();
         }

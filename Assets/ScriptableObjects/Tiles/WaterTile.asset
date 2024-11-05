@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0881f80970c4533498f8eb2afdf81333, type: 3}
   m_Name: WaterTile
   m_EditorClassIdentifier: 
-  i: 0
-  j: 0
   type: 3
   passable: 0
   rootable: 0
+  gameObjectType: 3
