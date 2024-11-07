@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public bool picked;
-
+    public int soulLvl;
     public Vector3 position3;
     public int seqId;
     public int tileIdLocation;
@@ -28,14 +28,13 @@ public class PlayerScript : MonoBehaviour
     public int starlings;
     public int maxStarlings;
     public ScoutingSystem ss;
-    public GameObject starlingPrefab;
-    private GameObject starling;
+
     public bool isThereABird = false;
 
     public List<GameAction> actions;
 
 
-    private Vector3 initialPosition; // To store the initial position of the starling
+
 
     // Start is called before the first frame update
     public void Start()
@@ -44,12 +43,10 @@ public class PlayerScript : MonoBehaviour
         ss = FindAnyObjectByType<ScoutingSystem>();
         rooted = false;
         maxStarlings = 1;
-        starlingPrefab = ss.StarlingPrefab;
         bioMass = 100;
         position3 = this.transform.position;
         CheckPosition();
         tileIdDestination = tileIdLocation;
-        initialPosition = position3; // Set the initial position
         UpdateEnergy(100);
         UpdateWater(100);
         UpdateStarlings(1);
@@ -58,12 +55,8 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
+ 
+   
 
     public void CheckPosition()
     {
