@@ -47,7 +47,49 @@ public class ScoreKeeper : MonoBehaviour
         UpdateScore();
     }
 
+    public void UpdateResources(int energy, int water, int biomass, int starling, int disease)
+    {
+        PlayerScript ps = tbs.activePlayer.GetComponent<PlayerScript>();
+        if (ps.energy + energy >= 0)
+        {
+            if (ps.water + water >= 0)
+            {
+                if (ps.bioMass + biomass >= 0)
+                {
+                    if (ps.starlings + starling >= 0)
+                    {
+                        ps.energy += energy;
+                        ps.water += water;
+                        ps.starlings += starling;
+                        ps.bioMass += biomass;
+                    }
+                    else
+                    {
+                        PopUpPanel.RaisePopUpPanel("Not Enough Of Starlings");
+                    }
+                }
+                else
+                {
+                    PopUpPanel.RaisePopUpPanel("Not Enough Of Biomass");
+                }
 
+            }
+            else
+            {
+                PopUpPanel.RaisePopUpPanel("Not Enough Of Water");
+            }
+
+
+
+
+
+        }
+        else
+        {
+            PopUpPanel.RaisePopUpPanel("Not Enough Of Energy");
+        }
+        tbs.diseaseLevel += disease;
+    }
     public void UpdateScore()
     {
 

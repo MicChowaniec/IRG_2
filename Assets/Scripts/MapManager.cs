@@ -301,8 +301,9 @@ public class MapManager : MonoBehaviour
                 player.GetComponent<PlayerScript>().seqId = p.sequence;
                 player.GetComponent<MeshRenderer>().material = p.material;
                 player.GetComponent<PlayerScript>().treePrefab = p.TreePrefab;
-                player.GetComponent<PlayerScript>().picked= p.picked;
-                tbs.players.Add(player);
+                player.GetComponent<PlayerScript>().picked = p.picked;
+            tbs.pickedPlayer = player;
+            tbs.players.Add(player);
             foreach(GameAction ga in p.actions)
             {
                 player.GetComponent<PlayerScript>().UpdateActions(ga);

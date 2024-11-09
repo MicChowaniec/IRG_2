@@ -36,10 +36,7 @@ public class TileScript : MonoBehaviour
         ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();
     }
-    void Update()
-    {
-
-    }
+   
     public void AddNeighbours()
     {
         

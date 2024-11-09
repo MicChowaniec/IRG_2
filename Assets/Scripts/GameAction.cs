@@ -28,9 +28,13 @@ public class GameAction : ScriptableObject
     public bool SingleTarget;
     public int DiseaseChange;
     public int Damage;
-    public void OnClick()
+    public void Execute()
     {
         //Add Event Listener
+    }
+    public void OnClick()
+    {
+
     }
 
 }

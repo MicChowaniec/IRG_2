@@ -21,10 +21,6 @@ public class Rooting : MonoBehaviour
         Root(Vector2.zero);
     }
 
-    private void Update()
-    {
-
-    }
 
     public void Root()
     {

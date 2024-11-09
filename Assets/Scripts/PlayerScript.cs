@@ -33,6 +33,8 @@ public class PlayerScript : MonoBehaviour
 
     public List<GameAction> actions;
 
+    public List<GameObject> visibleTiles;
+
 
 
 

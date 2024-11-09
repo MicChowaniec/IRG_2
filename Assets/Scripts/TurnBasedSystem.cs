@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,6 +13,7 @@ public class TurnBasedSystem : MonoBehaviour
     public Turn ActiveTurn; // Property to access the active turn
     public int activeTurnIndex; //Value between 0 and Length of turns
     private int numberOfTurns;
+    public ScoreKeeper scoreKeeper;
 
     private int solarPointer;
     private int solarMaximum;
@@ -30,6 +32,7 @@ public class TurnBasedSystem : MonoBehaviour
 
     public List<GameObject> players;
     public GameObject activePlayer;
+    public GameObject pickedPlayer;
     private int numberOfPlayers;
     private int activePlayerIndex;
 
@@ -70,7 +73,7 @@ public class TurnBasedSystem : MonoBehaviour
         activePlayer = players[activePlayerIndex];
         CheckTurn();
         am.CheckTurnAndPlayer();
-        scc.CenterOnObject(activePlayer);
+        scc.CenterOnObject(pickedPlayer);
         activePlayer.GetComponent<VisionSystem>().ScanForVisible();
     }
     public void ChangePlayer()
@@ -83,12 +86,19 @@ public class TurnBasedSystem : MonoBehaviour
         }
         activePlayerIndex = (activePlayerIndex + 1) % numberOfPlayers;
         activePlayer = players[activePlayerIndex];
-        scc.CenterOnObject(activePlayer);
-        
-        activePlayer.GetComponent<PlayerScript>().UpdateEnergy(0);
-        activePlayer.GetComponent<PlayerScript>().UpdateWater(0);
-        activePlayer.GetComponent<PlayerScript>().UpdateStarlings(0);
-        
+        if (activePlayer.GetComponent<PlayerScript>().picked==true)
+        {
+            scc.CenterOnObject(pickedPlayer);
+            
+            activePlayer.GetComponent<PlayerScript>().UpdateEnergy(0);
+            activePlayer.GetComponent<PlayerScript>().UpdateWater(0);
+            activePlayer.GetComponent<PlayerScript>().UpdateStarlings(0);
+            activePlayer.GetComponent<PlayerScript>().UpdateBioMass(0);
+           // activePlayer.GetComponent<PlayerScript>().UpdateStarlings();
+        }
+
+
+
         totalTurns++;
 
     }

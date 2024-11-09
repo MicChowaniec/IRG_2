@@ -18,9 +18,13 @@ public class SelectionScript : MonoBehaviour
     private int displayedPlayerIndex;
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         displayedPlayerIndex = 0;
         displayedPlayer = players[displayedPlayerIndex];
+        foreach (Player p in players)
+        {
+            p.picked= false;
+        }
     }
 
     public void OnClickPick()
