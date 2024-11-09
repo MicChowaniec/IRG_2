@@ -8,7 +8,7 @@ public class MusicManager : MonoBehaviour
     {
         if (audioSource != null)
         {
-            audioSource.Play(); // Play the music at the start
+            //audioSource.Play(); // Play the music at the start
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,13 @@ public class ActionManager : MonoBehaviour
         Button button = go.GetComponent<Button>();
         button.onClick.AddListener(ga.OnClick);
         go.GetComponent<Image>().sprite = ga.Sprite;
+        TMP_Text buttonText = go.GetComponentInChildren<TMP_Text>();
+        buttonText.text = ga.Name;
+        if (ga.Type1 == tbs.ActiveTurn.actionType)
+        {
+            button.enabled = true;
+        }
+
     }
     public void RefreshButtons()
     {
@@ -59,6 +67,7 @@ public class ActionManager : MonoBehaviour
             if (panelMapping.TryGetValue(ga.Type1, out GameObject panel))
             {
                 CreateButton(ga, panel);  // Create button on the corresponding panel
+               
             }
             else
             {
@@ -68,7 +77,8 @@ public class ActionManager : MonoBehaviour
     }
     public void CheckTurnAndPlayer()
     {
-        if (tbs.ActiveTurn != null && tbs.activePlayer.GetComponent<PlayerScript>().picked == true)
+        
+        if (tbs.activePlayer.GetComponent<PlayerScript>().picked == true)
         {
             RefreshButtons();
         }
