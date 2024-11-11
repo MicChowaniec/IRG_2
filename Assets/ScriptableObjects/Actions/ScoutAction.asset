@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: Set scout on a rock or tree to enhance vision.
   Type1: 0
   Type2: 0
-  Sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
+  Sprite: {fileID: 21300000, guid: bc1f1b3d5e29ed8459b68ec57ad94adb, type: 3}
   Range: 100
   EnergyChange: -50
   WaterChange: 0

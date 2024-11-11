@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ActionManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class ActionManager : MonoBehaviour
     TurnBasedSystem tbs;
 
     public GameObject ButtonPrefab;
+
+
 
 
     public void CreateButton(GameAction ga, GameObject parent)
@@ -80,13 +83,15 @@ public class ActionManager : MonoBehaviour
         
         if (tbs.activePlayer.GetComponent<PlayerScript>().picked == true)
         {
-            RefreshButtons();
+            
         }
         else
         {
             Debug.Log("haven't found name of the turn: " + tbs.ActiveTurn.nameOfTurn);
         }
     }
+
+ 
    
 
 

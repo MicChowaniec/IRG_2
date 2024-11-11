@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class ScoutingSystem : MonoBehaviour
 {
+    public static Action OnScoutingSystem;
+
     public GameObject StarlingPrefab;
     public bool canYouFly = false;
     private GameObject starling;
@@ -14,11 +16,7 @@ public class ScoutingSystem : MonoBehaviour
         starling = Instantiate(StarlingPrefab);
 
     }
-    public void ClickOnTileToFly(Vector3 destination)
-    {
-        starling.GetComponent<ScoutingMovement>().Move(destination);
-        starling.GetComponent<VisionSystem>().ScanForVisible();
-    }
+    
 
 
 }

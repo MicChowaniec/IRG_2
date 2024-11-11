@@ -15,5 +15,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: ccd38a6b262a1da4a8ec19546b2cb9d4, type: 3}
   nameOfTurn: SolarTurn
   description: 'Sun gives you energy. '
+  actionType: 3
   actions:
   - {fileID: 11400000, guid: d6d65fa3b8b43394495393f71a34b278, type: 2}
