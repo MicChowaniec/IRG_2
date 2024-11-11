@@ -11,20 +11,17 @@ public class VisionSystem : MonoBehaviour
 
     void Start()
     {
-        if (ps.picked==true)
+        if (ps.human==true)
         {
             ScanForVisible();
         }
         
     }
 
-    void Update()
-    {
-
-    }
 
     public void ScanForVisible()
     {
+        //Consider using OverlapSpehereNonAlloc
         Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
 
         foreach (Collider hit in hits)

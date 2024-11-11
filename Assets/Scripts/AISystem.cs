@@ -12,7 +12,7 @@ public class AISystem : MonoBehaviour
     public void AIBehaviour(ActionTypeEnum ate)
     {
 
-        if (activePlayer.GetComponent<PlayerScript>().picked == false)
+        if (activePlayer.GetComponent<PlayerScript>().human == false)
         {
             List<GameAction> possibilities = new List<GameAction>();
 

@@ -86,7 +86,7 @@ public class TurnBasedSystem : MonoBehaviour
         }
         activePlayerIndex = (activePlayerIndex + 1) % numberOfPlayers;
         activePlayer = players[activePlayerIndex];
-        if (activePlayer.GetComponent<PlayerScript>().picked==true)
+        if (activePlayer.GetComponent<PlayerScript>().human ==true)
         {
             scc.CenterOnObject(pickedPlayer);
             

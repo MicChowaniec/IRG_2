@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public bool picked;
+    public bool human;
     public int soulLvl;
     public Vector3 position3;
     public int seqId;
@@ -114,7 +114,7 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-        if (picked == true)
+        if (human == true)
         {
             sk.energyUpdateText.text = energy.ToString();
         }
@@ -150,7 +150,7 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-        if (picked == true)
+        if (human == true)
         {
             sk.waterUpdateText.text = water.ToString();
         }
@@ -164,7 +164,7 @@ public class PlayerScript : MonoBehaviour
     public void UpdateBioMass(int actionBioMass)
     {
         bioMass += actionBioMass;
-        if (picked == true)
+        if (human == true)
         {
             sk.bioMassUpdateText.text = bioMass.ToString();
         }
@@ -173,7 +173,7 @@ public class PlayerScript : MonoBehaviour
     public void UpdateStarlings(int addOrRemove)
     {
         starlings += addOrRemove;
-        if (picked == true)
+        if (human == true)
         {
             sk.starlingsCounterText.text = starlings + "/" + maxStarlings;
         }

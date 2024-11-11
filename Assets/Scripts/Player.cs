@@ -11,7 +11,7 @@ public class Player : ScriptableObject
     public string itsDescription;
     public Vector3 startPos;
     public Quaternion startRot = Quaternion.identity;
-    public bool picked = false;
+    public bool human = false;
     public GameObject Prefab;
     public GameObject TreePrefab;
     public Material material;

@@ -23,13 +23,13 @@ public class SelectionScript : MonoBehaviour
         displayedPlayer = players[displayedPlayerIndex];
         foreach (Player p in players)
         {
-            p.picked= false;
+            p.human= false;
         }
     }
 
     public void OnClickPick()
     {
-        displayedPlayer.picked = true;
+        displayedPlayer.human = true;
         SceneManager.LoadScene("VsAIScene");
     }
     public void OnClickNext()

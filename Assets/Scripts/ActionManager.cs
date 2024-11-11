@@ -81,7 +81,7 @@ public class ActionManager : MonoBehaviour
     public void CheckTurnAndPlayer()
     {
         
-        if (tbs.activePlayer.GetComponent<PlayerScript>().picked == true)
+        if (tbs.activePlayer.GetComponent<PlayerScript>().human == true)
         {
             
         }

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 [CreateAssetMenu(fileName = "Action", menuName = "Add Action", order = 3)]
 public class GameAction : ScriptableObject
 {
-    
+    public static Action<string> Skill { get; private set; }
+
     public string Name;
     public string Description;
     public ActionTypeEnum Type1;
@@ -34,7 +36,7 @@ public class GameAction : ScriptableObject
     }
     public void OnClick()
     {
-
+        Skill.Invoke(Name);
     }
 
 }
