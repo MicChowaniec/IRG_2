@@ -32,7 +32,7 @@ public class GameAction : ScriptableObject
     public int Damage;
     public void Execute()
     {
-        //Add Event Listener
+        Skill.Invoke(Name);
     }
     public void OnClick()
     {
