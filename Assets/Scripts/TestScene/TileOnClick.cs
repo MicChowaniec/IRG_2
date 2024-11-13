@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class EventTrigger : MonoBehaviour
+public class TileOnClick : MonoBehaviour
 {
-    public static event Action Skill;
-
     public void OnMouseDown()
     {
-        Skill?.Invoke();
+        GetComponentInChildren<TileOnClick>().enabled = true;
     }
-
 }
