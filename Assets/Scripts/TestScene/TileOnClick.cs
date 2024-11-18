@@ -6,6 +6,11 @@ public class TileOnClick : MonoBehaviour
 {
     public void OnMouseDown()
     {
-        GetComponentInChildren<TileOnClick>().enabled = true;
+        
+        Transform childTransform = transform.Find("Canvas"); 
+        if (childTransform != null)
+        {
+            childTransform.gameObject.SetActive(true);
+        }
     }
 }
