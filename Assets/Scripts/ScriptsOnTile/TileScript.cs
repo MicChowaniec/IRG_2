@@ -21,7 +21,7 @@ public class TileScript : MonoBehaviour
     PlayerScript ps;
     PlayerMovement pm;
     public int activePlayer;
-    public bool rootable= true;
+    public bool rootable = true;
     public bool passable = true;
     public MovementSystem ms;
     public ScoutingSystem ss;
@@ -36,11 +36,11 @@ public class TileScript : MonoBehaviour
         ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();
     }
-   
+
     public void AddNeighbours()
     {
-        
-        for (int i = -1;i<2;i++)
+
+        for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
             {
@@ -58,17 +58,17 @@ public class TileScript : MonoBehaviour
                         neighbours.Add(neighborId);
                     }
                 }
-                
+
             }
         }
     }
     public int Neighbour(int i, int j)
     {
         int tempId;
-        Vector2 vectorTemp = new Vector2(0,0);
+        Vector2 vectorTemp = new Vector2(0, 0);
         if (mapManager == null)
         {
-            
+
             return -1;
         }
 
@@ -85,105 +85,18 @@ public class TileScript : MonoBehaviour
         {
             vectorTemp = ijCoordinates + new Vector2(i, j);
         }
-        
+
 
         if (mapManager.posAndIds.TryGetValue(vectorTemp, out tempId))
         {
 
             return tempId;
-        }     
+        }
         else
         {
-            return -1; 
+            return -1;
         }
     }
-    private void OnMouseOver()
-    {
-        if (IsPointerOverUI())
-        {
-            OnMouseExit();
-            return; // Exit early if over UI
-        }
-        Material[] materials = new Material[2];
-        materials[0] = this.GetComponent<MeshRenderer>().material;
-        materials[1] = litMaterial;
-        this.GetComponent<MeshRenderer>().materials = materials;
-    }
-    private void OnMouseExit()
-    {
-
-        Material[] materials = new Material[1];
-        materials[0] = this.GetComponent<MeshRenderer>().material;
-        this.GetComponent<MeshRenderer>().materials = materials;
-    }
-
-    private void OnMouseDown()
-    {
-        if (Vector3.Distance(tbs.activePlayer.transform.position, transform.position) < 1) {
-
-            pm = tbs.activePlayer.GetComponent<PlayerMovement>();
-            if (tbs.ActiveTurn.nameOfTurn == "SolarTurn")
-            {
-                if (ms.movable == true)
-                {
-                    if (IsPointerOverUI())
-                    {
-                        OnMouseExit();
-                        return; // Exit early if over UI
-                    }
-                    //TODO add other players to move.
-                    if (passable == true)
-                    {
-                        
-                            if (ps.CheckForEnergy(50))
-                            {
-                                ps.UpdateEnergy(-50);
-                                Debug.Log("Click");
-
-                                //Call function "Move" from "Player Movement"
-                                pm.GetComponent<PlayerMovement>().Move(transform.position);
-                            }
-                    }
-                }
-            }
-        }
-        else if (tbs.ActiveTurn.nameOfTurn == "ThirdEyeTurn")
-        {
-            ps = tbs.activePlayer.GetComponent<PlayerScript>();
-            if (IsPointerOverUI())
-            {
-                OnMouseExit();
-                return; // Exit early if over UI
-            }
-            if (ss.canYouFly == true)
-            {
-                if (gote == GameObjectTypeEnum.Bush)
-                {
-                    if (ps.starlings >= 1)
-                    {
-                        if (ps.CheckForEnergy(10))
-                        {
-                            ps.UpdateEnergy(-10);
-
-                            //TODO: change it
-                            //Call function "MoveStarling" from "Player Movement"
-                            ps.destination = coordinates;
-                            ps.tileIdDestination = id;
-                            ps.doYouWantToFly = true;
-                            ps.bioMass += 20;
-                            ps.UpdateStarlings(-1);
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-    private bool IsPointerOverUI()
-    {
-        return EventSystem.current.IsPointerOverGameObject();
-    }
-
 }
 
 

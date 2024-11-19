@@ -61,6 +61,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -113,8 +116,7 @@ MonoBehaviour:
   ms: {fileID: 0}
   ss: {fileID: 0}
   tbs: {fileID: 0}
-  hasBush: 0
-  hasAnimal: 0
+  gote: 4
   hasRock: 0
 --- !u!64 &618323466898441428
 MeshCollider:
