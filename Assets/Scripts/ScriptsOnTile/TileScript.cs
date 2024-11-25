@@ -97,6 +97,20 @@ public class TileScript : MonoBehaviour
             return -1;
         }
     }
+    public void Highlight()
+    {
+        Material[] materials = new Material[2];
+        materials[0] = this.GetComponent<MeshRenderer>().material;
+        materials[1] = litMaterial;
+        this.GetComponent<MeshRenderer>().materials = materials;
+    }
+    public void StopHighlight()
+    {
+
+        Material[] materials = new Material[1];
+        materials[0] = this.GetComponent<MeshRenderer>().material;
+        this.GetComponent<MeshRenderer>().materials = materials;
+    }
 }
 
 
