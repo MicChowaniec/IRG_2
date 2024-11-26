@@ -7,13 +7,16 @@ public class UIWithButtonsListener : MonoBehaviour, IPointerExitHandler
     private void OnEnable()
     {
         // Subscribe to the Skill event
+        OnClickTile.OnClick -=DisableAllChildren;
         OnClickTile.OnClick += EnableAllChildren;
+
 
     }
 
     private void OnDisable()
     {
         // Unsubscribe from the Skill event
+        OnClickTile.OnClick += DisableAllChildren;
         OnClickTile.OnClick -= EnableAllChildren;
     }
 
@@ -24,20 +27,16 @@ public class UIWithButtonsListener : MonoBehaviour, IPointerExitHandler
         this.transform.GetChild(0).gameObject.SetActive(true);
         this.transform.position = position;
     }
-    public void DisableAllChildren()
+    public void DisableAllChildren(Vector3 position)
     {
         this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    private void SetPositionToPointer(Vector2 mousePosition)
-    {
-        mousePosition = Input.mousePosition;
-        this.transform.position = mousePosition;
-    }
+   
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        DisableAllChildren();
+        DisableAllChildren(Vector3.zero);
     }
 
 

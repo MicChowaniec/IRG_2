@@ -56,13 +56,13 @@ public class MapManager : MonoBehaviour
         if (sizeOfMap > 3)
         {
             CreateMap(sizeOfMap);
-            AllocatePlayers();
+
             Debug.Log(sizeOfMap);
         }
         else if (sizeOfMap==3)
         {
             CreateTutorialMap();
-            AllocatePlayers();
+
             assistant.SetActive(true);
             Debug.Log(sizeOfMap);
         }
@@ -290,29 +290,7 @@ public class MapManager : MonoBehaviour
     /// Allocating number of players
     /// </summary>
     /// <param name="numPlayers"></param>
-    public void AllocatePlayers()
-    {
-
-        foreach (Player p in players)
-        {
-            
-                GameObject player = Instantiate(p.Prefab, p.startPos, p.startRot);
-                player.name = p.name;
-                player.GetComponent<PlayerScript>().seqId = p.sequence;
-                player.GetComponent<MeshRenderer>().material = p.material;
-                player.GetComponent<PlayerScript>().treePrefab = p.TreePrefab;
-                player.GetComponent<PlayerScript>().human = p.human;
-            tbs.pickedPlayer = player;
-            tbs.players.Add(player);
-            foreach(GameAction ga in p.actions)
-            {
-                player.GetComponent<PlayerScript>().UpdateActions(ga);
-            }
-
-            
-        }
-        tbs.Prepare();
-    }
+   
     /// <summary>
     /// Clearing information about fields where current player stands, except given one
     /// </summary>

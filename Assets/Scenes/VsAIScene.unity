@@ -290,6 +290,18 @@ MonoBehaviour:
   redText: {fileID: 1326070642}
   mapManager: {fileID: 631253412}
   tbs: {fileID: 1697207773}
+  redScore: 0
+  redScoreP: 0
+  blueScore: 0
+  blueScoreP: 0
+  greenScore: 0
+  greenScoreP: 0
+  yellowScore: 0
+  yellowScoreP: 0
+  orangeScore: 0
+  orangeScoreP: 0
+  purpleScore: 0
+  purpleScoreP: 0
   winnerLabel: {fileID: 2044739965}
   WinnerPanel: {fileID: 1413346970}
 --- !u!1 &218120759
@@ -3902,7 +3914,7 @@ GameObject:
   - component: {fileID: 1024903163}
   - component: {fileID: 1024903162}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TurnIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6398,58 +6410,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599934340}
   m_CullTransparentMesh: 1
---- !u!1 &1607636495
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607636496}
-  - component: {fileID: 1607636497}
-  m_Layer: 0
-  m_Name: ActionManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1607636496
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607636495}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 389.25, y: 331.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1607636497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607636495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6eb6485b927dea4ba70ebf1fb7a98a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PurplePanel: {fileID: 1788932440}
-  BluePanel: {fileID: 2087760531}
-  GreenPanel: {fileID: 418746512}
-  YellowPanel: {fileID: 817292276}
-  OrangePanel: {fileID: 1585894396}
-  RedPanel: {fileID: 2142114372}
-  tbs: {fileID: 1697207773}
-  ButtonPrefab: {fileID: 6100123718318728756, guid: 8a9eefccea1c10941b364f0cd43a93c2, type: 3}
 --- !u!1 &1620855338
 GameObject:
   m_ObjectHideFlags: 0
@@ -6749,6 +6709,58 @@ MonoBehaviour:
   PlayerTalks: {fileID: 1667477999}
   btn: {fileID: 740210146}
   scenario: 0
+--- !u!1 &1655148545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655148546}
+  - component: {fileID: 1655148547}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1655148546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655148545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 389.25, y: 331.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1655148547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655148545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78a186f2777ccb4881424ebca4c2505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tbs: {fileID: 1697207773}
+  players:
+  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
+  - {fileID: 11400000, guid: fdf8d22f78bde194b962d7faa8d9b6b7, type: 2}
+  - {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
+  - {fileID: 11400000, guid: e9a6d584ace65ee47859add22f65e8a7, type: 2}
+  - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
+  - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
 --- !u!1 &1667477997
 GameObject:
   m_ObjectHideFlags: 0
@@ -6938,7 +6950,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
   ActiveTurn: {fileID: 0}
   activeTurnIndex: 0
-  scoreKeeper: {fileID: 0}
   step: 15
   dayUI: {fileID: 576203490}
   nightUI: {fileID: 91447564}
@@ -6950,7 +6961,6 @@ MonoBehaviour:
   totalTurns: 0
   image: {fileID: 1024903162}
   scc: {fileID: 963194229}
-  am: {fileID: 1607636497}
   diseaseLevel: 0
 --- !u!1 &1720341627
 GameObject:
@@ -9666,8 +9676,8 @@ SceneRoots:
   - {fileID: 91447569}
   - {fileID: 850136775}
   - {fileID: 193148307}
-  - {fileID: 1607636496}
   - {fileID: 1560448888}
   - {fileID: 1637323969}
   - {fileID: 723493278}
   - {fileID: 872610211}
+  - {fileID: 1655148546}

@@ -24,14 +24,14 @@ public class TileScript : MonoBehaviour
     public bool rootable = true;
     public bool passable = true;
     public MovementSystem ms;
-    public ScoutingSystem ss;
+
     public TurnBasedSystem tbs;
     public GameObjectTypeEnum gote;
     public bool hasRock = false;
 
     private void Start()
     {
-        ss = FindAnyObjectByType<ScoutingSystem>();
+  
         tbs = FindAnyObjectByType<TurnBasedSystem>();
         ms = FindAnyObjectByType<MovementSystem>();
         mapManager = FindAnyObjectByType<MapManager>();

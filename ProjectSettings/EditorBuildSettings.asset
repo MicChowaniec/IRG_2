@@ -20,4 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VsAIScene.unity
     guid: 9f9f43d3d3610544d8ce5112097ec4a0
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: a025bf60b7007d646851986c32a52109
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

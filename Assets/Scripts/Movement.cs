@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Movement : MonoBehaviour, IMovement
+public abstract class Movement : MonoBehaviour
 {
     public float speed;
     protected Vector3 startingPosition;
     public Vector3 destinationPosition;
     
-    public void Update() { }
 
     public void Move(Vector3 destination)
     {
