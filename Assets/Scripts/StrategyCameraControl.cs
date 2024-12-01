@@ -1,5 +1,6 @@
 using UnityEngine; // Import the Unity Engine namespace for MonoBehaviour and related classes
 using System.Collections;
+using Unity.VisualScripting;
 
 public class StrategyCameraControl : MonoBehaviour // Define a public class named StrategyCameraControl inheriting from MonoBehaviour
 {
@@ -18,8 +19,6 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     private Camera cam; // Reference to the Camera component
     private bool isSpacePressed = false; // Boolean to track if the space key is currently pressed
 
-    [SerializeField] // Serialize the private field to allow assignment in the Unity Inspector
-    TurnBasedSystem tbs; // Reference to the TurnBasedSystem script
 
     /// <summary>
     /// Called when the script is first initialized.
@@ -28,6 +27,18 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     private void Start()
     {
         cam = GetComponent<Camera>(); // Get the Camera component attached to this object
+    }
+    private void OnEnable()
+    {
+        PlayerManager.ActivePlayerBroadcast += ChangeObjectToCenterOn;
+    }
+    private void OnDisable()
+    {
+        PlayerManager.ActivePlayerBroadcast -= ChangeObjectToCenterOn;
+    }
+    public void ChangeObjectToCenterOn(Player player)
+    {
+        objectToCenterOn = player.GetComponent<Transform>();
     }
 
     /// <summary>
@@ -148,7 +159,7 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     void HandleCenterOnObject()
     {
         // Check if tbs is assigned and has an activePlayer
-        objectToCenterOn = tbs != null && tbs.activePlayer != null ? tbs.activePlayer.transform : objectToCenterOn;
+        
 
         if (Input.GetKey(KeyCode.Space) && objectToCenterOn != null)
         {

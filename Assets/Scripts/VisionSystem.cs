@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
     public LayerMask finalLayer;
     public float range;
-    public PlayerScript ps;
+
+    public static event Action<int[]> AddVisibleFields;
 
     void Start()
     {
-        if (ps.human==true)
-        {
-            ScanForVisible();
-        }
-        
+               
     }
 
 

@@ -10,8 +10,8 @@ using UnityEngine.UIElements;
 public class MapManager : MonoBehaviour
 {
 
-    [Range(3, 25)]
-    public int sizeOfMap;
+    public GameSettings gameSettings;
+    private int sizeOfMap;
 
     public GameObject rockTilePrefab;
 
@@ -38,16 +38,13 @@ public class MapManager : MonoBehaviour
     [Range(1, 10)]
     public int scale;
 
-    public Player[] players;
     public int rootables;
 
     public TurnBasedSystem tbs;
     
     public GameObject assistant;
 
-
-
-
+    public static event Action mapGenerated; 
 
     // Start is called before the first frame update
 
@@ -66,6 +63,7 @@ public class MapManager : MonoBehaviour
             assistant.SetActive(true);
             Debug.Log(sizeOfMap);
         }
+        mapGenerated?.Invoke();
     }
 
     // Update is called once per frame
@@ -286,10 +284,7 @@ public class MapManager : MonoBehaviour
 
 
     }
-    /// <summary>
-    /// Allocating number of players
-    /// </summary>
-    /// <param name="numPlayers"></param>
+
    
     /// <summary>
     /// Clearing information about fields where current player stands, except given one
@@ -301,7 +296,7 @@ public class MapManager : MonoBehaviour
         {
             if (id != exceptThisId)
             {
-                GameObject.Find(id.ToString()).GetComponent<TileScript>().stander = 0;
+                GameObject.Find(id.ToString()).GetComponent<TileScript>().stander = null;
             }
         }
     }
@@ -321,19 +316,5 @@ public class MapManager : MonoBehaviour
         }
         return temp;
     }
-    public void Pick(Player player)
-    {
-        foreach (Player p in players)
-        {
-
-            if(p != player)
-            {
-                p.GetComponent<PlayerScript>().human = false;
-            }
-            else
-            {
-                p.GetComponent<PlayerScript>().human = true;
-            }
-        }
-    }
+   
 }

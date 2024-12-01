@@ -13,20 +13,7 @@ public class MovementSystem : MonoBehaviour
     [SerializeField]
     public GameObject cannotMoveRooted;
     // Start is called before the first frame update
-    public void OnButtonClick()
-    {
-        if (tbs.activePlayer.GetComponent<PlayerScript>().rooted == false)
-        {
-            movable = true;
-        }
-        else
-        {
-            cannotMoveRooted.SetActive(true);
-        }
-    }
-    public void CloseCannotMoveRooted()
-    {
-        cannotMoveRooted.SetActive(false);
-    }
+   
+  
 
 }

@@ -2,52 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class PlayerScript : MonoBehaviour
 {
-    public bool human;
-    public int soulLvl;
-    public Vector3 position3;
-    public int seqId;
-    public int tileIdLocation;
-    public int tileIdDestination;
-    public MapManager mapManager;
-    public Vector2 destination;
-    public bool doYouWantToMove = false;
-    public bool doYouWantToFly = false;
-    public float moveSpeed = 5f;
-    public int percent;
-    public GameObject treePrefab;
-
-    public int bioMass;
-    public int energy;
-    public int water;
-    public bool rooted;
-
-    public int starlings;
-    public int maxStarlings;
-
-
-    public bool isThereABird = false;
-
-
+    public Player player;
 
     public List<GameObject> visibleTiles;
-
-
-
+    private int tileId;
+    public static event Action<string> UpdatePlayerPosition;
 
     // Start is called before the first frame update
     public void Start()
-    { 
-        position3 = this.transform.position;
+    {
+        this.transform.position = player.Pos;
         CheckPosition();
-        tileIdDestination = tileIdLocation;
     }
 
     public void CheckPosition()
     {
-        position3 = this.transform.position;
         SearchForTileWithRaycast();
     }
 
@@ -62,11 +35,15 @@ public class PlayerScript : MonoBehaviour
 
             if (tile != null)
             {
-                tileIdLocation = tile.id;
-                tile.stander = seqId;
+                tile.stander = player.itsName;
             }
         }
     }
+    public void OnEnable()
+    {
+      
+    }
+    //public 
 
    
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SunLevel : MonoBehaviour
 {
-
+    public GameSettings gameSettings;
 
     public GameObject dayUI;
     public GameObject nightUI;
@@ -15,29 +15,34 @@ public class SunLevel : MonoBehaviour
     private int signature;
 
     [HideInInspector]
-    public int step;
+    public float step;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        step = 160.0f / gameSettings.CyclesPerDay;
+        solarPointer = 10;
+        solarMaximum = 90;
+        SolarRise();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        TurnBasedSystem.NextTurn += SolarUpdate;
+    }
+    private void OnDisable()
+    {
+        TurnBasedSystem.NextTurn -= SolarUpdate;
     }
 
     public void SolarRise()
     {
         dayUI.SetActive(true);
         nightUI.SetActive(false);
-        solarPointer = 1;
+        SolarUpdate();
     }
-    public void SolaUpdate()
+    public void SolarUpdate()
     {
-        solarPointer += step;
+        solarPointer += (int)step;
         //Sun position check for zenit during year
         if (signature != -1 && solarMaximum < 90)
         {
@@ -52,7 +57,7 @@ public class SunLevel : MonoBehaviour
    
 
       //Sun position funtion during day/night
-        if (solarPointer > 0 && solarPointer< 181)
+        if (solarPointer > 10 && solarPointer< 170)
         {
             float x = Mathf.Abs((float)solarPointer - 1 / 2 * solarMaximum) - 1 / 2 * solarMaximum;
             float y = (float)solarPointer / 2;

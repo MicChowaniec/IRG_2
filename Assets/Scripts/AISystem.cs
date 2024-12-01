@@ -4,22 +4,12 @@ using UnityEngine;
 
 public class AISystem : MonoBehaviour
 {
-    public TurnBasedSystem tbs;
-    public MapManager mm;
-    private GameObject activePlayer;
-
     
     public void AIBehaviour(ActionTypeEnum ate)
     {
 
-        if (activePlayer.GetComponent<PlayerScript>().human == false)
+        if (this.GetComponent<PlayerScript>().player.human == false)
         {
-
-
-            activePlayer = tbs.activePlayer;
-
-           
-
 
         }
     }

@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings")]
 public class GameSettings : ScriptableObject
 {
-    int SizeOfMap = 6;
-    int CyclesPerDay = 2;
-    int Difficulty = 1;
-    bool RootingOnlyNextToSelf = false;
+    public int SizeOfMap = 6;
+    public int CyclesPerDay = 2;
+    public int Difficulty = 1;
+    public bool RootingOnlyNextToSelf = false;
 }

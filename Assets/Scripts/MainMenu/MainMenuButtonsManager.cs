@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtonsManager : MonoBehaviour
 {
-   public void TutorialButtonClick()
+   public void OnGameSettingsPressStart()
     {
-        SceneManager.LoadScene("TutorialScene");
+        SceneManager.LoadScene("SelectionScene");
     }
-    public void HotSeatButtonClick()
+    public void VsAISceneButtonClick()
     {
-        SceneManager.LoadScene("HotSeatScene");
+        SceneManager.LoadScene("vsAIScene");
     }
     public void ExitButtonClick()
     {

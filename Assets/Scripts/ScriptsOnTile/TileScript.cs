@@ -13,7 +13,7 @@ public class TileScript : MonoBehaviour
     public Vector2 coordinates;
     public Vector2 ijCoordinates;
     public int owner;
-    public int stander;
+    public string stander;
     public List<int> neighbours = new List<int>();
     public MapManager mapManager;
     [SerializeField]
