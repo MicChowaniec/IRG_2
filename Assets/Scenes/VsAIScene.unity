@@ -278,32 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aff1648b4263ae42b5f30698c9915ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bioMassUpdateText: {fileID: 1873388850}
-  energyUpdateText: {fileID: 749377958}
-  waterUpdateText: {fileID: 1819670175}
-  starlingsCounterText: {fileID: 1947176348}
-  purpleText: {fileID: 433880329}
-  blueText: {fileID: 1599934342}
-  greenText: {fileID: 1326070642}
-  yellowText: {fileID: 1847431302}
-  orangeText: {fileID: 1143698066}
-  redText: {fileID: 1326070642}
-  mapManager: {fileID: 631253412}
-  tbs: {fileID: 1697207773}
-  redScore: 0
-  redScoreP: 0
-  blueScore: 0
-  blueScoreP: 0
-  greenScore: 0
-  greenScoreP: 0
-  yellowScore: 0
-  yellowScoreP: 0
-  orangeScore: 0
-  orangeScoreP: 0
-  purpleScore: 0
-  purpleScoreP: 0
-  winnerLabel: {fileID: 2044739965}
-  WinnerPanel: {fileID: 1413346970}
 --- !u!1 &218120759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,7 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140179efda640d34391c9c688a4d6e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeOfMap: 20
+  gameSettings: {fileID: 0}
   rockTilePrefab: {fileID: 1785028746914359239, guid: 960a82232ebf31549891f0ebcb4076a1, type: 3}
   grassTilePrefab: {fileID: 1785028746914359239, guid: e1e212d076696d14aa2783b1f9f823c3, type: 3}
   waterTilePrefab: {fileID: 1785028746914359239, guid: 823af1dcd5614334e91c996fe362f37b, type: 3}
@@ -1299,13 +1273,6 @@ MonoBehaviour:
   fieldRotation: {x: 0, y: 0, z: 0, w: 1}
   numberOfTypesOfTiles: 0
   scale: 2
-  players:
-  - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
-  - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
-  - {fileID: 11400000, guid: e9a6d584ace65ee47859add22f65e8a7, type: 2}
-  - {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
-  - {fileID: 11400000, guid: fdf8d22f78bde194b962d7faa8d9b6b7, type: 2}
-  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
   rootables: 0
   tbs: {fileID: 1697207773}
   assistant: {fileID: 1637323965}
@@ -3763,7 +3730,6 @@ MonoBehaviour:
   minY: 5
   maxY: 80
   objectToCenterOn: {fileID: 0}
-  tbs: {fileID: 1697207773}
 --- !u!1 &986226859
 GameObject:
   m_ObjectHideFlags: 0
@@ -6753,14 +6719,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f78a186f2777ccb4881424ebca4c2505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tbs: {fileID: 1697207773}
   players:
-  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
-  - {fileID: 11400000, guid: fdf8d22f78bde194b962d7faa8d9b6b7, type: 2}
-  - {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
-  - {fileID: 11400000, guid: e9a6d584ace65ee47859add22f65e8a7, type: 2}
-  - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
   - {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
+  - {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
+  - {fileID: 11400000, guid: e9a6d584ace65ee47859add22f65e8a7, type: 2}
+  - {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
+  - {fileID: 11400000, guid: fdf8d22f78bde194b962d7faa8d9b6b7, type: 2}
+  - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
+  activePlayer: {fileID: 0}
 --- !u!1 &1667477997
 GameObject:
   m_ObjectHideFlags: 0
@@ -6948,19 +6914,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 668627204154b7146b1c68656a353a16, type: 2}
   - {fileID: 11400000, guid: 58d0da2c50fbde042bd7420bf6d7c167, type: 2}
   - {fileID: 11400000, guid: 5196641d9bad61f4ea6ab7c7a7afdd01, type: 2}
-  ActiveTurn: {fileID: 0}
   activeTurnIndex: 0
-  step: 15
-  dayUI: {fileID: 576203490}
-  nightUI: {fileID: 91447564}
-  Light: {fileID: 705507994}
-  players: []
-  activePlayer: {fileID: 0}
-  pickedPlayer: {fileID: 0}
-  ms: {fileID: 0}
+  gameSettings: {fileID: 0}
   totalTurns: 0
   image: {fileID: 1024903162}
-  scc: {fileID: 963194229}
   diseaseLevel: 0
 --- !u!1 &1720341627
 GameObject:
