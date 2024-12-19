@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class SunLevel : MonoBehaviour
@@ -13,13 +11,13 @@ public class SunLevel : MonoBehaviour
     private int solarPointer;
     private int solarMaximum;
     private int signature;
-
-    [HideInInspector]
+   
     public float step;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         step = 160.0f / gameSettings.CyclesPerDay;
         solarPointer = 10;
         solarMaximum = 90;

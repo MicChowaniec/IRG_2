@@ -6,18 +6,13 @@ using System;
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
-    public LayerMask finalLayer;
     public float range;
+    private int[] ListOfDiscoveredFields;
+  
 
     public static event Action<int[]> AddVisibleFields;
 
-    void Start()
-    {
-               
-    }
-
-
-    public void ScanForVisible()
+     public void ScanForVisible()
     {
         //Consider using OverlapSpehereNonAlloc
         Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
@@ -25,17 +20,18 @@ public class VisionSystem : MonoBehaviour
         foreach (Collider hit in hits)
         {
             GameObject go = hit.gameObject;
-            SetLayerRecursively(go, 6);
+            CheckRecursively(go);
         }
+        AddVisibleFields?.Invoke(ListOfDiscoveredFields);
     }
 
-    private void SetLayerRecursively(GameObject obj, int newLayer)
+    private void CheckRecursively(GameObject obj)
     {
-        obj.layer = newLayer;
+        
 
         foreach (Transform child in obj.transform)
         {
-            SetLayerRecursively(child.gameObject, newLayer);
+            CheckRecursively(child.gameObject);
         }
     }
 }

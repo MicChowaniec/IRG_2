@@ -34,6 +34,7 @@ public class MapManager : MonoBehaviour
     public int numberOfTypesOfTiles;
     public Dictionary<Vector2, int> posAndIds = new Dictionary<Vector2, int>();
     public Dictionary<int, TileScript> tiles = new Dictionary<int, TileScript>();
+    public GameObject originalTreePrefab;
 
     [Range(1, 10)]
     public int scale;
@@ -44,12 +45,13 @@ public class MapManager : MonoBehaviour
     
     public GameObject assistant;
 
-    public static event Action mapGenerated; 
+    public static event Action MapGenerated; 
 
     // Start is called before the first frame update
 
     void Start()
     {
+        sizeOfMap = gameSettings.SizeOfMap;
         if (sizeOfMap > 3)
         {
             CreateMap(sizeOfMap);
@@ -62,8 +64,9 @@ public class MapManager : MonoBehaviour
 
             assistant.SetActive(true);
             Debug.Log(sizeOfMap);
+            
         }
-        mapGenerated?.Invoke();
+        MapGenerated?.Invoke();
     }
 
     // Update is called once per frame
@@ -135,7 +138,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Map Creation Finished");
+        
         foreach (int i in posAndIds.Values)
         {
             GameObject.Find(i.ToString()).GetComponent<TileScript>().AddNeighbours();
@@ -144,6 +147,7 @@ public class MapManager : MonoBehaviour
         Debug.Log("Neighbours Added");
         rootables = CountRootables();
         Debug.Log($"Rootables Counted: {rootables}");
+        Debug.Log("Map Creation Finished");
 
 
 
@@ -168,6 +172,11 @@ public class MapManager : MonoBehaviour
                 // Grass to the center star
                 if (i == 0)
                 {
+                    if(j==0)
+                    {
+                        Instantiate(originalTreePrefab, Vector3.zero, Quaternion.identity, tiles[id].transform);
+                        tiles[id].rootable = false;
+                    }
                     InstatiateField(grassTilePrefab, id, i, j);
                 }
                 else if (j == 0)
@@ -227,7 +236,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Map Creation Finished");
+        
         foreach (int i in posAndIds.Values)
         {
             GameObject.Find(i.ToString()).GetComponent<TileScript>().AddNeighbours();
@@ -236,6 +245,9 @@ public class MapManager : MonoBehaviour
         Debug.Log("Neighbours Added");
         rootables = CountRootables();
         Debug.Log($"Rootables Counted: {rootables}");
+        Debug.Log("Map Creation Finished");
+        MapGenerated?.Invoke();
+
 
 
 

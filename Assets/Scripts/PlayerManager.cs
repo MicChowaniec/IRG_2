@@ -5,18 +5,19 @@ using Unity.VisualScripting;
 public class PlayerManager : MonoBehaviour
 {
     public Player[] players;
-    [HideInInspector]
-    public Player activePlayer;
+    private Player activePlayer;
     private int activePlayerIndex;
 
     public static event Action<Player> ActivePlayerBroadcast;
 
-    public void Start()
+    public void OnEnable()
     {
-        activePlayerIndex = 0;
-        activePlayer = players[activePlayerIndex];
-        activePlayer.GetComponent<VisionSystem>().ScanForVisible();
+
+        MapManager.MapGenerated += AllocatePlayers;
     }
+    /// <summary>
+    /// Allocate player only once, after map is created
+    /// </summary>
     public void AllocatePlayers()
     {
         if (players == null || players.Length == 0)
@@ -30,6 +31,7 @@ public class PlayerManager : MonoBehaviour
             GameObject player = Instantiate(p.Prefab, p.Pos, p.Rot);
             player.name = p.name;
         }
+        MapManager.MapGenerated -= AllocatePlayers;
     }
 
     public void ChangePlayer()
@@ -46,4 +48,5 @@ public class PlayerManager : MonoBehaviour
         // Safely invoke the event
         ActivePlayerBroadcast?.Invoke(activePlayer);
     }
+ 
 }

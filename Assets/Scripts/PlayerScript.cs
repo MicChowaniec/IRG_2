@@ -15,7 +15,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        this.transform.position = player.Pos;
+        this.transform.position = player.StartPos;
+        this.transform.rotation = player.StartRot;
         CheckPosition();
     }
 
@@ -41,11 +42,20 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnEnable()
     {
-      
+        VisionSystem.AddVisibleFields += UpdateVisibleFields;
     }
-    //public 
+    public void OnDisable()
+    {
+        VisionSystem.AddVisibleFields -= UpdateVisibleFields;
+    }
 
-   
+    private void UpdateVisibleFields(int[] visibleFieldsIDs)
+    {
+
+        //ask map manager for GameObject?
+    }
+
+
 
 
 

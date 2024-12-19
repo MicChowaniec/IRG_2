@@ -8,12 +8,5 @@ using UnityEngine;
 public class MovementSystem : MonoBehaviour
 {
     public bool movable = false;
-    [SerializeField]
-    public TurnBasedSystem tbs;
-    [SerializeField]
-    public GameObject cannotMoveRooted;
-    // Start is called before the first frame update
-   
-  
 
 }

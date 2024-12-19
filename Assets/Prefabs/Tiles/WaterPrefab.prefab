@@ -114,7 +114,6 @@ MonoBehaviour:
   rootable: 1
   passable: 1
   ms: {fileID: 0}
-  ss: {fileID: 0}
   tbs: {fileID: 0}
   gote: 3
   hasRock: 0
@@ -139,7 +138,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!136 &6494880687652573162
 CapsuleCollider:
   m_ObjectHideFlags: 0

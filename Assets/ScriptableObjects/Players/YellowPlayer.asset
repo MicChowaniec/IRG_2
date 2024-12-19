@@ -12,19 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: YellowPlayer
   m_EditorClassIdentifier: 
-  actions:
-  - {fileID: 11400000, guid: 2dbd0b0777d1b52479cbbce19f2d5f42, type: 2}
-  - {fileID: 11400000, guid: d4f2a2b989ffc404dbd717c04fd53df0, type: 2}
-  - {fileID: 11400000, guid: 68d2edc715a26a54b9be654e62f7819f, type: 2}
-  - {fileID: 11400000, guid: d6d65fa3b8b43394495393f71a34b278, type: 2}
-  - {fileID: 11400000, guid: 37538f4346eb5fd4684156b2bc66d0a3, type: 2}
-  - {fileID: 11400000, guid: 504f4be5877224c48b6682aee5b16970, type: 2}
   sequence: 4
-  itsName: Red
-  itsDescription: Red is fire and red is blood
-  startPos: {x: 0, y: 0.2, z: -0.8660254}
-  startRot: {x: 0, y: 0, z: 0, w: 1}
-  picked: 0
-  Prefab: {fileID: 8738965356391052564, guid: cfe51e72b416225438c17ac9f45fd66e, type: 3}
-  TreePrefab: {fileID: 917251808456883119, guid: 8cf4881834babd14187af90fc6d8fd2e, type: 3}
+  itsName: Yellow
+  itsDescription: Yellow is collecting more energy, and because of this, can move
+    faster.
+  Pos: {x: 0, y: 0, z: 0}
+  StartPos: {x: 0, y: 0, z: 0}
+  Rot: {x: 0, y: 0, z: 0, w: 1}
+  StartRot: {x: 0, y: 0, z: 0, w: 1}
+  human: 0
+  Prefab: {fileID: 13136404289340683, guid: f3cf715784b5b974ab02a6117b154748, type: 3}
+  TreePrefab: {fileID: 2398761042893261284, guid: 768d7164f04478f4dabe5b6b2071d243, type: 3}
   material: {fileID: 2100000, guid: cf688a5108615e046976e287dabecd4d, type: 2}

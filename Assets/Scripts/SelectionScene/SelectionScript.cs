@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Services.Analytics;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 public class SelectionScript : MonoBehaviour
 {
@@ -16,21 +19,35 @@ public class SelectionScript : MonoBehaviour
     private Player displayedPlayer;
     public GameObject cameraRoot;
     private int displayedPlayerIndex;
+    private GameObject spawnedPlayer;
+    public Transform parent;
     // Start is called before the first frame update
+
+   
     void Start()
     {
+        UnityServices.InitializeAsync();
         displayedPlayerIndex = 0;
         displayedPlayer = players[displayedPlayerIndex];
+        spawnedPlayer = Instantiate(players[displayedPlayerIndex].Prefab, parent);
+        UpdateText();
         foreach (Player p in players)
         {
-            p.human= false;
+            p.human = false;
         }
+        
     }
 
     public void OnClickPick()
     {
         displayedPlayer.human = true;
+        PlayerPickEvent playerPickEvent = new PlayerPickEvent
+        {
+            Name = displayedPlayer.name
+        };
+        AnalyticsService.Instance.RecordEvent(playerPickEvent);
         SceneManager.LoadScene("VsAIScene");
+
     }
     public void OnClickNext()
     {
@@ -70,9 +87,10 @@ public class SelectionScript : MonoBehaviour
     private void CheckForPlayer(int index)
     {
         displayedPlayerIndex += index;
-        if (displayedPlayerIndex > players.Length-1)
+        if (displayedPlayerIndex > players.Length - 1)
         {
             displayedPlayerIndex = 0;
+
 
         }
         else if (displayedPlayerIndex < 0)
@@ -80,7 +98,27 @@ public class SelectionScript : MonoBehaviour
             displayedPlayerIndex = players.Length - 1;
         }
         displayedPlayer = players[displayedPlayerIndex];
+        Destroy(spawnedPlayer);
+        spawnedPlayer = Instantiate(players[displayedPlayerIndex].Prefab, parent);
+        UpdateText();
+    }
+    private string DisplayTitle()
+    {
+        return displayedPlayer.itsName;
+        
+    }
+
+
+    private string DisplayDescription()
+    {
+        return displayedPlayer.itsDescription;
 
     }
 
+    private void UpdateText()
+    {
+        TitleText.text = DisplayTitle();
+        TitleText.color = displayedPlayer.material.color;
+        DescriptionText.text = DisplayDescription();
+    }
 }
