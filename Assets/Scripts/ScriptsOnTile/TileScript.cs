@@ -18,26 +18,29 @@ public class TileScript : MonoBehaviour
     public MapManager mapManager;
     [SerializeField]
     public Material litMaterial;
-    PlayerScript ps;
-    PlayerMovement pm;
-    public int activePlayer;
-    public bool rootable = true;
-    public bool passable = true;
-    public MovementSystem ms;
-
+    public Player activePlayer;
     public TurnBasedSystem tbs;
-    public GameObjectTypeEnum gote;
     public bool hasRock = false;
 
-    private void Start()
+    public static int SendID(Vector3 vector3) {
+        return 0;
+            }
+
+    public void Start()
     {
-  
-        tbs = FindAnyObjectByType<TurnBasedSystem>();
-        ms = FindAnyObjectByType<MovementSystem>();
-        mapManager = FindAnyObjectByType<MapManager>();
+        ScriptableObject.CreateInstance<TileType>();
+    }
+    private void OnEnable()
+    {
+        MapManager.MapGenerated += AddNeighbours;
+        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
     }
 
-    public void AddNeighbours()
+    private void ActivePlayerUpdate(Player player) 
+    {
+        activePlayer = player;
+    }
+    private void AddNeighbours()
     {
 
         for (int i = -1; i < 2; i++)
@@ -61,6 +64,7 @@ public class TileScript : MonoBehaviour
 
             }
         }
+        MapManager.MapGenerated -= AddNeighbours;
     }
     public int Neighbour(int i, int j)
     {
@@ -110,6 +114,14 @@ public class TileScript : MonoBehaviour
         Material[] materials = new Material[1];
         materials[0] = this.GetComponent<MeshRenderer>().material;
         this.GetComponent<MeshRenderer>().materials = materials;
+    }
+    private void OnMouseEnter()
+    {
+        Highlight();
+    }
+    private void OnMouseExit()
+    {
+        StopHighlight();
     }
 }
 

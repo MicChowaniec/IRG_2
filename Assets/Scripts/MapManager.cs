@@ -139,15 +139,7 @@ public class MapManager : MonoBehaviour
         }
 
         
-        foreach (int i in posAndIds.Values)
-        {
-            GameObject.Find(i.ToString()).GetComponent<TileScript>().AddNeighbours();
-
-        }
-        Debug.Log("Neighbours Added");
-        rootables = CountRootables();
-        Debug.Log($"Rootables Counted: {rootables}");
-        Debug.Log("Map Creation Finished");
+        
 
 
 
@@ -172,12 +164,13 @@ public class MapManager : MonoBehaviour
                 // Grass to the center star
                 if (i == 0)
                 {
-                    if(j==0)
+                    InstatiateField(grassTilePrefab, id, i, j);
+                    if (j==0)
                     {
                         Instantiate(originalTreePrefab, Vector3.zero, Quaternion.identity, tiles[id].transform);
                         tiles[id].rootable = false;
                     }
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    
                 }
                 else if (j == 0)
                 {
@@ -237,12 +230,7 @@ public class MapManager : MonoBehaviour
         }
 
         
-        foreach (int i in posAndIds.Values)
-        {
-            GameObject.Find(i.ToString()).GetComponent<TileScript>().AddNeighbours();
-
-        }
-        Debug.Log("Neighbours Added");
+        
         rootables = CountRootables();
         Debug.Log($"Rootables Counted: {rootables}");
         Debug.Log("Map Creation Finished");

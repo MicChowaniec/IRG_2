@@ -996,7 +996,7 @@ PrefabInstance:
       addedObject: {fileID: 1601692875157988610}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2065679584531289882}
+      addedObject: {fileID: -2049627424844685930}
   m_SourcePrefab: {fileID: 100100000, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
 --- !u!1 &13136404289340683 stripped
 GameObject:
@@ -1025,7 +1025,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2065679584531289882
+--- !u!114 &-2049627424844685930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1034,11 +1034,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 13136404289340683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 736f531b6ab67784c8d14aeeed65ad08, type: 3}
+  m_Script: {fileID: 11500000, guid: 806ccb5e140c39d4391e504141c33eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1, z: 1}
-  size: 1
+  player: {fileID: 11400000, guid: b3508984f0f04ad4fbc5d33d158992ee, type: 2}
+  visibleTiles: []
 --- !u!4 &821198648635989937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}

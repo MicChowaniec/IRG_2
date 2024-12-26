@@ -19,7 +19,7 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   Rot: {x: 0, y: 0, z: 0, w: 1}
   StartRot: {x: 0, y: 0, z: 0, w: 1}
-  human: 0
+  human: 1
   Prefab: {fileID: 13136404289340683, guid: 88966bd8f50dd22458779dd63d0f7eea, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
   material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}
