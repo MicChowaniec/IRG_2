@@ -7,17 +7,27 @@ using System;
 public class PlayerScript : MonoBehaviour
 {
     public Player player;
-
-    public List<GameObject> visibleTiles;
+    public Animator animator;
+    
     private int tileId;
-    public static event Action<string> UpdatePlayerPosition;
+    public static event Action<int> UpdatePlayerPosition;
+
+    
 
     // Start is called before the first frame update
     public void Start()
     {
-        this.transform.position = player.StartPos;
+        
+        transform.position = player.StartPos;
         this.transform.rotation = player.StartRot;
         CheckPosition();
+        animator = GetComponent<Animator>();
+        animator.SetTrigger("Idle");
+        if (player.human==true)
+        {
+            StrategyCameraControl scc = FindAnyObjectByType<StrategyCameraControl>();
+            scc.objectToCenterOn = transform;
+        }
     }
 
     public void CheckPosition()
@@ -27,34 +37,27 @@ public class PlayerScript : MonoBehaviour
 
     public void SearchForTileWithRaycast()
     {
-        RaycastHit hit;
         Vector3 playerPosition = this.transform.position;
 
-        if (Physics.Raycast(playerPosition, Vector3.down, out hit))
+        if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit))
         {
-            TileScript tile = hit.collider.GetComponent<TileScript>();
-
-            if (tile != null)
+            
+            if (hit.collider.TryGetComponent<TileScript>(out var tile))
             {
-                tile.stander = player.itsName;
+                tile.TSO.stander = player;
+                tileId = tile.TSO.id;
+                Vector3 tempScale = transform.localScale;
+                transform.parent = tile.transform;
+                transform.localScale = tempScale;
             }
         }
     }
-    public void OnEnable()
+   
+    public void UpdatePosition()
     {
-        VisionSystem.AddVisibleFields += UpdateVisibleFields;
+        player.Pos = transform.position;
+        player.Rot = transform.rotation;
     }
-    public void OnDisable()
-    {
-        VisionSystem.AddVisibleFields -= UpdateVisibleFields;
-    }
-
-    private void UpdateVisibleFields(int[] visibleFieldsIDs)
-    {
-
-        //ask map manager for GameObject?
-    }
-
 
 
 

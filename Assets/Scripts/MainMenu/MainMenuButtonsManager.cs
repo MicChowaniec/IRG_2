@@ -12,14 +12,10 @@ public class MainMenuButtonsManager : MonoBehaviour
     public static event Action<string> DisplayConfirmationPopup;
     public static event Action<string> DisplayDissapearingPopup;
 
-    private void Start()
-    {
-       
-
-    }
+   
     public void OnGameSettingsPressStart()
     {
-        ParametersEvent parametersEvent = new ParametersEvent
+        ParametersEvent parametersEvent = new()
         {
             MapSize = gameSettings.SizeOfMap,
             CyclesPerDay = gameSettings.CyclesPerDay,

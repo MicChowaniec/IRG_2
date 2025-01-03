@@ -1114,6 +1114,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
       insertIndex: -1
       addedObject: {fileID: -2066929048539632336}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8781765123033158380}
   m_SourcePrefab: {fileID: 100100000, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
 --- !u!1 &13136404289340683 stripped
 GameObject:
@@ -1155,7 +1158,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
-  visibleTiles: []
+  animator: {fileID: 0}
+--- !u!114 &8781765123033158380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13136404289340683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4cc110069ab36448650c7382dac3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 384
+  range: 1.4
+  ListOfDiscoveredFields: 
+  human: 0
+  owner: {fileID: 0}
 --- !u!4 &2882937907647121409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2660926356113027163, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
@@ -1631,7 +1653,7 @@ PrefabInstance:
       objectReference: {fileID: 7391928298274556292, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
     - target: {fileID: 4419779393663245483, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
       propertyPath: m_SelectedEditorRenderState
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1663,5 +1685,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736f531b6ab67784c8d14aeeed65ad08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0, y: 0, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   size: 1

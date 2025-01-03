@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -12,8 +13,14 @@ public class PlayerManager : MonoBehaviour
 
     public void OnEnable()
     {
-
+        TurnBasedSystem.NextTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
+    }
+
+    public void OnDisable()
+    {
+        TurnBasedSystem.NextTurn -= ChangePlayer;
+        MapManager.MapGenerated -= AllocatePlayers;
     }
     /// <summary>
     /// Allocate player only once, after map is created
@@ -45,6 +52,7 @@ public class PlayerManager : MonoBehaviour
         activePlayerIndex = (activePlayerIndex + 1) % players.Length;
         activePlayer = players[activePlayerIndex];
 
+        
         // Safely invoke the event
         ActivePlayerBroadcast?.Invoke(activePlayer);
     }

@@ -15,9 +15,9 @@ MonoBehaviour:
   sequence: 2
   itsName: Blue
   itsDescription: Blue is collecting more water and have unique voice skills.
-  Pos: {x: 0, y: 0, z: 0}
-  StartPos: {x: -0.6666667, y: 1.33, z: -0.4330127}
-  Rot: {x: 0, y: 0, z: 0, w: 1}
+  Pos: {x: -0.6666667, y: 0, z: -0.4330127}
+  StartPos: {x: -0.6666667, y: 0, z: -0.4330127}
+  Rot: {x: 0, y: 0.8660254, z: 0, w: -0.50000006}
   StartRot: {x: 0, y: 0.8660254, z: 0, w: -0.50000006}
   human: 0
   Prefab: {fileID: 13136404289340683, guid: 0e3e9e36d2c345841a3bca98617733c9, type: 3}

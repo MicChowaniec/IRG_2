@@ -13,39 +13,39 @@ public class MapManager : MonoBehaviour
     public GameSettings gameSettings;
     private int sizeOfMap;
 
-    public GameObject rockTilePrefab;
+    public GameObject tilePrefab;
 
-    public GameObject grassTilePrefab;
-
-    public GameObject waterTilePrefab;
-
-    public GameObject sandTilePrefab;
+    public TileType rockTileType;
+    public TileType sandTileType;
+    public TileType waterTileType;
+    public TileType grassTileType;
 
     public GameObject[] bushPrefabs;
 
     public GameObject rockPrefab;
 
     public GameObject tileParent;
+
     public float x;
     public float y;
     public float z;
     public Vector3 fieldPosition;
     public Quaternion fieldRotation = Quaternion.identity;
     public int numberOfTypesOfTiles;
-    public Dictionary<Vector2, int> posAndIds = new Dictionary<Vector2, int>();
-    public Dictionary<int, TileScript> tiles = new Dictionary<int, TileScript>();
+    public Dictionary<int, TileScriptableObject> tiles = new();
+    public Dictionary<Vector2, int> posAdnIds = new();
     public GameObject originalTreePrefab;
 
     [Range(1, 10)]
     public int scale;
 
-    public int rootables;
 
     public TurnBasedSystem tbs;
     
     public GameObject assistant;
-
-    public static event Action MapGenerated; 
+    public static int centerId;
+    public static event Action MapGenerated;
+    public static event Action<int> Rootables;
 
     // Start is called before the first frame update
 
@@ -87,50 +87,51 @@ public class MapManager : MonoBehaviour
                 // Grass to the center star
                 if (i == 0)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (j == 0)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (i == j)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (i == -j)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (i == 2 && j == -1)
                 {
-                    InstatiateField(waterTilePrefab, id, i, j);
+                    InstatiateField(waterTileType, id, i, j);
                 }
                 else if (i == 1 && j == -2)
                 {
-                    InstatiateField(grassTilePrefab, id,i,j);
+                    InstatiateField(grassTileType, id,i,j);
                     InstantiateBush(bushPrefabs[2], id);
-                    tiles[id].gote=GameObjectTypeEnum.Bush;
-                    tiles[id].passable = false;
+                    tiles[id].childType=GameObjectTypeEnum.Bush;
+                    
                 }
                 else
                 {
                     TileTypesEnum rtt = RandomTileType();
                     if (rtt == TileTypesEnum.Rock)
                     {
-                        InstatiateField(rockTilePrefab, id, i, j);
+                        InstatiateField(rockTileType, id, i, j);
 
                     }
                     else if (rtt == TileTypesEnum.Sand)
                     {
-                        InstatiateField(sandTilePrefab, id, i, j);
+                        InstatiateField(sandTileType, id, i, j);
                     }
                     else if (rtt == TileTypesEnum.Grass)
                     {
-                        InstatiateField(grassTilePrefab, id, i, j);
+                        InstatiateField(grassTileType, id, i, j);
                     }
                     else if (rtt == TileTypesEnum.Water)
                     {
-                        InstatiateField(waterTilePrefab, id, i, j);
+                        InstatiateField(waterTileType, id, i, j);
                     }
 
                 }
@@ -150,6 +151,7 @@ public class MapManager : MonoBehaviour
     /// <param name="size"></param>
     public void CreateMap(int size)
     {
+
         int id = 0;
         Debug.Log("Map Creation Started");
         for (int i = -size + 1; i < size; i++)
@@ -164,25 +166,26 @@ public class MapManager : MonoBehaviour
                 // Grass to the center star
                 if (i == 0)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                     if (j==0)
                     {
-                        Instantiate(originalTreePrefab, Vector3.zero, Quaternion.identity, tiles[id].transform);
-                        tiles[id].rootable = false;
+                        GameObject tree = Instantiate(originalTreePrefab, tiles[id].representation.transform);
+                        tree.transform.localScale =new Vector3(0.2f, 20, 0.2f);
+                        centerId = id;
                     }
                     
                 }
                 else if (j == 0)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (i == j)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 else if (i == -j)
                 {
-                    InstatiateField(grassTilePrefab, id, i, j);
+                    InstatiateField(grassTileType, id, i, j);
                 }
                 // Everything else random
                 else
@@ -191,37 +194,38 @@ public class MapManager : MonoBehaviour
                    
                     if (rtt == TileTypesEnum.Rock)
                     {
-                        InstatiateField(rockTilePrefab, id, i, j);
+                        InstatiateField(rockTileType, id, i, j);
                         if (2 > new System.Random().Next(0, 4))
                         {
                             //int random = new System.Random().Next(0, bushPrefabs.Length);
-                            GameObject rock = Instantiate(rockPrefab, tiles[id].transform);
-                            rock.transform.localScale = new Vector3(1, 20, 1);
+                            GameObject rock = Instantiate(rockPrefab, tiles[id].coordinates, Quaternion.identity, tiles[id].representation.transform);
+                            rock.transform.localScale = new Vector3(1, 40, 1);
                             
-                            tiles[id].hasRock = true;
-                            tiles[id].passable = false;
+                            tiles[id].childType =GameObjectTypeEnum.Rock;
+                    
 
                         }
                     }
                     else if (rtt == TileTypesEnum.Sand)
                     {
-                        InstatiateField(sandTilePrefab, id, i, j);
+                        InstatiateField(sandTileType, id, i, j);
                     }
                     else if (rtt == TileTypesEnum.Grass)
                     {
-                        InstatiateField(grassTilePrefab, id, i, j);
+                        InstatiateField(grassTileType, id, i, j);
                         if (2 >= new System.Random().Next(0,4))
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
                             InstantiateBush(bushPrefabs[random], id);
-                            tiles[id].gote = GameObjectTypeEnum.Bush;
+                            tiles[id].childType = GameObjectTypeEnum.Bush;
                             tiles[id].passable = false;
 
                         }
                     }
                     else if (rtt == TileTypesEnum.Water)
                     {
-                        InstatiateField(waterTilePrefab, id, i, j);
+                        InstatiateField(waterTileType, id, i, j);
+                        tiles[id].childType = GameObjectTypeEnum.Water;
                     }
 
                 }
@@ -229,12 +233,12 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        
-        
-        rootables = CountRootables();
-        Debug.Log($"Rootables Counted: {rootables}");
+
+
         Debug.Log("Map Creation Finished");
         MapGenerated?.Invoke();
+        int temp = CountRootables();
+        Rootables?.Invoke(temp);
 
 
 
@@ -258,27 +262,44 @@ public class MapManager : MonoBehaviour
     /// <param name="id"></param>
     /// <param name="i"></param>
     /// <param name="j"></param>
-    public void InstatiateField(GameObject prefab, int id, int i, int j)
+    public void InstatiateField(TileType tt, int id, int i, int j)
     {
-        GameObject mapTile = Instantiate(prefab, fieldPosition, fieldRotation, tileParent.transform);
-        mapTile.name = id.ToString();
-        TileScript tileScript = mapTile.GetComponent<TileScript>();
-        tileScript.id = id;
-        tileScript.coordinates = new Vector2(x, z);
-        Vector2 key = new Vector2(i, j);
-        tileScript.ijCoordinates = key;
-        tileScript.rootable = tileScript.tileType.rootable;
-        tileScript.passable = tileScript.tileType.passable;
-
+        TileScriptableObject TSO = ScriptableObject.CreateInstance<TileScriptableObject>();
+        
+        TSO.id = id;
+        TSO.coordinates = new Vector3(x, 0, z);
+        Vector2 key = new(i, j);
+        TSO.ijCoordinates = key;
+        TSO.tileTypes = tt.type;
+        TSO.passable = tt.passable;
+        TSO.rootable = tt.rootable;
+        TSO.representation = Instantiate(tilePrefab, fieldPosition, fieldRotation, tileParent.transform);
+        TSO.representation.name = id.ToString();
+        TSO.representation.GetComponent<MeshRenderer>().material = tt.Material;
+        TileScript tileScript = TSO.representation.GetComponent<TileScript>();
+        tileScript.TSO = TSO;
+        tileScript.TT = tt;
         tileScript.mapManager = this;
 
-        posAndIds.Add(key, id);
-        tiles.Add(id, tileScript);
+        OnHoverScript onHoverScript = TSO.representation.GetComponent<OnHoverScript>();
+
+
+        onHoverScript.onHoverSC = TSO;
+
+
+        tiles.Add(id, TSO);
+        posAdnIds.Add(key, id);
+
+        
+        
+        
+        
+
 
     }
     public void InstantiateBush(GameObject prefab, int id)
     {
-        GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tiles[id].transform);
+        GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tiles[id].representation.transform);
         bushObject.transform.localScale = new Vector3(0.5f, 20, 0.5f);
         bushObject.transform.position += new Vector3(0, 0.2f, 0);
 
@@ -292,13 +313,7 @@ public class MapManager : MonoBehaviour
     /// <param name="exceptThisId"></param>
     public void ClearStanders(int exceptThisId)
     {
-        foreach (int id in posAndIds.Values)
-        {
-            if (id != exceptThisId)
-            {
-                GameObject.Find(id.ToString()).GetComponent<TileScript>().stander = null;
-            }
-        }
+       //Do zrobienia
     }
     /// <summary>
     /// Counting rootables fields on map
@@ -307,7 +322,7 @@ public class MapManager : MonoBehaviour
     public int CountRootables()
     {
         int temp = 0;
-        foreach (TileScript t in tiles.Values)
+        foreach (TileScriptableObject t in tiles.Values)
         {
             if (t.rootable == true)
             {

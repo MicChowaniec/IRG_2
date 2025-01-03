@@ -2,17 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
     public float range;
-    private int[] ListOfDiscoveredFields;
-  
+    public List<int> ListOfDiscoveredFields = new();
+    public bool human;
+    public Player owner;
 
-    public static event Action<int[]> AddVisibleFields;
+    public void Start()
+    {
+        
+        if (TryGetComponent<PlayerScript>(out PlayerScript playerScript) == true)
+        {
+            human = playerScript.player.human;
+        }
+        ScanForVisible();
 
-     public void ScanForVisible()
+    }
+
+    public void ScanForVisible()
     {
         //Consider using OverlapSpehereNonAlloc
         Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
@@ -21,8 +32,23 @@ public class VisionSystem : MonoBehaviour
         {
             GameObject go = hit.gameObject;
             CheckRecursively(go);
+            if (go.TryGetComponent<TileScript>(out TileScript ts)==true)
+            {
+                int idToAdd = ts.TSO.id;
+                ListOfDiscoveredFields.Add(idToAdd);
+                if (owner != null)
+                {
+                    owner.GetComponent<VisionSystem>().ListOfDiscoveredFields.Add(idToAdd);
+                }
+            }
+
+            
+            if (human ==true)
+            {
+                go.layer = 6;
+            }
+          
         }
-        AddVisibleFields?.Invoke(ListOfDiscoveredFields);
     }
 
     private void CheckRecursively(GameObject obj)

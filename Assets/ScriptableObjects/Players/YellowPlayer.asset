@@ -16,10 +16,10 @@ MonoBehaviour:
   itsName: Yellow
   itsDescription: Yellow is collecting more energy, and because of this, can move
     faster.
-  Pos: {x: 0, y: 0, z: 0}
-  StartPos: {x: 0, y: 0, z: 0}
+  Pos: {x: 0.6666667, y: 0, z: -0.4330127}
+  StartPos: {x: 0.6666667, y: 0, z: -0.4330127}
   Rot: {x: 0, y: 0, z: 0, w: 1}
-  StartRot: {x: 0, y: 0, z: 0, w: 1}
+  StartRot: {x: 0, y: 0.86602545, z: 0, w: 0.49999997}
   human: 0
   Prefab: {fileID: 13136404289340683, guid: f3cf715784b5b974ab02a6117b154748, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 768d7164f04478f4dabe5b6b2071d243, type: 3}

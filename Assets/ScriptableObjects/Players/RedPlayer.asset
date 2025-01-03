@@ -16,7 +16,7 @@ MonoBehaviour:
   itsName: Red
   itsDescription: Red is pretty tough, and mining from roots
   Pos: {x: 0, y: 0, z: 0}
-  StartPos: {x: 0, y: 0, z: 0}
+  StartPos: {x: 0, y: 0, z: 0.8660254}
   Rot: {x: 0, y: 0, z: 0, w: 1}
   StartRot: {x: 0, y: 0, z: 0, w: 1}
   human: 0

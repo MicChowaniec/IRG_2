@@ -7,6 +7,7 @@ public class PopUpPanel : MonoBehaviour
 {
     public GameObject panel; // Panel do wyœwietlenia
     public TextMeshProUGUI messageText; // Tekst w panelu
+   
 
 
 

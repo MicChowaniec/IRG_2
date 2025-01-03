@@ -1005,10 +1005,10 @@ PrefabInstance:
       addedObject: {fileID: 1601692875157988610}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2065679584531289882}
+      addedObject: {fileID: 3671785511634844336}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3671785511634844336}
+      addedObject: {fileID: -796217547563119247}
   m_SourcePrefab: {fileID: 100100000, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}
 --- !u!1 &13136404289340683 stripped
 GameObject:
@@ -1037,20 +1037,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2065679584531289882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13136404289340683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 736f531b6ab67784c8d14aeeed65ad08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1, z: 1}
-  size: 1
 --- !u!114 &3671785511634844336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,7 +1050,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
-  visibleTiles: []
+  animator: {fileID: 0}
+--- !u!114 &-796217547563119247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13136404289340683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4cc110069ab36448650c7382dac3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 384
+  range: 1.4
+  ListOfDiscoveredFields: 
+  human: 0
+  owner: {fileID: 0}
 --- !u!4 &2882937907647121409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2660926356113027163, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}

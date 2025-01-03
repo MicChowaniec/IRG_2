@@ -13,7 +13,17 @@ public class Player : ScriptableObject
     {
         Pos = StartPos;
         Rot = StartRot;
+        water = 10;
+        energy = 10;
+        biomass = 10;
+        protein = 10;
     }
+    public int water;
+    public int energy;
+    public int biomass;
+    public int protein;
+
+
     public int sequence;
     public string itsName;
     public string itsDescription;

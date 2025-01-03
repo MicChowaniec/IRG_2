@@ -15,10 +15,10 @@ MonoBehaviour:
   sequence: 3
   itsName: Green
   itsDescription: Green focus on regeneration and disease
-  Pos: {x: 0, y: 0, z: 0}
-  StartPos: {x: 0, y: 0, z: 0}
+  Pos: {x: 0, y: 0, z: -0.8660254}
+  StartPos: {x: 0, y: 0, z: -0.8660254}
   Rot: {x: 0, y: 0, z: 0, w: 1}
-  StartRot: {x: 0, y: 0, z: 0, w: 1}
+  StartRot: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   human: 0
   Prefab: {fileID: 13136404289340683, guid: 52c23d1c9d2c65d4b8b3918594c79c85, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 40a33e15f192bc343bbd32d746243508, type: 3}

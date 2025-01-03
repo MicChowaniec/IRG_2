@@ -15,10 +15,10 @@ MonoBehaviour:
   sequence: 5
   itsName: Orange
   itsDescription: Orange is aggresive one
-  Pos: {x: 0, y: 0, z: 0}
-  StartPos: {x: 0, y: 0, z: 0}
+  Pos: {x: 0.6666667, y: 0, z: 0.4330127}
+  StartPos: {x: 0.6666667, y: 0, z: 0.4330127}
   Rot: {x: 0, y: 0, z: 0, w: 1}
-  StartRot: {x: 0, y: 0, z: 0, w: 1}
+  StartRot: {x: 0, y: 0.5, z: 0, w: 0.8660254}
   human: 0
   Prefab: {fileID: 13136404289340683, guid: eb79ceb0a69c08546b783dece71d7048, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: db714fb8008b2164da8cccb3ce88b9a1, type: 3}

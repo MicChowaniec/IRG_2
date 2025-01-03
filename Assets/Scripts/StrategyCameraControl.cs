@@ -1,6 +1,7 @@
 using UnityEngine; // Import the Unity Engine namespace for MonoBehaviour and related classes
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class StrategyCameraControl : MonoBehaviour // Define a public class named StrategyCameraControl inheriting from MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     public float zoomSmoothness = 5f; // Smoothness factor for zooming in/out
     public float spaceMoveHeight = 10f; // Height to move up when space is pressed
     public float nonLinearFactor = 1.5f; // Factor for non-linear zoom scaling
-    public float minY = 5f; // Minimum allowed height for the camera
-    public float maxY = 80f; // Maximum allowed height for the camera
+    public float minY = 1.5f; // Minimum allowed height for the camera
+    public float maxY = 10f; // Maximum allowed height for the camera
+    public float minZ = -100f;
+    public float maxZ = 100f;
+    public float minFOV = 15f;
+    public float maxFOV = 90f;
 
     public Transform objectToCenterOn; // Reference to the object the camera will center on when space is pressed
 
@@ -28,14 +33,7 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     {
         cam = GetComponent<Camera>(); // Get the Camera component attached to this object
     }
-    private void OnEnable()
-    {
-        PlayerManager.ActivePlayerBroadcast += ChangeObjectToCenterOn;
-    }
-    private void OnDisable()
-    {
-        PlayerManager.ActivePlayerBroadcast -= ChangeObjectToCenterOn;
-    }
+   
     public void ChangeObjectToCenterOn(Player player)
     {
         objectToCenterOn = player.GetComponent<Transform>();
@@ -93,33 +91,30 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     /// Controls zooming in and out using the mouse scroll wheel.
     /// Calculates zoom speed and direction based on the distance to the hit point and applies a smooth zoom effect.
     /// </summary>
-    void HandleScrollZoom()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f)
+    
+        void HandleScrollZoom()
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition); // Ray from the mouse pointer
-            RaycastHit hit;
+            // Pobierz wartoœæ scrolla
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-            if (Physics.Raycast(ray, out hit))
+            if (scroll != 0f)
             {
-                Vector3 directionToTarget = hit.point - transform.position; // Calculate the direction to the hit point
-                float distance = directionToTarget.magnitude; // Distance to the hit point
+                // Zmieñ wartoœæ Field of View w zale¿noœci od scrolla
+                cam.fieldOfView -= scroll * scrollSpeed;
 
-                // Non-linear zoom speed adjustment
-                float zoomAmount = scroll * scrollSpeed * Mathf.Pow(distance, nonLinearFactor) * Time.deltaTime;
+                // Ogranicz wartoœæ FoV do minimalnego i maksymalnego zakresu
+                cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minFOV, maxFOV); // Zakres FoV
 
-                // Calculate the new camera position
-                Vector3 newCameraPosition = transform.position + directionToTarget.normalized * zoomAmount;
+                // Oblicz nowy k¹t nachylenia kamery w osi X
+                float targetAngleX = Mathf.Lerp(45f, 30f, (cam.fieldOfView - minFOV) / (maxFOV - minFOV));
 
-                // Clamp the Y position to ensure the camera doesn't go below minY or above maxY
-                newCameraPosition.y = Mathf.Clamp(newCameraPosition.y, minY, maxY);
-
-                // Lerp to the new position for smooth zoom
-                transform.position = Vector3.Lerp(transform.position, newCameraPosition, zoomSmoothness * Time.deltaTime);
+                // Ustaw now¹ rotacjê kamery z p³ynn¹ interpolacj¹
+                Quaternion targetRotation = Quaternion.Euler(targetAngleX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * zoomSmoothness);
             }
         }
-    }
+    
+
 
     /// <summary>
     /// Handles camera rotation around its axis or around a specified object.
@@ -127,6 +122,7 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     /// </summary>
     void HandleRotation()
     {
+
         // Right mouse button rotation
         if (Input.GetMouseButton(1))
         {
@@ -159,11 +155,11 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     void HandleCenterOnObject()
     {
         // Check if tbs is assigned and has an activePlayer
-        
 
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Input.GetKey(KeyCode.Space) && objectToCenterOn != null)
         {
-            if (!isSpacePressed)
+            if (!isSpacePressed|| scroll != 0f)
             {
                 isSpacePressed = true;
 

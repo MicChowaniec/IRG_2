@@ -6,34 +6,39 @@ using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour
 {
-    [SerializeField]
-    public TileType tileType;
-    public int id;
+    public TileType TT;
+    public TileScriptableObject TSO;
     // Update is called once per frame
-    public Vector2 coordinates;
-    public Vector2 ijCoordinates;
-    public int owner;
-    public string stander;
-    public List<int> neighbours = new List<int>();
-    public MapManager mapManager;
-    [SerializeField]
-    public Material litMaterial;
+    
+    public List<int> neighbours = new();
+    
     public Player activePlayer;
     public TurnBasedSystem tbs;
-    public bool hasRock = false;
 
-    public static int SendID(Vector3 vector3) {
-        return 0;
-            }
+    public MapManager mapManager;
 
     public void Start()
     {
-        ScriptableObject.CreateInstance<TileType>();
+        
     }
+    public static int SendID(Vector3 vector3)
+    {
+
+
+
+        return 0;
+            }
+
+   
     private void OnEnable()
     {
         MapManager.MapGenerated += AddNeighbours;
         PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+    }
+    private void OnDisable()
+    {
+        MapManager.MapGenerated -= AddNeighbours;
+        PlayerManager.ActivePlayerBroadcast-= ActivePlayerUpdate;
     }
 
     private void ActivePlayerUpdate(Player player) 
@@ -47,82 +52,78 @@ public class TileScript : MonoBehaviour
         {
             for (int j = -1; j < 2; j++)
             {
-                if (j == 0 & i == 0) { }
-                else if (j == 1 & i == -1 & (i + ijCoordinates.x) < 0) { }
-                else if (j == -1 & i == 1 & (i + ijCoordinates.x) <= 0) { }
-                else if (j == 1 & i == 1 & (i + ijCoordinates.x) > 0) { }
-                else if (j == -1 & i == -1 & (i + ijCoordinates.x) >= 0) { }
+               
+                if (j == 1 & i == -1 & (i + TSO.ijCoordinates.x) < 0) { }
+                else if (j == -1 & i == 1 & (i + TSO.ijCoordinates.x) <= 0) { }
+                else if (j == 1 & i == 1 & (i + TSO.ijCoordinates.x) > 0) { }
+                else if (j == -1 & i == -1 & (i + TSO.ijCoordinates.x) >= 0) { }
 
                 else
                 {
                     int neighborId = Neighbour(i, j);
                     if (neighborId != -1)
                     {
-                        neighbours.Add(neighborId);
+                        if (!neighbours.Contains(neighborId))
+                        {
+                            neighbours.Add(neighborId);
+                            Debug.Log("Neighbour Added");
+                        }
                     }
                 }
 
             }
         }
-        MapManager.MapGenerated -= AddNeighbours;
+        if (TSO.id == MapManager.centerId)
+        {
+            foreach (var n in neighbours)
+            {
+                mapManager.tiles[n].rootable = false;
+
+            }
+        }
+        
     }
     public int Neighbour(int i, int j)
     {
-        int tempId;
-        Vector2 vectorTemp = new Vector2(0, 0);
+        Vector2 vectorTemp = new(0, 0);
         if (mapManager == null)
         {
 
             return -1;
         }
 
-        if (mapManager.posAndIds == null)
+        if (mapManager.posAdnIds == null)
         {
 
             return -1;
         }
-        if (ijCoordinates.x < 1)
+        
+        if (TSO.ijCoordinates.x < 1)
         {
-            vectorTemp = ijCoordinates + new Vector2(i, j);
+            vectorTemp = TSO.ijCoordinates + new Vector2(i, j);
         }
-        else if (ijCoordinates.x >= 1)
+        else if (TSO.ijCoordinates.x >= 1)
         {
-            vectorTemp = ijCoordinates + new Vector2(i, j);
+            vectorTemp = TSO.ijCoordinates + new Vector2(i, j);
         }
 
-
-        if (mapManager.posAndIds.TryGetValue(vectorTemp, out tempId))
+        if (mapManager.posAdnIds.TryGetValue(vectorTemp,out int tempId))
         {
-
-            return tempId;
+            if (tempId != TSO.id)
+            {
+                return tempId;
+            }
+            else
+            {
+                return -1;
+            }
         }
         else
         {
             return -1;
         }
     }
-    public void Highlight()
-    {
-        Material[] materials = new Material[2];
-        materials[0] = this.GetComponent<MeshRenderer>().material;
-        materials[1] = litMaterial;
-        this.GetComponent<MeshRenderer>().materials = materials;
-    }
-    public void StopHighlight()
-    {
-
-        Material[] materials = new Material[1];
-        materials[0] = this.GetComponent<MeshRenderer>().material;
-        this.GetComponent<MeshRenderer>().materials = materials;
-    }
-    private void OnMouseEnter()
-    {
-        Highlight();
-    }
-    private void OnMouseExit()
-    {
-        StopHighlight();
-    }
+   
 }
 
 
