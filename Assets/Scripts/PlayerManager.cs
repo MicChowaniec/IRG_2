@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     private int activePlayerIndex;
 
     public static event Action<Player> ActivePlayerBroadcast;
+    public static event Action<bool> HumanPlayerBroadcast;
 
     public void OnEnable()
     {
@@ -52,9 +53,18 @@ public class PlayerManager : MonoBehaviour
         activePlayerIndex = (activePlayerIndex + 1) % players.Length;
         activePlayer = players[activePlayerIndex];
 
-        
+
         // Safely invoke the event
         ActivePlayerBroadcast?.Invoke(activePlayer);
+        if(activePlayer.human == true)
+        {
+            HumanPlayerBroadcast?.Invoke(true);
+        }
+        else if (activePlayer.human ==false)
+        {
+            HumanPlayerBroadcast?.Invoke(false);
+        }
+
     }
- 
+
 }

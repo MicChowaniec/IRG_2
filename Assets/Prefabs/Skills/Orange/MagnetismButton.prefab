@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 106127206316501831}
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
-  - component: {fileID: 167202851340680570}
   m_Layer: 5
-  m_Name: BiteButton
+  m_Name: MagnetismButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 40af5779d421a2e40b98ebb3db2ce4e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 94519b1deaafe9842a857e922cdfd51c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -121,17 +120,3 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &167202851340680570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648954108819363694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ad557b00bf3b8a4e915c202f9bad91b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onHoverSC: {fileID: 0}
-  litMaterial: {fileID: 0}

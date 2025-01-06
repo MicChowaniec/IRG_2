@@ -13,15 +13,26 @@ public class Player : ScriptableObject
     {
         Pos = StartPos;
         Rot = StartRot;
-        water = 10;
-        energy = 10;
-        biomass = 10;
-        protein = 10;
+        water = 12;
+        energy = 12;
+        biomass = 12;
+        protein = 12;
+        starlings = 1;
+        maxStarlings = 1;
+        eyes = 2;
+        fireResistance = -10;
+        toxicResistance = 0;
+
     }
     public int water;
     public int energy;
     public int biomass;
     public int protein;
+    public int starlings;
+    public int maxStarlings;
+    public int eyes;
+    public int fireResistance;
+    public int toxicResistance;
 
 
     public int sequence;
@@ -30,6 +41,7 @@ public class Player : ScriptableObject
     public Vector3 Pos, StartPos;
     public Quaternion Rot, StartRot;
     public bool human = false;
+    public bool rooted = false;
     public GameObject Prefab;
     public GameObject TreePrefab;
     public Material material;

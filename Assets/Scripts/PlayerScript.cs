@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class PlayerScript : MonoBehaviour
 {
     public Player player;
     public Animator animator;
-    
+
     private int tileId;
     public static event Action<int> UpdatePlayerPosition;
 
-    
+    public void OnEnable()
+    {
+        PlayerManager.ActivePlayerBroadcast += MakeAction;
+    }
+
+
+    public void OnDisable()
+    {
+        PlayerManager.ActivePlayerBroadcast -= MakeAction;
+    }
 
     // Start is called before the first frame update
     public void Start()
@@ -57,6 +67,14 @@ public class PlayerScript : MonoBehaviour
     {
         player.Pos = transform.position;
         player.Rot = transform.rotation;
+    }
+    private void MakeAction(Player player)
+    {
+        if(player.human)
+        {
+            return;
+        }
+        //Implement AI behavior
     }
 
 
