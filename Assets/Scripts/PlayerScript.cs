@@ -75,6 +75,7 @@ public class PlayerScript : MonoBehaviour
             return;
         }
         //Implement AI behavior
+        
     }
 
 
