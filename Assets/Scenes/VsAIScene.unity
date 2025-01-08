@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 3e3a1cd3faf02f9498c88bc06956f233, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1001,7 +1001,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 193148307}
-  - component: {fileID: 193148308}
   - component: {fileID: 193148309}
   m_Layer: 0
   m_Name: ScoreKeeper
@@ -1025,18 +1024,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &193148308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193148306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aff1648b4263ae42b5f30698c9915ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &193148309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3447,7 +3434,6 @@ RectTransform:
   - {fileID: 707863559}
   - {fileID: 1413346971}
   - {fileID: 1341553193}
-  - {fileID: 892147227}
   - {fileID: 310830743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4248,7 +4234,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 0.9, b: 0.8, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -5191,7 +5177,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 193148308}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ScoreKeeper, Assembly-CSharp
         m_MethodName: FinishGameClick
         m_Mode: 1
@@ -5788,12 +5774,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1895947286}
-  m_Father: {fileID: 576203494}
+  m_Father: {fileID: 1341553193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -160, y: 50}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &892147228
 MonoBehaviour:
@@ -8081,7 +8067,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 892147227}
   m_Father: {fileID: 576203494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12067,7 +12054,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.65
+  m_fontSize: 41.65
   m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13098,10 +13085,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSettings: {fileID: 11400000, guid: bca31676766ca3d4d87a562537bada7b, type: 2}
-  dayUI: {fileID: 576203490}
-  nightUI: {fileID: 91447564}
   Light: {fileID: 705507994}
-  step: 0
+  dayStep: 0
+  nightStep: 0
 --- !u!1 &2090517709
 GameObject:
   m_ObjectHideFlags: 0

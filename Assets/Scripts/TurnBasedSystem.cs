@@ -42,6 +42,11 @@ public class TurnBasedSystem : MonoBehaviour
         NextTurn?.Invoke();
     }
 
+    public void OnEnable()
+    {
+        
+    }
+
 
 
 }

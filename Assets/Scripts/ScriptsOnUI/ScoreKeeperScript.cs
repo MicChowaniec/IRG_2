@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,8 +56,20 @@ public class ScoreKeeperScript : MonoBehaviour
     public int rootableFields;
 
 
+    public void OnEnable()
+    {
+        SunLevel.DayEvent += SunLevelChange;
+    }
+    public void OnDisable()
+    {
+        SunLevel.DayEvent -= SunLevelChange;
+    }
 
-
+    private void SunLevelChange(int sunLevelChange)
+    {
+        sunLevel = sunLevelChange;
+        sunLevelText.text = "Sun Level: " + sunLevel;
+    }
 
     private void ChangeWaterLevel(int waterChange)
 

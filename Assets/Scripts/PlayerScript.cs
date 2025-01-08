@@ -15,13 +15,14 @@ public class PlayerScript : MonoBehaviour
 
     public void OnEnable()
     {
-        PlayerManager.ActivePlayerBroadcast += MakeAction;
+        //PlayerManager.ActivePlayerBroadcast
+        PlayerManager.HumanPlayerBroadcast += MakeAction;
     }
 
 
     public void OnDisable()
     {
-        PlayerManager.ActivePlayerBroadcast -= MakeAction;
+        PlayerManager.HumanPlayerBroadcast -= MakeAction;
     }
 
     // Start is called before the first frame update
@@ -68,13 +69,17 @@ public class PlayerScript : MonoBehaviour
         player.Pos = transform.position;
         player.Rot = transform.rotation;
     }
-    private void MakeAction(Player player)
+    private void MakeAction(bool AI)
     {
-        if(player.human)
+        if(true)
         {
             return;
         }
         //Implement AI behavior
+        else
+        {
+            
+        }
         
     }
 

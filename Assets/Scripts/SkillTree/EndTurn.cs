@@ -1,0 +1,12 @@
+using UnityEditor;
+using UnityEngine;
+using System;
+
+public class EndTurn : AbstractSkill
+{
+    public static event Action EndTurnEvent;
+    public override void Do(int range, bool self)
+    {
+        EndTurnEvent?.Invoke();
+    }
+}
