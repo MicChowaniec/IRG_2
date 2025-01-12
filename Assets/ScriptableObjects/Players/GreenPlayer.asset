@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: GreenPlayer
   m_EditorClassIdentifier: 
+  id: 1
+  water: 12
+  energy: 12
+  biomass: 12
+  protein: 12
+  starlings: 1
+  maxStarlings: 1
+  eyes: 2
+  fireResistance: -10
+  toxicResistance: 0
   sequence: 3
   itsName: Green
   itsDescription: Green focus on regeneration and disease
   Pos: {x: 0, y: 0, z: -0.8660254}
   StartPos: {x: 0, y: 0, z: -0.8660254}
-  Rot: {x: 0, y: 0, z: 0, w: 1}
+  Rot: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   StartRot: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   human: 0
+  rooted: 0
   Prefab: {fileID: 13136404289340683, guid: 52c23d1c9d2c65d4b8b3918594c79c85, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 40a33e15f192bc343bbd32d746243508, type: 3}
   material: {fileID: 2100000, guid: 1717475dbaaa8924ea2328f699fb8a56, type: 2}

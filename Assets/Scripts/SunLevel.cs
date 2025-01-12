@@ -7,8 +7,7 @@ public class SunLevel : MonoBehaviour
     public GameSettings gameSettings;
 
     public Light Light;
-    private int solarPointer;
-    private int solarMaximum;
+    public int solarPointer;
     private int signature;
    
     public float dayStep;
@@ -21,64 +20,68 @@ public class SunLevel : MonoBehaviour
     void OnNewGame()
     {
 
-        dayStep = 180.0f / (float)gameSettings.CyclesPerDay;
+        dayStep = 160.0f / (float)gameSettings.CyclesPerDay / 36;
         nightStep = -45;
-        solarPointer = 10;
-        solarMaximum = 90;
+
         MapManager.MapGenerated -= OnNewGame;
+        SunRise();
     }
     private void OnEnable()
     {
         MapManager.MapGenerated += OnNewGame;
-        TurnBasedSystem.NextTurn += SolarUpdate;
+         PlayerManager.ActivePlayerBroadcast+= SolarUpdate;
         
     }
     private void OnDisable()
     {
 
-        TurnBasedSystem.NextTurn -= SolarUpdate;
+        PlayerManager.ActivePlayerBroadcast -= SolarUpdate;
+        MapManager.MapGenerated -= OnNewGame;
+    }
+    private void SunRise()
+    {
+        solarPointer = 0;
+        Light.color = new Color(0, 0.8f, 0.9f, 1);
+    }
+    private void SunSet()
+    {
+        solarPointer = -90;
+        NightEvent?.Invoke();
+
+        Light.color = new Color(0, 0.3f, 0.6f, 1);
+        
+        float x = solarPointer;
+        Light.transform.rotation = Quaternion.Euler(new Vector3(x, x, 0));
     }
 
-   
-    public void SolarUpdate()
+
+    public void SolarUpdate(int id)
     {
 
         solarPointer += (int)dayStep;
         //Sun position check for zenit during year - TODO
-        //if (signature != -1 && solarMaximum < 90)
-        //{
-         //   signature = 1;
-        //}
-        //else
-        //{
-        //    signature = -1;
-        //}
+        if (signature != -1 && solarPointer < 89)
+        {
+           signature = 1;
+        }
+        else
+        {
+            signature = -1;
+        }
 //
         //solarMaximum += 1 * signature;
    
 
       //Sun position funtion during day/night
-        if (solarPointer > 10 && solarPointer< 170)
-        {
-            float x = Mathf.Abs((float)solarPointer - 1 / 2 * solarMaximum) - 1 / 2 * solarMaximum;
+        if (solarPointer > 1 && solarPointer < 179)
+        {   float x = Mathf.Sin(solarPointer*Mathf.PI/180)*90;
             float y = (float)solarPointer / 2;
             Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
-            Light.color = new Color(0, 0.8f, 0.9f, 1);
             DayEvent?.Invoke((int)x);
-           
-
-
         }
         else
         {
-            solarPointer = -90;
-            float x = Mathf.Abs((float)solarPointer - 1 / 2 * solarMaximum) - 1 / 2 * solarMaximum;
-            float y = (float)solarPointer / 2;
-            Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
-            Light.color = new Color(0,0.3f,0.6f,1);
-
-
-            NightEvent?.Invoke();
+            SunSet();
         }
     }
 }

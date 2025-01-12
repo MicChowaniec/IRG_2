@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: RedPlayer
   m_EditorClassIdentifier: 
+  id: 5
+  water: 12
+  energy: 12
+  biomass: 12
+  protein: 12
+  starlings: 1
+  maxStarlings: 1
+  eyes: 2
+  fireResistance: -10
+  toxicResistance: 0
   sequence: 6
   itsName: Red
   itsDescription: Red is pretty tough, and mining from roots
-  Pos: {x: 0, y: 0, z: 0}
+  Pos: {x: 0, y: 0, z: 0.8660254}
   StartPos: {x: 0, y: 0, z: 0.8660254}
   Rot: {x: 0, y: 0, z: 0, w: 1}
   StartRot: {x: 0, y: 0, z: 0, w: 1}
   human: 0
+  rooted: 0
   Prefab: {fileID: 13136404289340683, guid: a7eb34304fecc10409f1492240b9db05, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 95cd0a9541f54cb47b5db1d7cf4eda53, type: 3}
   material: {fileID: 2100000, guid: c1846bb18311031489fe63550620be48, type: 2}

@@ -6,21 +6,27 @@ using UnityEditor.Animations;
 public class PlayerManager : MonoBehaviour
 {
     public Player[] players;
+    public GameObject ActionBar;
+
     private Player activePlayer;
     private int activePlayerIndex;
 
-    public static event Action<Player> ActivePlayerBroadcast;
-    public static event Action<bool> HumanPlayerBroadcast;
+
+    public static event Action<int> ActivePlayerBroadcast;
+    public static event Action ChangePhase;
+
 
     public void OnEnable()
     {
-        TurnBasedSystem.NextTurn += ChangePlayer;
+        EndTurn.EndTurnEvent += ChangePlayer;
+        PlayerScript.FinishTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
     }
 
     public void OnDisable()
     {
-        TurnBasedSystem.NextTurn -= ChangePlayer;
+       EndTurn.EndTurnEvent -=  ChangePlayer;
+        PlayerScript.FinishTurn -= ChangePlayer;
         MapManager.MapGenerated -= AllocatePlayers;
     }
     /// <summary>
@@ -49,22 +55,19 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("Player list is empty. Unable to change player.");
             return;
         }
-
+        
         activePlayerIndex = (activePlayerIndex + 1) % players.Length;
         activePlayer = players[activePlayerIndex];
 
-
         // Safely invoke the event
-        ActivePlayerBroadcast?.Invoke(activePlayer);
-        if(activePlayer.human == true)
+        ActivePlayerBroadcast?.Invoke(activePlayer.id);
+        ActionBar.SetActive(activePlayer.human);
+        if (activePlayerIndex%players.Length==0)
         {
-            HumanPlayerBroadcast?.Invoke(true);
+            ChangePhase?.Invoke();
         }
-        else if (activePlayer.human ==false)
-        {
-            HumanPlayerBroadcast?.Invoke(false);
-        }
-
     }
+
+
 
 }

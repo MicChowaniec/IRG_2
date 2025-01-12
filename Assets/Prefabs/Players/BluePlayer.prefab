@@ -938,6 +938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
   animator: {fileID: 1601692875157988610}
+  isActivePlayer: 0
 --- !u!114 &-6903829643535082838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -952,7 +953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 4294967295
   range: 1.4
   ListOfDiscoveredFields: 
   human: 0

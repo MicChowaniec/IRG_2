@@ -59,16 +59,23 @@ public class ScoreKeeperScript : MonoBehaviour
     public void OnEnable()
     {
         SunLevel.DayEvent += SunLevelChange;
+        SunLevel.NightEvent += SunLevelChange;
     }
     public void OnDisable()
     {
         SunLevel.DayEvent -= SunLevelChange;
+        SunLevel.NightEvent -= SunLevelChange;
     }
 
     private void SunLevelChange(int sunLevelChange)
     {
         sunLevel = sunLevelChange;
-        sunLevelText.text = "Sun Level: " + sunLevel;
+        sunLevelText.text = sunLevel.ToString();
+    }
+    private void SunLevelChange()
+    {
+        sunLevel = 0;
+        sunLevelText.text = sunLevel.ToString();
     }
 
     private void ChangeWaterLevel(int waterChange)

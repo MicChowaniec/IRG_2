@@ -22,7 +22,6 @@ public class TurnBasedSystem : MonoBehaviour
 
     public int diseaseLevel;
 
-    public static event Action NextTurn;
 
     void Start()
     {
@@ -31,7 +30,16 @@ public class TurnBasedSystem : MonoBehaviour
         ActiveTurn = turns[activeTurnIndex];
         image.sprite = ActiveTurn.icon;
     }
+    public void OnEnable()
+    {
+        PlayerManager.ChangePhase += SetNextTurn;
 
+    }
+    public void OnDisable()
+    {
+       PlayerManager.ChangePhase -= SetNextTurn;
+
+    }
 
     public void SetNextTurn()
     {
@@ -39,14 +47,13 @@ public class TurnBasedSystem : MonoBehaviour
         activeTurnIndex = (activeTurnIndex + 1) % numberOfTurns;
         ActiveTurn = turns[activeTurnIndex];
         image.sprite = ActiveTurn.icon;
-        NextTurn?.Invoke();
-    }
 
-    public void OnEnable()
-    {
-        
     }
+    
 
+
+
+ 
 
 
 }

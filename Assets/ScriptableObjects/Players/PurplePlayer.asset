@@ -12,14 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: PurplePlayer
   m_EditorClassIdentifier: 
+  id: 4
+  water: 12
+  energy: 12
+  biomass: 12
+  protein: 12
+  starlings: 1
+  maxStarlings: 1
+  eyes: 2
+  fireResistance: -10
+  toxicResistance: 0
   sequence: 1
   itsName: Purple
   itsDescription: Purple has 3 eyes, and is Starling-Friendly.
   Pos: {x: -0.6666667, y: 0, z: 0.4330127}
   StartPos: {x: -0.6666667, y: 0, z: 0.4330127}
-  Rot: {x: 0, y: 0, z: 0, w: 1}
+  Rot: {x: 0, y: -0.5, z: 0, w: 0.8660254}
   StartRot: {x: 0, y: -0.5, z: 0, w: 0.8660254}
   human: 1
+  rooted: 0
   Prefab: {fileID: 13136404289340683, guid: 88966bd8f50dd22458779dd63d0f7eea, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
   material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}

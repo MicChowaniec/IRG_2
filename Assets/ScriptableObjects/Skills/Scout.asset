@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73551e2395d02094f8b967334a9745d7, type: 3}
+  m_Name: Scout
+  m_EditorClassIdentifier: 
+  label: Starling
+  description: 'Send Starling scout to: \n -Set a nest on hill \n -pick a fruit from
+    tree or bush, \n -blind other player'
+  button: 0
+  sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
+  actionType: 0
+  RootedSkill: 0
+  ButtonPrefab: {fileID: 2648954108819363694, guid: 585d5530b6cc78b4aa883a213c94712e, type: 3}
+  starling: 1
+  biomass: 0
+  water: 0
+  energy: 0
+  protein: 0
+  resistance: 0
+  eyes: 0
+  range: 0
+  self: 0

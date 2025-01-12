@@ -9,22 +9,36 @@ public class PlayerScript : MonoBehaviour
 {
     public Player player;
     public Animator animator;
-
+    public bool isActivePlayer;
     private int tileId;
     public static event Action<int> UpdatePlayerPosition;
+    public static event Action FinishTurn;
 
     public void OnEnable()
     {
         //PlayerManager.ActivePlayerBroadcast
-        PlayerManager.HumanPlayerBroadcast += MakeAction;
+        PlayerManager.ActivePlayerBroadcast += SetActivePlayer;
     }
 
 
     public void OnDisable()
     {
-        PlayerManager.HumanPlayerBroadcast -= MakeAction;
+        PlayerManager.ActivePlayerBroadcast -= SetActivePlayer;
     }
 
+    private void SetActivePlayer(int i)
+    {
+
+        if (player.id == i)
+        {
+            isActivePlayer = true;
+            MakeAction(player.human);
+        }
+        else
+        {
+            isActivePlayer = false;
+        }
+    }
     // Start is called before the first frame update
     public void Start()
     {
@@ -69,22 +83,12 @@ public class PlayerScript : MonoBehaviour
         player.Pos = transform.position;
         player.Rot = transform.rotation;
     }
-    private void MakeAction(bool AI)
+    private void MakeAction(bool human)
     {
-        if(true)
+        if (!human)
         {
-            return;
+            FinishTurn?.Invoke();
+            Debug.Log(player.itsName + "End the turn");
         }
-        //Implement AI behavior
-        else
-        {
-            
-        }
-        
     }
-
-
-
-
-
 }

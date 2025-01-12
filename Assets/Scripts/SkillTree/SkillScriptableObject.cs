@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
-[CreateAssetMenu(fileName = "SkillScriptableObject", menuName = "Scriptable Objects/Skill")]
-public class SkillScriptableObject : ScriptableObject
+[CreateAssetMenu(fileName = "SkillScriptableObject", menuName = "Skill")]
+public class SkillScriptableObject : OnHoverSC
 {
-    public string label;
     public ActionTypeEnum actionType;
-    public string description;
+    public bool RootedSkill;
+
+    
+    public GameObject ButtonPrefab;
 
     public int starling;
     public int biomass;

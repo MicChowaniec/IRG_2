@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
 public class Player : ScriptableObject
 {
+    public int id;
+
     private void Awake()
     {
         Reset();
@@ -45,5 +47,8 @@ public class Player : ScriptableObject
     public GameObject Prefab;
     public GameObject TreePrefab;
     public Material material;
+
+    public List<CardScriptableObject> cards;
+
 
 }

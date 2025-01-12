@@ -12,15 +12,12 @@ public class TileScript : MonoBehaviour
     
     public List<int> neighbours = new();
     
-    public Player activePlayer;
+    public int activePlayer;
     public TurnBasedSystem tbs;
 
     public MapManager mapManager;
 
-    public void Start()
-    {
-        
-    }
+   
     public static int SendID(Vector3 vector3)
     {
 
@@ -41,9 +38,9 @@ public class TileScript : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast-= ActivePlayerUpdate;
     }
 
-    private void ActivePlayerUpdate(Player player) 
+    private void ActivePlayerUpdate(int id)
     {
-        activePlayer = player;
+        activePlayer = id;
     }
     private void AddNeighbours()
     {
@@ -66,7 +63,7 @@ public class TileScript : MonoBehaviour
                         if (!neighbours.Contains(neighborId))
                         {
                             neighbours.Add(neighborId);
-                            Debug.Log("Neighbour Added");
+                            //Debug.Log("Neighbour Added");
                         }
                     }
                 }

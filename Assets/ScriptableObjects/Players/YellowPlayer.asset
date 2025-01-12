@@ -12,15 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: YellowPlayer
   m_EditorClassIdentifier: 
+  id: 6
+  water: 12
+  energy: 12
+  biomass: 12
+  protein: 12
+  starlings: 1
+  maxStarlings: 1
+  eyes: 2
+  fireResistance: -10
+  toxicResistance: 0
   sequence: 4
   itsName: Yellow
   itsDescription: Yellow is collecting more energy, and because of this, can move
     faster.
   Pos: {x: 0.6666667, y: 0, z: -0.4330127}
   StartPos: {x: 0.6666667, y: 0, z: -0.4330127}
-  Rot: {x: 0, y: 0, z: 0, w: 1}
+  Rot: {x: 0, y: 0.86602545, z: 0, w: 0.49999997}
   StartRot: {x: 0, y: 0.86602545, z: 0, w: 0.49999997}
   human: 0
+  rooted: 0
   Prefab: {fileID: 13136404289340683, guid: f3cf715784b5b974ab02a6117b154748, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 768d7164f04478f4dabe5b6b2071d243, type: 3}
   material: {fileID: 2100000, guid: cf688a5108615e046976e287dabecd4d, type: 2}
