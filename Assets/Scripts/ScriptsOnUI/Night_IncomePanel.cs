@@ -125,7 +125,7 @@ public class Night_IncomePanel : MonoBehaviour
             }
 
         }
-        //skill.AddComponent<>
+        
 
     }
 

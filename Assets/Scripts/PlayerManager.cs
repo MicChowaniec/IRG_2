@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     public Player[] players;
     public GameObject ActionBar;
 
-    private Player activePlayer;
+    public Player activePlayer;
     private int activePlayerIndex;
 
 
