@@ -13,6 +13,7 @@ public class TileScriptableObject : OnHoverSC
     public GameObject representation;
     public TileTypesEnum tileTypes;
     public GameObjectTypeEnum childType = GameObjectTypeEnum.None;
+    public int childColor;
 
     public override void AskForDetails()
     {

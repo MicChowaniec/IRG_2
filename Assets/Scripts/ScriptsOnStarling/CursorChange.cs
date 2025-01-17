@@ -8,10 +8,6 @@ public class RaycastCursorFollow : MonoBehaviour
     {
        
 
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main Camera is not assigned. Please assign it in the Inspector.");
-        }
     }
 
    

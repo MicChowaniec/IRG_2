@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: ScoutSkillSO
   m_EditorClassIdentifier: 
   label: Starling
-  description: 'Send Starling scout to: \n -Set a nest on hill \n -pick a fruit from
-    tree or bush, \n -blind other player'
+  description: "Send Starling scout to:\n-set a nest on hill,\n-pick a fruit from
+    tree,\n-or bush, \n-blind other player."
+  forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
   actionType: 0

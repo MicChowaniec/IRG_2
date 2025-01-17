@@ -1,9 +1,12 @@
 using JetBrains.Annotations;
 using UnityEngine;
+using System;
+using UnityEditor;
 
 public class AbstractSkill : MonoBehaviour
 {
     public SkillScriptableObject skill;
+    
     public virtual void StatisticChange(int starling, int biomass, int water, int energy, int protein, int resistance, int eyes)
     {
 
@@ -12,6 +15,11 @@ public class AbstractSkill : MonoBehaviour
     {
 
     }
+    public virtual bool CheckResources(int res)
+    {
+        return false;
+    }
     
+
 
 }

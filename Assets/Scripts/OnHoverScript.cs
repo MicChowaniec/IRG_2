@@ -7,19 +7,45 @@ public class OnHoverScript: MonoBehaviour
 {
     private string label;
     private string description;
+    
+    private string forStarlingText;
     private bool button;
+
+    private bool forStarling;
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
     public static event Action< string, string,bool> OnHoverBroadcast;
 
+    public void OnEnable()
+    {
+        StarlingSkillScript.BirdActive += ForStarling;
+    }
+    public void OnDisable()
+    {
+        StarlingSkillScript.BirdActive -= ForStarling;
+    }
+
+    public void ForStarling(bool b)
+    {
+        forStarling = b;
+    }
     public void OnMouseEnter()
     {
         onHoverSC.AskForDetails();
         label = onHoverSC.label;
         description = onHoverSC.description;
         button = onHoverSC.button;
-        OnHoverBroadcast?.Invoke(label, description, button);
+        if (forStarling)
+        {
+           
+        }
+        else
+        {
+            OnHoverBroadcast?.Invoke(label, description, button);
+        }
+
+
         Debug.Log("send info to PopUP");
         Highlight();
     }

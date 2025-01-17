@@ -217,6 +217,8 @@ public class MapManager : MonoBehaviour
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
                             InstantiateBush(bushPrefabs[random], id);
+                            // 0 - purple, 1 - blue, 2 - green, 3 - yellow, 4 - orange, 5 - red; TODO - sth with sense about it.
+                            tiles[id].childColor = random;
                             tiles[id].childType = GameObjectTypeEnum.Bush;
                             tiles[id].passable = false;
 
