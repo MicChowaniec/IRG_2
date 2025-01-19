@@ -7,15 +7,20 @@ public class OnHoverScript: MonoBehaviour
 {
     private string label;
     private string description;
-    
+
     private string forStarlingText;
+    private GameObjectTypeEnum GOTE;
+    private Color color;
+
     private bool button;
+
 
     private bool forStarling;
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action< string, string,bool> OnHoverBroadcast;
+    public static event Action<string, string, bool, GameObjectTypeEnum,Color> OnHoverBroadcast;
+   
 
     public void OnEnable()
     {
@@ -36,14 +41,12 @@ public class OnHoverScript: MonoBehaviour
         label = onHoverSC.label;
         description = onHoverSC.description;
         button = onHoverSC.button;
-        if (forStarling)
-        {
-           
-        }
-        else
-        {
-            OnHoverBroadcast?.Invoke(label, description, button);
-        }
+        GOTE = onHoverSC.GetChildObjectType();
+        color = onHoverSC.GetChildObjectColor();
+
+
+        OnHoverBroadcast?.Invoke(label, description, button, GOTE ,color);
+        
 
 
         Debug.Log("send info to PopUP");

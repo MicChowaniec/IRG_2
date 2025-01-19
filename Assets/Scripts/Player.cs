@@ -36,6 +36,12 @@ public class Player : ScriptableObject
     public int fireResistance;
     public int toxicResistance;
 
+    public int PurpleLvl;
+    public int BlueLvl;
+    public int GreenLvl;
+    public int YellowLvl;
+    public int OrangeLvl;
+    public int RedLvl;
 
     public int sequence;
     public string itsName;
@@ -50,5 +56,29 @@ public class Player : ScriptableObject
 
     public List<CardScriptableObject> cards;
 
+    public void Grow(int Addedprotein)
+    {
+        while (protein<=biomass)
+        {
+            protein++;
+            Addedprotein--;
+        }
+        if (protein == biomass)
+        {
+            while (Addedprotein + protein > biomass)
+            {
+                biomass++;
+                Addedprotein--;
+                if (Addedprotein + protein > biomass)
+                {
+                    protein++;
+                    Addedprotein--;
+                }
+
+
+            }
+        }
+
+    }
 
 }

@@ -32,18 +32,18 @@ public class TileHoverSC : OnHoverSC
                 break;
 
             case GameObjectTypeEnum.Bush:
-                temp = "Pick some small fruits";
+                temp = "Pick some small fruits, of type: " +tso.childColor.ToString();
                 break;
             case GameObjectTypeEnum.Water:
                 temp = "Hunt some small fish";
                 break;
             case GameObjectTypeEnum.Tree:
-                    temp = "Pick fruit from this tree";
+                    temp = "Pick fruit from this tree, type: "+tso.childColor.ToString();
                 break;
         }
 
         return temp;
     }
-
+   
 
 }

@@ -34,6 +34,7 @@ public class MapManager : MonoBehaviour
     public int numberOfTypesOfTiles;
     public Dictionary<int, TileScriptableObject> tiles = new();
     public Dictionary<Vector2, int> posAdnIds = new();
+    public Dictionary<int, Color> colors = new();
     public GameObject originalTreePrefab;
 
     [Range(1, 10)]
@@ -51,6 +52,8 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
+
+        colors[0] = Color.magenta; colors[1] = Color.blue; colors[2] = Color.green; colors[3] = Color.yellow; colors[4] = Color.gray; colors[5] = Color.red ;
         sizeOfMap = gameSettings.SizeOfMap;
         if (sizeOfMap > 3)
         {
@@ -217,8 +220,9 @@ public class MapManager : MonoBehaviour
                         {
                             int random = new System.Random().Next(0, bushPrefabs.Length);
                             InstantiateBush(bushPrefabs[random], id);
-                            // 0 - purple, 1 - blue, 2 - green, 3 - yellow, 4 - orange, 5 - red; TODO - sth with sense about it.
-                            tiles[id].childColor = random;
+                            // 0 - purple, 1 - blue, 2 - green, 3 - yellow, 4 - orange, 5 - red; Use dictionary "colors";
+                            
+                            tiles[id].childColor = colors[random];
                             tiles[id].childType = GameObjectTypeEnum.Bush;
                             tiles[id].passable = false;
 

@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edceae283b48ace4e82fe2bbc7cf1c7c, type: 3}
   m_Name: ThroatTurn
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 38ede013d287ec940b0db6433497b8d2, type: 3}
+  icon: {fileID: 21300000, guid: 53de92de1d566d049a9a9dca827075d9, type: 3}
   nameOfTurn: ThroatTurn
   description: Water and Speach
   actionType: 1
-  actions:
-  - {fileID: 11400000, guid: d4f2a2b989ffc404dbd717c04fd53df0, type: 2}

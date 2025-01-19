@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.RenderGraphModule;
 
 public class TileScript : MonoBehaviour
 {
@@ -18,13 +19,11 @@ public class TileScript : MonoBehaviour
     public MapManager mapManager;
 
    
-    public static int SendID(Vector3 vector3)
+    public int SendID(Vector3 vector3)
     {
 
-
-
-        return 0;
-            }
+        return TSO.id;
+    }
 
    
     private void OnEnable()

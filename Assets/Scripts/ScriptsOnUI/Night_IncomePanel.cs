@@ -1,6 +1,9 @@
 using NUnit.Framework;
+using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using System;
 
 public class Night_IncomePanel : MonoBehaviour
 {
@@ -8,6 +11,9 @@ public class Night_IncomePanel : MonoBehaviour
     public GameObject CardCreatorPanel;
     public GameObject IncarnateCreatorPanel;
     public GameObject ConfirmButton;
+
+    public TextMeshProUGUI PassiveDescription;
+
     public GameObject PurpleLP;
     public GameObject BlueLP;
     public GameObject GreenLP;
@@ -21,9 +27,13 @@ public class Night_IncomePanel : MonoBehaviour
     public GameObject OrangeRP;
     public GameObject RedRP;
 
+
+    public static event Action<bool> CardCreatorMenu;
     public void OnEnable()
     {
         SunLevel.NightEvent += ShowIncome;
+
+
     }
     public void OnDisable()
     {

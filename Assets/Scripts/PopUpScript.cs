@@ -24,7 +24,7 @@ public class PopUpScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHand
         OnHoverScript.OnHoverBroadcast -= StartDisplayPopUp;
     }
 
-    private void StartDisplayPopUp(string label, string description, bool button)
+    private void StartDisplayPopUp(string label, string description, bool button, GameObjectTypeEnum gote, Color color )
     {
         isMouseOver = true; // Set the flag to true when mouse is over
         if (displayCoroutine != null)

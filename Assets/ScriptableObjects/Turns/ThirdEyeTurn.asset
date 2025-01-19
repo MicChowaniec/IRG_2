@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edceae283b48ace4e82fe2bbc7cf1c7c, type: 3}
   m_Name: ThirdEyeTurn
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: f3a1a981eb35a834991fb2aebf5dd53a, type: 3}
+  icon: {fileID: 21300000, guid: 6414dae49a05a3c4c93fb812953b430e, type: 3}
   nameOfTurn: ThirdEyeTurn
   description: Manage Starlings
-  actions:
-  - {fileID: 11400000, guid: 2dbd0b0777d1b52479cbbce19f2d5f42, type: 2}
+  actionType: 0

@@ -22,5 +22,19 @@ public class SkillScriptableObject : OnHoverSC
     public bool self;
 
 
+    public string purplePassiveDescription;
+    public string bluePassiveDescription;
+    public string greenPassiveDescription;
+    public string yellowPassiveDescription;
+    public string orangePassiveDescription;
+    public string redPassiveDescription;
+
+    public bool purplePassive;
+    public bool bluePassive;
+    public bool greenPassive;
+    public bool yellowPassive;
+    public bool orangePassive;
+    public bool redPassive; 
+
 
 }

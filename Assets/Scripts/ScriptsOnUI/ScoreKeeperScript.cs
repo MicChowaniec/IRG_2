@@ -61,12 +61,14 @@ public class ScoreKeeperScript : MonoBehaviour
         SunLevel.DayEvent += SunLevelChange;
         SunLevel.NightEvent += SunLevelChange;
         StarlingSkillScript.StarlingConsumed += StarlingChange;
+        StarlingSkillScript.FishEaten += ChangeProteinLevel ;
     }
     public void OnDisable()
     {
         SunLevel.DayEvent -= SunLevelChange;
         SunLevel.NightEvent -= SunLevelChange;
         StarlingSkillScript.StarlingConsumed -= StarlingChange;
+        StarlingSkillScript.FishEaten -= ChangeProteinLevel;
     }
 
     private void SunLevelChange(int sunLevelChange)

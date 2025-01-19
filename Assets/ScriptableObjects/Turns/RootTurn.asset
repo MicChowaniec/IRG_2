@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edceae283b48ace4e82fe2bbc7cf1c7c, type: 3}
   m_Name: RootTurn
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 9c32f38872401f24c87bdd0afa595dc0, type: 3}
+  icon: {fileID: 21300000, guid: 94c616220edea874d9626905eae3357e, type: 3}
   nameOfTurn: RootTurn
   description: Root
   actionType: 5
-  actions:
-  - {fileID: 11400000, guid: 504f4be5877224c48b6682aee5b16970, type: 2}
