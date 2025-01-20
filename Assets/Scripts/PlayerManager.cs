@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject ActionBar;
 
     public Player activePlayer;
-    private int activePlayerIndex;
+    private int activePlayerIndex=-1;
 
 
     public static event Action<int> ActivePlayerBroadcast;
@@ -21,11 +21,12 @@ public class PlayerManager : MonoBehaviour
         EndTurn.EndTurnEvent += ChangePlayer;
         PlayerScript.FinishTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
+        ChangePlayer();
     }
 
     public void OnDisable()
     {
-       EndTurn.EndTurnEvent -=  ChangePlayer;
+        EndTurn.EndTurnEvent -=  ChangePlayer;
         PlayerScript.FinishTurn -= ChangePlayer;
         MapManager.MapGenerated -= AllocatePlayers;
     }
@@ -55,9 +56,11 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("Player list is empty. Unable to change player.");
             return;
         }
-        
+
         activePlayerIndex = (activePlayerIndex + 1) % players.Length;
+
         activePlayer = players[activePlayerIndex];
+        Debug.Log(activePlayer.itsName);
 
         // Safely invoke the event
         ActivePlayerBroadcast?.Invoke(activePlayer.id);

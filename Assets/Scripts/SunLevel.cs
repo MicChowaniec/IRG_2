@@ -29,7 +29,7 @@ public class SunLevel : MonoBehaviour
     private void OnEnable()
     {
         MapManager.MapGenerated += OnNewGame;
-         PlayerManager.ActivePlayerBroadcast+= SolarUpdate;
+        PlayerManager.ActivePlayerBroadcast+= SolarUpdate;
         
     }
     private void OnDisable()

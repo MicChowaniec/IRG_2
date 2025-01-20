@@ -10,9 +10,9 @@ using System;
 public class TurnBasedSystem : MonoBehaviour
 {
     public List<Turn> turns; // List of turns, serialized for Unity Editor
-    private Turn ActiveTurn; // Property to access the active turn
+    public  Turn ActiveTurn; // Property to access the active turn
     public int activeTurnIndex; //Value between 0 and Length of turns
-    private int numberOfTurns;
+    public int numberOfTurns;
  
     public GameSettings gameSettings;
  
@@ -25,6 +25,7 @@ public class TurnBasedSystem : MonoBehaviour
 
     void Start()
     {
+        numberOfTurns = 6;
         totalTurns = 0;
         activeTurnIndex = 0;
         ActiveTurn = turns[activeTurnIndex];
@@ -43,17 +44,21 @@ public class TurnBasedSystem : MonoBehaviour
 
     public void SetNextTurn()
     {
-        numberOfTurns = turns.Count;
-        activeTurnIndex = (activeTurnIndex + 1) % numberOfTurns;
+        totalTurns++;
+        Debug.Log("Step 1");
+        activeTurnIndex = (totalTurns) % numberOfTurns;
+        Debug.Log("Step 2");
         ActiveTurn = turns[activeTurnIndex];
+        Debug.Log("Step 3");
         image.sprite = ActiveTurn.icon;
+        Debug.Log("Step 4");
 
     }
-    
 
 
 
- 
+
+
 
 
 }
