@@ -24,6 +24,8 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     private Camera cam; // Reference to the Camera component
     private bool isSpacePressed = false; // Boolean to track if the space key is currently pressed
 
+    public bool follow = true;
+
 
     /// <summary>
     /// Called when the script is first initialized.
@@ -31,14 +33,12 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
     /// </summary>
     private void Start()
     {
+
         cam = GetComponent<Camera>(); // Get the Camera component attached to this object
     }
-   
-    public void ChangeObjectToCenterOn(Player player)
-    {
-        objectToCenterOn = player.GetComponent<Transform>();
-    }
 
+    
+ 
     /// <summary>
     /// Updates every frame.
     /// Calls the movement, zoom, rotation, and centering functions to handle player input and adjust the camera.
@@ -49,7 +49,13 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
         HandleScrollZoom();
         HandleRotation();
         HandleCenterOnObject();
+        if (follow)
+        {
+            CenterOnObject();
+        }
+
     }
+
 
     /// <summary>
     /// Handles camera panning and movement based on keyboard and mouse input.
@@ -61,13 +67,27 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
 
         // Keyboard input (WSAD or Arrow keys)
         if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
+        {
+            follow = false;
             direction += transform.forward;
+        }
         if (Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow))
+        {
+            follow = false;
             direction -= transform.forward;
+        }
+
         if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
-            direction += transform.right;
+        {
+            follow = false;
+            direction += transform.right; 
+        }
+
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
-            direction -= transform.right;
+        {
+            follow = false;
+            direction -= transform.right; 
+        }
 
         // Normalize the direction vector to ensure consistent movement speed in all directions
         direction.y = 0; // Prevent movement in the Y direction
@@ -99,6 +119,7 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
 
             if (scroll != 0f)
             {
+            follow = false;
                 // Zmieñ wartoœæ Field of View w zale¿noœci od scrolla
                 cam.fieldOfView -= scroll * scrollSpeed;
 
@@ -126,6 +147,7 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
         // Right mouse button rotation
         if (Input.GetMouseButton(1))
         {
+            follow = false;
             float rotateX = Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
             float rotateY = -Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime; // Invert Y for intuitive rotation
 
@@ -139,10 +161,12 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
         {
             if (Input.GetKey("q"))
             {
+                follow = false;
                 transform.RotateAround(objectToCenterOn.position, Vector3.up, -rotateSpeed * Time.deltaTime);
             }
             if (Input.GetKey("e"))
             {
+                follow = false;
                 transform.RotateAround(objectToCenterOn.position, Vector3.up, rotateSpeed * Time.deltaTime);
             }
         }
@@ -159,29 +183,33 @@ public class StrategyCameraControl : MonoBehaviour // Define a public class name
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Input.GetKey(KeyCode.Space) && objectToCenterOn != null)
         {
-            if (!isSpacePressed|| scroll != 0f)
+            if (!isSpacePressed || scroll != 0f)
             {
                 isSpacePressed = true;
-
-                // Calculate the vector from the object to the origin (0, 0, 0) on the XZ plane
-                Vector3 targetPosition = objectToCenterOn.position;
-                Vector3 directionToCenter = (Vector3.zero - targetPosition).normalized;
-
-                // Calculate the new camera position closer to the object than the center
-                float distanceFromObject = 5.5f; // Set a fixed distance closer to the object
-                Vector3 newCameraPosition = objectToCenterOn.position - directionToCenter * distanceFromObject;
-
-                // Set the Y position to the fixed height
-                newCameraPosition.y = fixedHeight;
-
-                // Animate the camera's position
-                StartCoroutine(AnimateCameraToPosition(newCameraPosition, objectToCenterOn.position));
+                follow = true;
+                
             }
         }
         else
         {
             isSpacePressed = false; // Reset when space is released
         }
+    }
+
+    void CenterOnObject()
+    {
+        Vector3 targetPosition = objectToCenterOn.position;
+        Vector3 directionToCenter = (Vector3.zero - targetPosition).normalized;
+
+        // Calculate the new camera position closer to the object than the center
+        float distanceFromObject = 5.5f; // Set a fixed distance closer to the object
+        Vector3 newCameraPosition = objectToCenterOn.position - directionToCenter * distanceFromObject;
+
+        // Set the Y position to the fixed height
+        newCameraPosition.y = fixedHeight;
+
+        // Animate the camera's position
+        StartCoroutine(AnimateCameraToPosition(newCameraPosition, objectToCenterOn.position));
     }
     /// <summary>
     /// Immediately centers the camera on a specific object without requiring a key press.

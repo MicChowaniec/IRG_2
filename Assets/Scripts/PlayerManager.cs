@@ -11,17 +11,18 @@ public class PlayerManager : MonoBehaviour
     public Player activePlayer;
     private int activePlayerIndex=-1;
 
+    public GameObject[] playerInstances;
+
 
     public static event Action<int> ActivePlayerBroadcast;
     public static event Action ChangePhase;
-
 
     public void OnEnable()
     {
         EndTurn.EndTurnEvent += ChangePlayer;
         PlayerScript.FinishTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
-        ChangePlayer();
+  
     }
 
     public void OnDisable()
@@ -43,10 +44,21 @@ public class PlayerManager : MonoBehaviour
 
         foreach (Player p in players)
         {
+            int i = 0;
             GameObject player = Instantiate(p.Prefab, p.Pos, p.Rot);
             player.name = p.name;
+            if (p.human)
+            {
+                FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = player.transform;
+            }
+            playerInstances[i] = player;
         }
         MapManager.MapGenerated -= AllocatePlayers;
+        ChangePlayer();
+    }
+    public Transform GetTransformFromSO(Player player)
+    {
+        return playerInstances[player.id].GetComponent<Transform>();
     }
 
     public void ChangePlayer()
@@ -58,6 +70,12 @@ public class PlayerManager : MonoBehaviour
         }
 
         activePlayerIndex = (activePlayerIndex + 1) % players.Length;
+        if (activePlayerIndex%players.Length==0)
+        {
+
+            ChangePhase?.Invoke(); Debug.Log("Invoked Changed Phase");
+        }
+
 
         activePlayer = players[activePlayerIndex];
         Debug.Log(activePlayer.itsName);
@@ -65,10 +83,8 @@ public class PlayerManager : MonoBehaviour
         // Safely invoke the event
         ActivePlayerBroadcast?.Invoke(activePlayer.id);
         ActionBar.SetActive(activePlayer.human);
-        if (activePlayerIndex%players.Length==0)
-        {
-            ChangePhase?.Invoke();
-        }
+        
+
     }
 
 

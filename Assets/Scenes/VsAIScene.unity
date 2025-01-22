@@ -3176,6 +3176,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517176395}
   m_CullTransparentMesh: 1
+--- !u!1 &539759580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 539759581}
+  - component: {fileID: 539759582}
+  m_Layer: 0
+  m_Name: AI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &539759581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539759580}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 443.09738, y: 264.96326, z: 760.16724}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539759582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539759580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5909178bd62f7234f872234a1f1951b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &571064292
 GameObject:
   m_ObjectHideFlags: 0
@@ -7352,6 +7396,7 @@ MonoBehaviour:
   minFOV: 15
   maxFOV: 90
   objectToCenterOn: {fileID: 0}
+  follow: 1
 --- !u!1 &966759474
 GameObject:
   m_ObjectHideFlags: 0
@@ -12372,6 +12417,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4da1964ee082cde4295958b2d50e5c98, type: 2}
   ActionBar: {fileID: 1341553192}
   activePlayer: {fileID: 0}
+  playerInstances:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1667477997
 GameObject:
   m_ObjectHideFlags: 0
@@ -16144,3 +16196,4 @@ SceneRoots:
   - {fileID: 903628958}
   - {fileID: 576203494}
   - {fileID: 1149225230}
+  - {fileID: 539759581}

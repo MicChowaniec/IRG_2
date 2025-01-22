@@ -15,6 +15,7 @@ public class StarlingSkillScript : AbstractSkill
     public static event Action<bool> BirdActive;
     public static event Action<int> StarlingConsumed;
     public static event Action<int> FishEaten;
+    public static event Action SetNest;
 
     private GameObjectTypeEnum clickedTileObject;
     private Color clickedtileColor;
@@ -56,6 +57,19 @@ public class StarlingSkillScript : AbstractSkill
                 {
                     break;
                     //Add colors etc.
+                }
+            case GameObjectTypeEnum.Rock:
+                {
+                    SetNest();
+                    break;
+                }
+            case GameObjectTypeEnum.Tree:
+            {
+                    break;
+            }
+            case GameObjectTypeEnum.Player:
+                {
+                    break;
                 }
             
             

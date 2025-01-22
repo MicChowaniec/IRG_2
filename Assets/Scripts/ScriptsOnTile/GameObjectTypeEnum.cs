@@ -4,5 +4,6 @@ public enum GameObjectTypeEnum
     Bush,
     Tree,
     Water,
+    Player,
     None
 }

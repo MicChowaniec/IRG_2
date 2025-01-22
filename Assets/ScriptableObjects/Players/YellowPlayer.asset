@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: YellowPlayer
   m_EditorClassIdentifier: 
-  id: 6
+  id: 3
   water: 12
   energy: 12
   biomass: 12
@@ -22,6 +22,12 @@ MonoBehaviour:
   eyes: 2
   fireResistance: -10
   toxicResistance: 0
+  PurpleLvl: 0
+  BlueLvl: 0
+  GreenLvl: 0
+  YellowLvl: 0
+  OrangeLvl: 0
+  RedLvl: 0
   sequence: 4
   itsName: Yellow
   itsDescription: Yellow is collecting more energy, and because of this, can move
@@ -35,3 +41,4 @@ MonoBehaviour:
   Prefab: {fileID: 13136404289340683, guid: f3cf715784b5b974ab02a6117b154748, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 768d7164f04478f4dabe5b6b2071d243, type: 3}
   material: {fileID: 2100000, guid: cf688a5108615e046976e287dabecd4d, type: 2}
+  cards: []

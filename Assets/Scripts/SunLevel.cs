@@ -13,35 +13,32 @@ public class SunLevel : MonoBehaviour
     public float dayStep;
     public float nightStep;
 
+
     public static event Action<int> DayEvent;
     public static event Action NightEvent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void OnNewGame()
-    {
-
-        dayStep = 160.0f / (float)gameSettings.CyclesPerDay / 36;
-        nightStep = -45;
-
-        MapManager.MapGenerated -= OnNewGame;
-        SunRise();
-    }
+   
     private void OnEnable()
     {
-        MapManager.MapGenerated += OnNewGame;
-        PlayerManager.ActivePlayerBroadcast+= SolarUpdate;
+        solarPointer = 0;
+        dayStep = 180.0f / ((float)gameSettings.CyclesPerDay * 6.0f);
+        SunRise();
+ 
+        PlayerManager.ChangePhase += SolarUpdate;
         
     }
     private void OnDisable()
     {
 
-        PlayerManager.ActivePlayerBroadcast -= SolarUpdate;
-        MapManager.MapGenerated -= OnNewGame;
+        PlayerManager.ChangePhase -= SolarUpdate;
+
     }
     private void SunRise()
     {
         solarPointer = 0;
         Light.color = new Color(0, 0.8f, 0.9f, 1);
+
     }
     private void SunSet()
     {
@@ -55,7 +52,7 @@ public class SunLevel : MonoBehaviour
     }
 
 
-    public void SolarUpdate(int id)
+    public void SolarUpdate()
     {
 
         solarPointer += (int)dayStep;
@@ -73,9 +70,9 @@ public class SunLevel : MonoBehaviour
    
 
       //Sun position funtion during day/night
-        if (solarPointer > 1 && solarPointer < 179)
-        {   float x = Mathf.Sin(solarPointer*Mathf.PI/180)*90;
-            float y = (float)solarPointer / 2;
+        if (solarPointer > 0 && solarPointer < 181)
+        {   float x = Mathf.Sin((float)solarPointer*Mathf.PI/180.0f)*90.0f;
+            float y = (float)solarPointer / 2.0f;
             Light.transform.rotation = Quaternion.Euler(new Vector3(x, y, 0));
             DayEvent?.Invoke((int)x);
         }

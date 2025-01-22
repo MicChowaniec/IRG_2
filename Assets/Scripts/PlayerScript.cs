@@ -88,7 +88,7 @@ public class PlayerScript : MonoBehaviour
         if (!human)
         {
             FinishTurn?.Invoke();
-            Debug.Log(player.itsName + "End the turn");
+            Debug.Log(player.itsName + " finished the turn");
         }
     }
 }
