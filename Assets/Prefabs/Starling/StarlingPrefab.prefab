@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7862248158452734160}
   - component: {fileID: 4661567280992171663}
   - component: {fileID: 8612189318873562998}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 7254476305783044674}
   - component: {fileID: 2902394180986423259}
   - component: {fileID: 5144366863945415020}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 6529319150808303457}
   - component: {fileID: 4571344746261888675}
   - component: {fileID: 2161994434236072021}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,8 @@ GameObject:
   - component: {fileID: 2216397829857891037}
   - component: {fileID: 525145905246128698}
   - component: {fileID: -9121634119623963867}
-  m_Layer: 7
+  - component: {fileID: 8073102513291418117}
+  m_Layer: 6
   m_Name: StarlingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,11 +404,25 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
-  finalLayer:
-    serializedVersion: 2
-    m_Bits: 0
   range: 0.7
-  ps: {fileID: 0}
+  ListOfDiscoveredFields: 
+  human: 0
+  owner: {fileID: 0}
+--- !u!114 &8073102513291418117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804244517720626782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d13a73956e7f614abbc8edddd0f7178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0.5
+  followSpeed: 5
+  rotationSpeed: 5
 --- !u!1 &2259254453569927213
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +435,7 @@ GameObject:
   - component: {fileID: 4255104244910058968}
   - component: {fileID: 3021032878020243001}
   - component: {fileID: 3433273790309218387}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +545,7 @@ GameObject:
   - component: {fileID: 6652531373876479812}
   - component: {fileID: 2119637720525029100}
   - component: {fileID: 9965055643018957}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +655,7 @@ GameObject:
   - component: {fileID: 6113919126546495392}
   - component: {fileID: 6916281499857282776}
   - component: {fileID: 5860545474607321778}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +765,7 @@ GameObject:
   - component: {fileID: 3387947167153415738}
   - component: {fileID: 3829060659712835362}
   - component: {fileID: 8155039196515530072}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

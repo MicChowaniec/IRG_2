@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
@@ -11,27 +12,41 @@ public class Player : ScriptableObject
     {
         Reset();
     }
-    private void Reset()
+    public void Reset()
     {
         Pos = StartPos;
         Rot = StartRot;
-        water = 12;
-        energy = 12;
-        biomass = 12;
-        protein = 12;
+        water = 10;
+        energy = 10;
+        biomass = 10;
+        protein = 10;
         starlings = 1;
-        maxStarlings = 1;
-        eyes = 2;
+        soulLvl = 1;
+        
         fireResistance = -10;
         toxicResistance = 0;
+        if (id == 0)
+        {
+            eyes = 3;
+        }
+        else
+        {
+            eyes = 2;
+        }
+        PurpleLvl = 2;
+        BlueLvl = 2;
+        GreenLvl = 2;
+        YellowLvl = 2;
+        OrangeLvl =2;
+        RedLvl = 2;
 
-    }
+}
     public int water;
     public int energy;
     public int biomass;
     public int protein;
     public int starlings;
-    public int maxStarlings;
+    public int soulLvl;
     public int eyes;
     public int fireResistance;
     public int toxicResistance;
@@ -58,27 +73,35 @@ public class Player : ScriptableObject
 
     public void Grow(int Addedprotein)
     {
-        while (protein<=biomass)
+        Addedprotein = Addedprotein * GreenLvl;
+        while (Addedprotein > 0)
         {
-            protein++;
-            Addedprotein--;
-        }
-        if (protein == biomass)
-        {
-            while (Addedprotein + protein > biomass)
+            if (protein <biomass)
+            {
+                protein++;
+                Addedprotein--;
+            }
+            else if(protein>=biomass)
             {
                 biomass++;
                 Addedprotein--;
-                if (Addedprotein + protein > biomass)
-                {
-                    protein++;
-                    Addedprotein--;
-                }
-
-
             }
         }
 
     }
+    public void AddGenom(ActionTypeEnum ate, int amount)
+    {
+        switch (ate)
+            {
+            case ActionTypeEnum.Purple: PurpleLvl += amount;    break;
+            case ActionTypeEnum.Blue:   BlueLvl += amount;      break;
+            case ActionTypeEnum.Green:  GreenLvl += amount;     break;
+            case ActionTypeEnum.Yellow: YellowLvl += amount;    break;
+            case ActionTypeEnum.Orange: OrangeLvl += amount;    break;
+            case ActionTypeEnum.Red:    RedLvl += amount;       break;
+            case ActionTypeEnum.None: break;
+        }
+    }
+    
 
 }

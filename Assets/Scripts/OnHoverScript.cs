@@ -10,7 +10,7 @@ public class OnHoverScript: MonoBehaviour
 
     private string forStarlingText;
     private GameObjectTypeEnum GOTE;
-    private Color color;
+    private ActionTypeEnum ATE;
 
     private bool button;
 
@@ -19,7 +19,7 @@ public class OnHoverScript: MonoBehaviour
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action<string, string, bool, GameObjectTypeEnum,Color> OnHoverBroadcast;
+    public static event Action<string, string, bool, GameObjectTypeEnum,ActionTypeEnum> OnHoverBroadcast;
    
 
     public void OnEnable()
@@ -42,10 +42,10 @@ public class OnHoverScript: MonoBehaviour
         description = onHoverSC.description;
         button = onHoverSC.button;
         GOTE = onHoverSC.GetChildObjectType();
-        color = onHoverSC.GetChildObjectColor();
+        ATE = onHoverSC.GetChildObjectColor();
 
 
-        OnHoverBroadcast?.Invoke(label, description, button, GOTE ,color);
+        OnHoverBroadcast?.Invoke(label, description, button, GOTE ,ATE);
         
 
 

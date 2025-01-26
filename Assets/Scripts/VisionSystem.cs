@@ -22,6 +22,14 @@ public class VisionSystem : MonoBehaviour
         ScanForVisible();
 
     }
+    private void OnEnable()
+    {
+        StarlingSkillScript.SetNest += ScanForVisible;
+    }
+    private void OnDisable()
+    {
+        StarlingSkillScript.SetNest -= ScanForVisible;
+    }
 
     public void ScanForVisible()
     {

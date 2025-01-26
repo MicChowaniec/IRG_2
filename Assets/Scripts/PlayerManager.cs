@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
+using UnityEditor;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -16,13 +17,15 @@ public class PlayerManager : MonoBehaviour
 
     public static event Action<int> ActivePlayerBroadcast;
     public static event Action ChangePhase;
+    public static event Action PlayersInstantiated;
 
     public void OnEnable()
     {
         EndTurn.EndTurnEvent += ChangePlayer;
         PlayerScript.FinishTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
-  
+      
+
     }
 
     public void OnDisable()
@@ -30,10 +33,13 @@ public class PlayerManager : MonoBehaviour
         EndTurn.EndTurnEvent -=  ChangePlayer;
         PlayerScript.FinishTurn -= ChangePlayer;
         MapManager.MapGenerated -= AllocatePlayers;
+        
     }
     /// <summary>
     /// Allocate player only once, after map is created
     /// </summary>
+    /// 
+
     public void AllocatePlayers()
     {
         if (players == null || players.Length == 0)
@@ -44,6 +50,7 @@ public class PlayerManager : MonoBehaviour
 
         foreach (Player p in players)
         {
+            p.Reset();
             int i = 0;
             GameObject player = Instantiate(p.Prefab, p.Pos, p.Rot);
             player.name = p.name;
@@ -54,7 +61,9 @@ public class PlayerManager : MonoBehaviour
             playerInstances[i] = player;
         }
         MapManager.MapGenerated -= AllocatePlayers;
+        
         ChangePlayer();
+        PlayersInstantiated?.Invoke();
     }
     public Transform GetTransformFromSO(Player player)
     {

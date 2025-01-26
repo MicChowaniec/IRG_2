@@ -24,7 +24,7 @@ public class PopUpScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHand
         OnHoverScript.OnHoverBroadcast -= StartDisplayPopUp;
     }
 
-    private void StartDisplayPopUp(string label, string description, bool button, GameObjectTypeEnum gote, Color color )
+    private void StartDisplayPopUp(string label, string description, bool button, GameObjectTypeEnum gote, ActionTypeEnum color )
     {
         isMouseOver = true; // Set the flag to true when mouse is over
         if (displayCoroutine != null)
@@ -36,8 +36,7 @@ public class PopUpScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHand
 
     private IEnumerator DisplayPopUpWithDelay(string label, string description, bool button)
     {
-        // Wait for 0.5 second
-        float delay = 0.5f;
+        float delay = 0.1f;
         float elapsedTime = 0f;
 
         while (elapsedTime < delay)
@@ -57,7 +56,7 @@ public class PopUpScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHand
              Input.mousePosition, parentCanvas.worldCamera,
             out movePos);
 
-        transform.localPosition = movePos + new Vector2(0, 200);
+        transform.localPosition = movePos + new Vector2(0, 100);
 
         labelTMP.text = label;
         descriptionTMP.text = description;

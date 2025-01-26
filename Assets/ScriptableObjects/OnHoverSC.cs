@@ -19,8 +19,8 @@ public abstract class OnHoverSC : ScriptableObject
         return GameObjectTypeEnum.None;
 
     }
-    public virtual Color GetChildObjectColor()
+    public virtual ActionTypeEnum GetChildObjectColor()
     {
-        return Color.black;
+        return ActionTypeEnum.None;
     }
 }

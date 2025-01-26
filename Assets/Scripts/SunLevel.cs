@@ -36,8 +36,8 @@ public class SunLevel : MonoBehaviour
     }
     private void SunRise()
     {
-        solarPointer = 0;
-        Light.color = new Color(0, 0.8f, 0.9f, 1);
+        solarPointer = 1;
+        Light.color = new Color(1, 0.8f, 0.9f, 1);
 
     }
     private void SunSet()

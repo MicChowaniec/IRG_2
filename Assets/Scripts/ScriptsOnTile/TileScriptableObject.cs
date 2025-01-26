@@ -12,8 +12,8 @@ public class TileScriptableObject : OnHoverSC
     public Player stander;
     public GameObject representation;
     public TileTypesEnum tileTypes;
-    public GameObjectTypeEnum childType = GameObjectTypeEnum.None;
-    public Color childColor;
+    public GameObjectTypeEnum childType;
+    public ActionTypeEnum childColor;
 
     public override void AskForDetails()
     {
@@ -38,5 +38,13 @@ public class TileScriptableObject : OnHoverSC
         "\n Rootable: " + rootable.ToString() +
         "\n Object: " + childType.ToString();
         button = false;
+    }
+    public override GameObjectTypeEnum GetChildObjectType()
+    {
+        return childType;
+    }
+    public override ActionTypeEnum GetChildObjectColor()
+    {
+        return childColor;
     }
 }

@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
     public int numberOfTypesOfTiles;
     public Dictionary<int, TileScriptableObject> tiles = new();
     public Dictionary<Vector2, int> posAdnIds = new();
-    public Dictionary<int, Color> colors = new();
+    public Dictionary<int, ActionTypeEnum> colors = new();
     public GameObject originalTreePrefab;
 
     [Range(1, 10)]
@@ -46,14 +46,29 @@ public class MapManager : MonoBehaviour
     public GameObject assistant;
     public static int centerId;
     public static event Action MapGenerated;
-    public static event Action<int> Rootables;
+
+    public int startRootables;
+    public static event Action<int,int> RedRootables;
+    public static event Action<int,int> OrangeRootables;
+    public static event Action<int,int> YellowRootables;
+    public static event Action<int,int> GreenRootables;
+    public static event Action<int,int> BlueRootables;
+    public static event Action<int,int> PurpleRootables;
 
     // Start is called before the first frame update
-
+    public void OnEnable()
+    {
+        PlayerManager.PlayersInstantiated += CountRootables;
+    }
+    public void OnDisable()
+    {
+        PlayerManager.PlayersInstantiated -=CountRootables;
+    }
     void Start()
     {
+        startRootables = 0;
+        colors[0]= ActionTypeEnum.Purple; colors[1] = ActionTypeEnum.Blue; colors[2] = ActionTypeEnum.Green; colors[3] = ActionTypeEnum.Yellow; colors[4] = ActionTypeEnum.Orange; colors[5] = ActionTypeEnum.Red ;
 
-        colors[0] = Color.magenta; colors[1] = Color.blue; colors[2] = Color.green; colors[3] = Color.yellow; colors[4] = Color.gray; colors[5] = Color.red ;
         sizeOfMap = gameSettings.SizeOfMap;
         if (sizeOfMap > 3)
         {
@@ -243,8 +258,7 @@ public class MapManager : MonoBehaviour
 
         Debug.Log("Map Creation Finished");
         MapGenerated?.Invoke();
-        int temp = CountRootables();
-        Rootables?.Invoke(temp);
+
 
 
 
@@ -296,12 +310,6 @@ public class MapManager : MonoBehaviour
         tiles.Add(id, TSO);
         posAdnIds.Add(key, id);
 
-        
-        
-        
-        
-
-
     }
     public void InstantiateBush(GameObject prefab, int id)
     {
@@ -325,17 +333,52 @@ public class MapManager : MonoBehaviour
     /// Counting rootables fields on map
     /// </summary>
     /// <returns></returns>
-    public int CountRootables()
+    public void CountRootables()
     {
         int temp = 0;
+
+        int purple = 0;
+        int blue = 0;
+        int green = 0;
+        int yellow = 0;
+        int orange = 0;
+        int red = 0;
+
         foreach (TileScriptableObject t in tiles.Values)
         {
-            if (t.rootable == true)
+            if (startRootables == 0)
             {
-                temp++;
+                if (t.rootable == true)
+                {
+                    temp++;
+                }
             }
+            
+            if (t.owner != null)
+            {
+                switch (t.owner.id)
+                {
+                    case 0: purple++; break;
+                    case 1: blue++; break;
+                    case 2: green++; break;
+                    case 3: yellow++; break;
+                    case 4: red++; break;
+                    case 5: orange++; break;
+                }
+            }
+
         }
-        return temp;
+        startRootables = temp;
+        PurpleRootables?.Invoke(purple, startRootables);
+        BlueRootables?.Invoke(blue, startRootables);
+        GreenRootables?.Invoke(green, startRootables);
+        YellowRootables?.Invoke(yellow, startRootables);
+        OrangeRootables?.Invoke(orange, startRootables);
+        RedRootables?.Invoke(red, startRootables);
+
+
+
+
     }
    
 }

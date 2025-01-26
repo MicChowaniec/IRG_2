@@ -3,9 +3,15 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class ScoreKeeperScript : MonoBehaviour
 {
+    public Player humanPlayer;
+
+    public int eyes;
+    public TextMeshProUGUI eyesText;
+
     public Image waterTank;
     public TextMeshProUGUI waterText;
     public int water;
@@ -34,6 +40,28 @@ public class ScoreKeeperScript : MonoBehaviour
     public int biomass;
     public TextMeshProUGUI biomassText;
 
+
+
+    public int purpleGenom;
+    public TextMeshProUGUI purpleGenomText;
+
+    public int blueGenom;
+    public TextMeshProUGUI blueGenomText;
+
+    public int greenGenom;
+    public TextMeshProUGUI greenGenomText;
+
+    public int yellowGenom;
+    public TextMeshProUGUI yellowGenomText;
+
+    public int orangeGenom;
+    public TextMeshProUGUI orangeGenomText;
+
+    public int redGenom;
+    public TextMeshProUGUI redGenomText;
+
+
+
     public int sunLevel;
     public TextMeshProUGUI sunLevelText;
 
@@ -53,15 +81,23 @@ public class ScoreKeeperScript : MonoBehaviour
     public int purpleFields;
     public TextMeshProUGUI purpleFieldsText;
 
-    public int rootableFields;
-
 
     public void OnEnable()
     {
         SunLevel.DayEvent += SunLevelChange;
         SunLevel.NightEvent += SunLevelChange;
         StarlingSkillScript.StarlingConsumed += StarlingChange;
-        StarlingSkillScript.FishEaten += ChangeProteinLevel ;
+        StarlingSkillScript.FishEaten += ChangeProteinLevel;
+
+        MapManager.PurpleRootables += PurpleFieldsChange;
+        MapManager.BlueRootables += BlueFieldsChange;
+        MapManager.GreenRootables += GreenFieldsChange;
+        MapManager.YellowRootables += YellowFieldsChange;
+        MapManager.OrangeRootables += OrangeFieldsChange;
+        MapManager.RedRootables += RedFieldsChange;
+        
+        PlayerManager.PlayersInstantiated += StartingParameters;
+
     }
     public void OnDisable()
     {
@@ -69,8 +105,41 @@ public class ScoreKeeperScript : MonoBehaviour
         SunLevel.NightEvent -= SunLevelChange;
         StarlingSkillScript.StarlingConsumed -= StarlingChange;
         StarlingSkillScript.FishEaten -= ChangeProteinLevel;
+
+        MapManager.PurpleRootables += PurpleFieldsChange;
+        MapManager.BlueRootables += BlueFieldsChange;
+        MapManager.GreenRootables += GreenFieldsChange;
+        MapManager.YellowRootables += YellowFieldsChange;
+        MapManager.OrangeRootables += OrangeFieldsChange;
+        MapManager.RedRootables += RedFieldsChange;
+
+        PlayerManager.PlayersInstantiated -= StartingParameters;
     }
 
+
+    private void StartingParameters()
+    {
+        PlayerManager pm = FindAnyObjectByType<PlayerManager>();
+        foreach (Player p in pm.players)
+        {
+            if(p.human)
+            {
+                BiomassChange();
+                maxStarling = p.soulLvl;
+                StarlingChange();
+                ChangeProteinLevel();
+                ChangeEnergyLevel();
+                ChangeWaterLevel();
+                ChangeEyes();
+            }
+        }
+    }
+
+    private void ChangeEyes()
+    {
+        eyes = humanPlayer.eyes;
+        eyesText.text = "Eyes: \n" + eyes;
+    }
     private void SunLevelChange(int sunLevelChange)
     {
         sunLevel = sunLevelChange;
@@ -82,66 +151,76 @@ public class ScoreKeeperScript : MonoBehaviour
         sunLevelText.text = sunLevel.ToString();
     }
 
-    private void ChangeWaterLevel(int waterChange)
+    private void ChangeWaterLevel()
 
     {
-        water = waterChange;
-        waterText.text = "Water" + waterChange + "/" + biomass;
-        waterTank.fillAmount = ChangeResource(waterChange);
+        water = humanPlayer.water;
+        waterText.text = "Water" + water + "/" + biomass;
+        waterTank.fillAmount = ChangeResource(water);
     }
 
-    private void ChangeEnergyLevel(int energyChange)
+    private void ChangeEnergyLevel()
     {
-        energy = energyChange;
-        energyText.text = "Energy" + energyChange + "/" + biomass;
-        energyTank.fillAmount = ChangeResource(energyChange);
+        energy = humanPlayer.energy;
+        energyText.text = "Energy" + energy + "/" + biomass;
+        energyTank.fillAmount = ChangeResource(energy);
     }
 
-    private void ChangeProteinLevel(int proteinChange)
+    private void ChangeProteinLevel()
     {
-        protein = proteinChange;
-        proteinText.text = "Protein" + proteinChange + "/" + biomass;
-        proteinTank.fillAmount = ChangeResource(proteinChange);
+        protein = humanPlayer.protein;
+        proteinText.text = "Protein" + protein + "/" + biomass;
+        proteinTank.fillAmount = ChangeResource(protein);
+        BiomassChange();
     }
 
-    private void StarlingChange(int starlingChange)
+    private void StarlingChange()
     {
-        starling = starlingChange;
-        starlingText.text = "Starlings" + starlingChange + "/" + maxStarling;
-        starlingTank.fillAmount = ChangeResource(starlingChange, maxStarling);
+        starling = humanPlayer.starlings;
+        starlingText.text = "Starlings" + starling + "/" + maxStarling;
+        starlingTank.fillAmount = ChangeResource(starling, maxStarling);
     }
-    private void BiomassChange(int biomassChange)
+    private void BiomassChange()
     {
-        biomass = biomassChange;
-        biomassText.text = "Biomass: \n" + biomassChange;
+        biomass = humanPlayer.biomass;
+        biomassText.text = "Biomass: \n" + biomass;
+        ChangeProteinLevel();
+        ChangeEnergyLevel();
+        ChangeWaterLevel();
+
     }
 
-    private void RedFieldsChange(int redFieldsChange)
+    private void RedFieldsChange(int redFieldsChange,int rootableFields)
     {
         redFields = redFieldsChange;
         redFieldsText.text = "Red: \n" + redFieldsChange + "/" + rootableFields + " (" + ChangeResource(redFieldsChange, rootableFields) + "%)";
     }
 
-     private void OrangeFieldsChange(int  orangeFieldsChange)
+     private void OrangeFieldsChange(int orangeFieldsChange, int rootableFields)
     {
         orangeFields = orangeFieldsChange;
         redFieldsText.text = "Orange: \n" + orangeFieldsChange + "/" + rootableFields +" ("+ ChangeResource(orangeFieldsChange, rootableFields) + "%)";
     }
 
-    private void YellowFieldsChange(int yellowFieldsChange)
+    private void YellowFieldsChange(int yellowFieldsChange, int rootableFields)
     {
         yellowFields = yellowFieldsChange;
         yellowFieldsText.text = "Yellow: \n" + yellowFieldsChange + "/" + rootableFields + " (" + ChangeResource(yellowFieldsChange, rootableFields) + "%)";
     }
-    private void GreenFieldsChange(int greenFieldsChange)
+    private void GreenFieldsChange(int greenFieldsChange, int rootableFields)
     {
         yellowFields = greenFieldsChange;
         yellowFieldsText.text = "Green: \n" + greenFieldsChange + "/" + rootableFields + " (" + ChangeResource(greenFieldsChange, rootableFields) + "%)";
     }
-    private void BlueFieldsChange(int blueFieldsChange)
+    private void BlueFieldsChange(int blueFieldsChange, int rootableFields)
     {
         blueFields = blueFieldsChange;
-        blueFieldsText.text = "Blue";
+        blueFieldsText.text = "Blue: \n" +blueFieldsChange + "/" + rootableFields + " (" + ChangeResource(blueFieldsChange, rootableFields) + "%)";
+    }
+    private void PurpleFieldsChange(int purpleFieldsChange, int rootableFields)
+    {
+        purpleFields = purpleFieldsChange;
+        purpleFieldsText.text = "Purple: \n" + purpleFieldsChange + "/" + rootableFields + "(" + ChangeResource(purpleFieldsChange, rootableFields) + "%)";
     }
     private float ChangeResource(int resourceChange)
     {
@@ -151,6 +230,12 @@ public class ScoreKeeperScript : MonoBehaviour
     private float ChangeResource(int resourceChange, int resourceMax)
     {
         return (float)resourceChange / (float)resourceMax;
+    }
+
+    private void GenomChange()
+    {
+        purpleGenom = humanPlayer.PurpleLvl;
+        purpleGenomText.text = "P:" + purpleGenom;
     }
 
 

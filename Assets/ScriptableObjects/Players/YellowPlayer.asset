@@ -18,16 +18,16 @@ MonoBehaviour:
   biomass: 12
   protein: 12
   starlings: 1
-  maxStarlings: 1
+  soulLvl: 1
   eyes: 2
   fireResistance: -10
   toxicResistance: 0
-  PurpleLvl: 0
-  BlueLvl: 0
-  GreenLvl: 0
-  YellowLvl: 0
-  OrangeLvl: 0
-  RedLvl: 0
+  PurpleLvl: 2
+  BlueLvl: 2
+  GreenLvl: 2
+  YellowLvl: 2
+  OrangeLvl: 2
+  RedLvl: 2
   sequence: 4
   itsName: Yellow
   itsDescription: Yellow is collecting more energy, and because of this, can move
@@ -41,4 +41,10 @@ MonoBehaviour:
   Prefab: {fileID: 13136404289340683, guid: f3cf715784b5b974ab02a6117b154748, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 768d7164f04478f4dabe5b6b2071d243, type: 3}
   material: {fileID: 2100000, guid: cf688a5108615e046976e287dabecd4d, type: 2}
-  cards: []
+  cards:
+  - {fileID: 11400000, guid: 2c7a026618fd1fd4eac33f3e992c7746, type: 2}
+  - {fileID: 11400000, guid: 3c751b2b919c86b4aa7c3dba4a91b5d1, type: 2}
+  - {fileID: 11400000, guid: 2e596fb0c2120ca418dc89d667d9151d, type: 2}
+  - {fileID: 11400000, guid: 4be30f929e1bebc4581bdcdd7808cb50, type: 2}
+  - {fileID: 11400000, guid: ed24efd9dc9581d4f8908290e9fa9704, type: 2}
+  - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}
