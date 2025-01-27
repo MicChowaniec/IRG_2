@@ -55,15 +55,23 @@ public class MapManager : MonoBehaviour
     public static event Action<int,int> BlueRootables;
     public static event Action<int,int> PurpleRootables;
 
-    // Start is called before the first frame update
-    public void OnEnable()
+    /// <summary>
+    /// 
+    /// </summary>
+    private void OnEnable()
     {
         PlayerManager.PlayersInstantiated += CountRootables;
     }
-    public void OnDisable()
+    /// <summary>
+    /// 
+    /// </summary>
+    private void OnDisable()
     {
         PlayerManager.PlayersInstantiated -=CountRootables;
     }
+    /// <summary>
+    /// 
+    /// </summary>
     void Start()
     {
         startRootables = 0;
@@ -190,20 +198,24 @@ public class MapManager : MonoBehaviour
                         GameObject tree = Instantiate(originalTreePrefab, tiles[id].representation.transform);
                         tree.transform.localScale =new Vector3(0.2f, 20, 0.2f);
                         centerId = id;
+                        tiles[id].childType = GameObjectTypeEnum.Tree;
                     }
-                    
+
                 }
                 else if (j == 0)
                 {
                     InstatiateField(grassTileType, id, i, j);
+                    tiles[id].childType = GameObjectTypeEnum.None;
                 }
                 else if (i == j)
                 {
                     InstatiateField(grassTileType, id, i, j);
+                    tiles[id].childType = GameObjectTypeEnum.None;
                 }
                 else if (i == -j)
                 {
                     InstatiateField(grassTileType, id, i, j);
+                    tiles[id].childType = GameObjectTypeEnum.None;
                 }
                 // Everything else random
                 else
@@ -227,6 +239,7 @@ public class MapManager : MonoBehaviour
                     else if (rtt == TileTypesEnum.Sand)
                     {
                         InstatiateField(sandTileType, id, i, j);
+                        tiles[id].childType = GameObjectTypeEnum.None;
                     }
                     else if (rtt == TileTypesEnum.Grass)
                     {
@@ -311,6 +324,11 @@ public class MapManager : MonoBehaviour
         posAdnIds.Add(key, id);
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="id"></param>
     public void InstantiateBush(GameObject prefab, int id)
     {
         GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tiles[id].representation.transform);
