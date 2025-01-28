@@ -16,10 +16,12 @@ public class StarlingSkillScript : AbstractSkill
     public static event Action StarlingConsumed;
     public static event Action FishEaten;
     public static event Action SetNest;
+    public static event Action GenomChange;
 
 
     private GameObjectTypeEnum clickedTileObject;
     private ActionTypeEnum clickedtileColor;
+    
 
 
     private void OnEnable()
@@ -78,7 +80,9 @@ public class StarlingSkillScript : AbstractSkill
                 {
                     activePlayer.AddGenom(clickedtileColor, 1);
                     activePlayer.Grow(1);
+                    GenomChange?.Invoke();
                     Debug.Log("Genom Collected: " + clickedtileColor);
+
                     break;
                     //Add colors etc.
                 }

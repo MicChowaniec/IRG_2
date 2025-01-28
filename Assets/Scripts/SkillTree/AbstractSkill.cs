@@ -20,6 +20,7 @@ public class AbstractSkill : MonoBehaviour
         return false;
     }
     
+    
 
 
 }

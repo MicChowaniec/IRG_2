@@ -957,7 +957,7 @@ MonoBehaviour:
   range: 1.4
   ListOfDiscoveredFields: 
   human: 0
-  owner: {fileID: 0}
+  owner: {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
 --- !u!4 &2882937907647121409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2660926356113027163, guid: 0e4a024e2d53bf144a079e830ed98846, type: 3}

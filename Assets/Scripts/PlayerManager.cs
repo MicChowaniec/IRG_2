@@ -48,26 +48,40 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+        // Initialize the array with the correct size
+        playerInstances = new GameObject[players.Length];
+
+        int i = 0;
         foreach (Player p in players)
         {
             p.Reset();
-            int i = 0;
+
             GameObject player = Instantiate(p.Prefab, p.Pos, p.Rot);
             player.name = p.name;
             if (p.human)
             {
                 FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = player.transform;
             }
-            playerInstances[i] = player;
+            playerInstances[i] = player; // Assign instantiated player
+            i++;
         }
+
+        // Unsubscribe from MapGenerated event to prevent multiple allocations
         MapManager.MapGenerated -= AllocatePlayers;
-        
+
+        // Change to the first active player
         ChangePlayer();
+
+        // Notify that players have been instantiated
         PlayersInstantiated?.Invoke();
     }
     public Transform GetTransformFromSO(Player player)
     {
         return playerInstances[player.id].GetComponent<Transform>();
+    }
+    public GameObject GetGameObjectFromSO(Player player)
+    {
+        return playerInstances[player.id];
     }
 
     public void ChangePlayer()

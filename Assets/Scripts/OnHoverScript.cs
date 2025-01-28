@@ -1,80 +1,96 @@
 using UnityEngine;
 using System;
-using UnityEngine.UI;
-using System.Diagnostics.SymbolStore;
+using UnityEngine.EventSystems;
 
-public class OnHoverScript: MonoBehaviour
+public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private string label;
     private string description;
 
-    private string forStarlingText;
     private GameObjectTypeEnum GOTE;
     private ActionTypeEnum ATE;
 
     private bool button;
-
-
     private bool forStarling;
+
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action<string, string, bool, GameObjectTypeEnum,ActionTypeEnum> OnHoverBroadcast;
-   
+    public static event Action<string, string, bool, GameObjectTypeEnum, ActionTypeEnum> OnHoverBroadcast;
+    public static event Action HidePopUp;
 
-    public void OnEnable()
+    private void OnEnable()
     {
         StarlingSkillScript.BirdActive += ForStarling;
     }
-    public void OnDisable()
+
+    private void OnDisable()
     {
         StarlingSkillScript.BirdActive -= ForStarling;
+
+        // Prevent memory leaks
+        HidePopUp = null;
+        OnHoverBroadcast = null;
     }
 
-    public void ForStarling(bool b)
+    private void ForStarling(bool isActive)
     {
-        forStarling = b;
-    }
-    public void OnMouseEnter()
-    {
-        onHoverSC.AskForDetails();
-        label = onHoverSC.label;
-        description = onHoverSC.description;
-        button = onHoverSC.button;
-        GOTE = onHoverSC.GetChildObjectType();
-        ATE = onHoverSC.GetChildObjectColor();
-
-
-        OnHoverBroadcast?.Invoke(label, description, button, GOTE ,ATE);
-        
-
-
-        Debug.Log("send info to PopUP");
-        Highlight();
+        forStarling = isActive;
     }
 
     public void Highlight()
     {
-        Material[] materials = new Material[2];
-        materials[0] = this.GetComponent<MeshRenderer>().material;
-        materials[1] = litMaterial;
-        GetComponent<MeshRenderer>().materials = materials;
+        var meshRenderer = GetComponent<MeshRenderer>();
+        var materials = meshRenderer.materials;
+
+        Array.Resize(ref materials, materials.Length + 1);
+        materials[^1] = litMaterial;
+
+        meshRenderer.materials = materials;
     }
+
     public void StopHighlight()
     {
+        var meshRenderer = GetComponent<MeshRenderer>();
+        var materials = meshRenderer.materials;
 
-
-        Material[] materials = new Material[1];
-        materials[0] = this.GetComponent<MeshRenderer>().materials[0];
-        GetComponent<MeshRenderer>().materials = materials;
+        if (materials.Length > 1)
+        {
+            Array.Resize(ref materials, materials.Length - 1);
+            meshRenderer.materials = materials;
+        }
     }
- 
-    private void OnMouseExit()
+
+    private void HandleHoverEnter()
     {
-        
-        StopHighlight();
+        if (onHoverSC == null)
+        {
+            Debug.LogError("onHoverSC is not assigned.");
+            return;
+        }
+
+        onHoverSC.AskForDetails();
+        label = onHoverSC.label;
+        description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
+        button = onHoverSC.button;
+        GOTE = onHoverSC.GetChildObjectType();
+        ATE = onHoverSC.GetChildObjectColor();
+
+        OnHoverBroadcast?.Invoke(label, description, button, GOTE, ATE);
     }
 
+    private void HandleHoverExit()
+    {
+        HidePopUp?.Invoke();
+    }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        HandleHoverEnter();
+    }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        HandleHoverExit();
+    }
 }

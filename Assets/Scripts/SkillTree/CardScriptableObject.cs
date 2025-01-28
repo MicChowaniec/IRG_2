@@ -5,6 +5,7 @@ public class CardScriptableObject : ScriptableObject
 {
     public GameObject skillNotRooted;
     public GameObject skillRooted;
-    public bool passive;
-    public bool passiveFromRooted;
+    public ActionTypeEnum passiveRooted;
+    public ActionTypeEnum passiveNotRooted;
+    
 }

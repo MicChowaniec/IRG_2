@@ -88,6 +88,7 @@ public class ScoreKeeperScript : MonoBehaviour
         SunLevel.NightEvent += SunLevelChange;
         StarlingSkillScript.StarlingConsumed += StarlingChange;
         StarlingSkillScript.FishEaten += ChangeProteinLevel;
+        StarlingSkillScript.GenomChange += GenomChange;
 
         MapManager.PurpleRootables += PurpleFieldsChange;
         MapManager.BlueRootables += BlueFieldsChange;
@@ -95,8 +96,9 @@ public class ScoreKeeperScript : MonoBehaviour
         MapManager.YellowRootables += YellowFieldsChange;
         MapManager.OrangeRootables += OrangeFieldsChange;
         MapManager.RedRootables += RedFieldsChange;
-        
+
         PlayerManager.PlayersInstantiated += StartingParameters;
+
 
     }
     public void OnDisable()
@@ -122,8 +124,9 @@ public class ScoreKeeperScript : MonoBehaviour
         PlayerManager pm = FindAnyObjectByType<PlayerManager>();
         foreach (Player p in pm.players)
         {
-            if(p.human)
+            if(p.human==true)
             {
+                humanPlayer = p;
                 BiomassChange();
                 maxStarling = p.soulLvl;
                 StarlingChange();
@@ -155,29 +158,28 @@ public class ScoreKeeperScript : MonoBehaviour
 
     {
         water = humanPlayer.water;
-        waterText.text = "Water" + water + "/" + biomass;
+        waterText.text = "Water: \n" + water + "/" + biomass;
         waterTank.fillAmount = ChangeResource(water);
     }
 
     private void ChangeEnergyLevel()
     {
         energy = humanPlayer.energy;
-        energyText.text = "Energy" + energy + "/" + biomass;
+        energyText.text = "Energy: \n" + energy + "/" + biomass;
         energyTank.fillAmount = ChangeResource(energy);
     }
 
     private void ChangeProteinLevel()
     {
         protein = humanPlayer.protein;
-        proteinText.text = "Protein" + protein + "/" + biomass;
+        proteinText.text = "Protein: \n" + protein + "/" + biomass;
         proteinTank.fillAmount = ChangeResource(protein);
-        BiomassChange();
     }
 
     private void StarlingChange()
     {
         starling = humanPlayer.starlings;
-        starlingText.text = "Starlings" + starling + "/" + maxStarling;
+        starlingText.text = "Starlings: \n" + starling + "/" + maxStarling;
         starlingTank.fillAmount = ChangeResource(starling, maxStarling);
     }
     private void BiomassChange()
@@ -236,6 +238,17 @@ public class ScoreKeeperScript : MonoBehaviour
     {
         purpleGenom = humanPlayer.PurpleLvl;
         purpleGenomText.text = "P:" + purpleGenom;
+        blueGenom = humanPlayer.BlueLvl;
+        blueGenomText.text = "B:" + blueGenom;
+        greenGenom = humanPlayer.GreenLvl;
+        greenGenomText.text = "G:" + greenGenom;
+        yellowGenom = humanPlayer.YellowLvl;
+        yellowGenomText.text = "Y:" + yellowGenom;
+        orangeGenom = humanPlayer.OrangeLvl;
+        orangeGenomText.text = "O:" + orangeGenom;
+        redGenom = humanPlayer.RedLvl;
+        redGenomText.text = "R:" + redGenom;
+
     }
 
 

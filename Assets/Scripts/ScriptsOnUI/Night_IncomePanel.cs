@@ -4,9 +4,13 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Night_IncomePanel : MonoBehaviour
 {
+    public Player human;
+
     public GameObject IncomePanel;
     public GameObject CardCreatorPanel;
     public GameObject IncarnateCreatorPanel;
@@ -27,6 +31,8 @@ public class Night_IncomePanel : MonoBehaviour
     public GameObject OrangeRP;
     public GameObject RedRP;
 
+    public GameObject SkillCardMain;
+
 
     public static event Action<bool> CardCreatorMenu;
     public void OnEnable()
@@ -35,51 +41,67 @@ public class Night_IncomePanel : MonoBehaviour
 
 
     }
+
     public void OnDisable()
     {
         SunLevel.NightEvent -= ShowIncome;
     }
+
     public void CreateSummary()
     {
 
     }
+
     public void ShowIncome()
     {
         IncomePanel.SetActive(true);
         CardCreatorPanel.SetActive(false);
         IncarnateCreatorPanel.SetActive(false);
     }
+
     public void ShowCardCreator()
     {
         IncomePanel.SetActive(false);
         CardCreatorPanel.SetActive(true);
         IncarnateCreatorPanel.SetActive(false);
+        //FillTheFields(human.skills);
     }
+
     public void ShowIncarnateCreator()
     {
         IncomePanel.SetActive(false);
         CardCreatorPanel.SetActive(false);
         IncarnateCreatorPanel.SetActive(true);
+       // FillTheCardFields(human.cards);
     }
+
     public void ShowConfirmButton()
     {
         ConfirmButton.SetActive(true);
     }
-
 
     public void ShowPlacesToBorn()
     {
         IncomePanel.SetActive(false);
         CardCreatorPanel.SetActive(false);
     }
-    public void FillTheFields(SkillScriptableObject[] skills)
-    {
-        foreach (var s in skills)
-        {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="skills"></param>
+    //private void FillTheFields(IEnumerable<SkillScriptableObject> skills)
+    //{
+    //    foreach (var s in skills)
+    //    {
 
-                InstantiateSkillButton(s,s.RootedSkill);
-        }
-    }
+    //        InstantiateSkillButton(s, s.RootedSkill);
+    //    }
+    //}
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="skill"></param>
+    /// <param name="rootedSkill"></param>
     private void InstantiateSkillButton(SkillScriptableObject skill, bool rootedSkill)
     {
         if (rootedSkill)
@@ -135,10 +157,19 @@ public class Night_IncomePanel : MonoBehaviour
             }
 
         }
-        
+
 
     }
 
+    //private void FillTheCardFields(IEnumerable<CardScriptableObject> cards)
+    //{
+    //    foreach (var c in cards)
+    //    {
+    //        Instantiate(c);
+    //    }
+    //}
 
+    
 
+   
 }

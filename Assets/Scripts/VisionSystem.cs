@@ -1,72 +1,87 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
     public float range;
-    public List<int> ListOfDiscoveredFields = new();
+
+    public HashSet<int> ListOfDiscoveredFields = new();
     public bool human;
     public Player owner;
 
-    public void Start()
-    {
-        
-        if (TryGetComponent<PlayerScript>(out PlayerScript playerScript) == true)
-        {
-            human = playerScript.player.human;
-        }
-        ScanForVisible();
+    private PlayerManager _playerManager;
+    private Collider[] _colliderBuffer = new Collider[50]; // Adjust size as needed
 
-    }
     private void OnEnable()
     {
+        _playerManager = FindAnyObjectByType<PlayerManager>();
+        PlayerManager.PlayersInstantiated += ScanForVisible;
         StarlingSkillScript.SetNest += ScanForVisible;
+
+        if (gameObject.activeInHierarchy)
+        {
+            ScanForVisible();
+        }
     }
+
     private void OnDisable()
     {
+        PlayerManager.PlayersInstantiated -= ScanForVisible;
         StarlingSkillScript.SetNest -= ScanForVisible;
     }
 
     public void ScanForVisible()
     {
-        //Consider using OverlapSpehereNonAlloc
-        Collider[] hits = Physics.OverlapSphere(transform.position, range, layer);
+        if (_playerManager == null) return;
 
-        foreach (Collider hit in hits)
+        if (TryGetComponent<PlayerScript>(out PlayerScript playerScript))
         {
-            GameObject go = hit.gameObject;
+            human = playerScript.player.human;
+        }
+
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, range, _colliderBuffer, layer);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            GameObject go = _colliderBuffer[i].gameObject;
             CheckRecursively(go);
-            if (go.TryGetComponent<TileScript>(out TileScript ts)==true)
+
+            if (go.TryGetComponent<TileScript>(out TileScript ts))
             {
                 int idToAdd = ts.TSO.id;
-                ListOfDiscoveredFields.Add(idToAdd);
-                if (owner != null)
+                if (ListOfDiscoveredFields.Add(idToAdd))
                 {
-                    owner.GetComponent<VisionSystem>().ListOfDiscoveredFields.Add(idToAdd);
+                    if (owner != null)
+                    {
+                        _playerManager.GetGameObjectFromSO(owner)
+                            ?.GetComponent<VisionSystem>()
+                            ?.ListOfDiscoveredFields.Add(idToAdd);
+                    }
                 }
             }
-
-            
-            if (human ==true)
-            {
-                go.layer = 6;
-            }
-          
         }
     }
 
     private void CheckRecursively(GameObject obj)
     {
-        
+        Queue<Transform> queue = new Queue<Transform>();
+        queue.Enqueue(obj.transform);
 
-        foreach (Transform child in obj.transform)
+        while (queue.Count > 0)
         {
-            CheckRecursively(child.gameObject);
+            Transform current = queue.Dequeue();
+
+            if (human == true || (owner != null && owner.human == true))
+            {
+                current.gameObject.layer = 6;
+            }
+
+            foreach (Transform child in current)
+            {
+                queue.Enqueue(child);
+            }
         }
     }
 }
-

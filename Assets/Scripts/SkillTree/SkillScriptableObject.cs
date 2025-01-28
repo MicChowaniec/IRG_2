@@ -7,7 +7,7 @@ public class SkillScriptableObject : OnHoverSC
     public ActionTypeEnum actionType;
     public bool RootedSkill;
 
-    
+
     public GameObject ButtonPrefab;
 
     public int starling;
@@ -34,7 +34,24 @@ public class SkillScriptableObject : OnHoverSC
     public bool greenPassive;
     public bool yellowPassive;
     public bool orangePassive;
-    public bool redPassive; 
+    public bool redPassive;
+
+    public string ReturnPassiveDescription(ActionTypeEnum passiveDescriptionReturn)
+        {
+        string temp = "";
+        switch (passiveDescriptionReturn)
+        {
+            case ActionTypeEnum.None:   temp = ""; break;
+            case ActionTypeEnum.Purple: temp = purplePassiveDescription; break;
+            case ActionTypeEnum.Blue: temp = bluePassiveDescription; break;
+            case ActionTypeEnum.Green: temp = greenPassiveDescription; break;
+            case ActionTypeEnum.Yellow: temp = yellowPassiveDescription; break;
+            case ActionTypeEnum.Orange: temp = orangePassiveDescription; break;
+            case ActionTypeEnum.Red: temp = redPassiveDescription; break;
+            
+        }
+        return temp;
+        }
 
 
 }

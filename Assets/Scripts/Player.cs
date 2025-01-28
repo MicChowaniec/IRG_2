@@ -69,11 +69,12 @@ public class Player : ScriptableObject
     public GameObject TreePrefab;
     public Material material;
 
+    public List<SkillScriptableObject> skills;
     public List<CardScriptableObject> cards;
 
     public void Grow(int Addedprotein)
     {
-        Addedprotein = Addedprotein * GreenLvl;
+        Addedprotein *= GreenLvl;
         while (Addedprotein > 0)
         {
             if (protein <biomass)
