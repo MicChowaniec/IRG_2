@@ -11,11 +11,12 @@ public class StarlingSkillScript : AbstractSkill
     public GameObject StarlingPrefab;
     private GameObject StarlingInstatiated;
     private bool birdActive;
+    private Vector3 ScanningCenter;
 
     public static event Action<bool> BirdActive;
     public static event Action StarlingConsumed;
     public static event Action FishEaten;
-    public static event Action SetNest;
+    public static event Action<Vector3,int> SetNest;
     public static event Action GenomChange;
 
 
@@ -29,6 +30,7 @@ public class StarlingSkillScript : AbstractSkill
         
         BirdActive += SetActiveBird;
         PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+        OnHoverScript.OnHoverBroadcast += CheckColorIncome;
 
     }
     private void OnDisable()
@@ -44,10 +46,11 @@ public class StarlingSkillScript : AbstractSkill
         activePlayer = pm.players[id];
     }
 
-    private void CheckColorIncome(string arg1, string arg2, bool arg3, GameObjectTypeEnum @enum, ActionTypeEnum color)
+    private void CheckColorIncome(string arg1, string arg2, Vector3 position, GameObjectTypeEnum type, ActionTypeEnum color)
     {
-        clickedTileObject = @enum;
-        Debug.Log("Tile Object: " + @enum);
+        ScanningCenter = position;
+        clickedTileObject = type;
+        Debug.Log("Tile Object: " + type);
         clickedtileColor = color;
         Debug.Log("Object Color: " + color);
     }
@@ -66,7 +69,7 @@ public class StarlingSkillScript : AbstractSkill
     }
     public override void Do(int range, bool self)
     {
-        StatisticChange(-1, 0, 0, 0, 0, 0, 0);
+
         switch (clickedTileObject)
         {
             case GameObjectTypeEnum.Water:
@@ -74,6 +77,7 @@ public class StarlingSkillScript : AbstractSkill
                     activePlayer.Grow(2);
                     FishEaten?.Invoke();
                     Debug.Log("Fish Eaten");
+
                     break;
                 }
             case GameObjectTypeEnum.Bush:
@@ -84,25 +88,42 @@ public class StarlingSkillScript : AbstractSkill
                     Debug.Log("Genom Collected: " + clickedtileColor);
 
                     break;
-                    //Add colors etc.
+
                 }
             case GameObjectTypeEnum.Rock:
                 {
-                    SetNest?.Invoke();
-                    Debug.Log("Nest Set");
+                    SetNest?.Invoke(ScanningCenter,3);
+
                     break;
                 }
             case GameObjectTypeEnum.Tree:
                 {
+                    if (clickedtileColor != ActionTypeEnum.None)
+                    {
+                        SetNest?.Invoke(ScanningCenter,3);
+                    }
+                    else
+                    {
+                        activePlayer.AddGenom(clickedtileColor, 1);
+                        activePlayer.Grow(1);
+                        GenomChange?.Invoke();
+                        Debug.Log("Genom Collected: " + clickedtileColor);
+                    }
                     break;
                 }
             case GameObjectTypeEnum.Player:
                 {
-                    break;
+
+                    return;
+                }
+            case GameObjectTypeEnum.None:
+                {
+                    return;
                 }
 
 
         }
+        StatisticChange(-1, 0, 0, 0, 0, 0, 0);
         Confirm();
     }
     public void ClickOnButton()
@@ -110,7 +131,7 @@ public class StarlingSkillScript : AbstractSkill
         if (CheckResources(1))
         {
             StarlingInstatiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
-            StarlingInstatiated.GetComponent<VisionSystem>().owner = activePlayer;
+
             Cursor.visible = false; // Hide the cursor
             BirdActive?.Invoke(true);
         }
@@ -139,7 +160,7 @@ public class StarlingSkillScript : AbstractSkill
     }
     public void Confirm()
     {
-        StarlingInstatiated.GetComponent<VisionSystem>().owner = null;
+
         Destroy(StarlingInstatiated); StarlingInstatiated = null;
         BirdActive?.Invoke(false);
         Cursor.visible = true;

@@ -4,8 +4,14 @@ using UnityEngine;
 public class CardScriptableObject : ScriptableObject
 {
     public GameObject skillNotRooted;
-    public GameObject skillRooted;
+    public SkillScriptableObject skillNotRootedSC;
+    public Turn turnNotRooted;
     public ActionTypeEnum passiveRooted;
+
+    public GameObject skillRooted;
+    public SkillScriptableObject skillRootedSC;
+    public Turn turnRooted;
     public ActionTypeEnum passiveNotRooted;
+    
     
 }

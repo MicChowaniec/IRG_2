@@ -7,7 +7,6 @@ public class PopUpScript : MonoBehaviour
 {
     public TextMeshProUGUI labelTMP;
     public TextMeshProUGUI descriptionTMP;
-    public GameObject buttonOK;
     public Canvas parentCanvas;
 
     private Coroutine displayCoroutine;
@@ -26,15 +25,15 @@ public class PopUpScript : MonoBehaviour
         OnHoverScript.HidePopUp -= HidePopUP;
     }
 
-    private void StartDisplayPopUp(string label, string description, bool button, GameObjectTypeEnum gote, ActionTypeEnum color)
+    private void StartDisplayPopUp(string label, string description, Vector3 position, GameObjectTypeEnum gote, ActionTypeEnum color)
     {
         isMouseOver = true;
 
         StopAllActiveCoroutines(); // Stop any existing coroutines
-        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(label, description, button));
+        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(label, description));
     }
 
-    private IEnumerator DisplayPopUpWithDelay(string label, string description, bool button)
+    private IEnumerator DisplayPopUpWithDelay(string label, string description)
     {
         float delay = 0.5f;
         float elapsedTime = 0f;
@@ -60,8 +59,7 @@ public class PopUpScript : MonoBehaviour
         // Update UI elements
         labelTMP.text = label;
         descriptionTMP.text = description;
-        buttonOK.SetActive(button);
-
+      
         // Animate pop-up
         animationCoroutine = StartCoroutine(AnimatePopUpScale(Vector3.zero, Vector3.one, 0.5f));
     }
@@ -90,7 +88,6 @@ public class PopUpScript : MonoBehaviour
     {
         StopAllActiveCoroutines(); // Stop any ongoing coroutines
         transform.localScale = Vector3.zero;
-        buttonOK.SetActive(false);
         isMouseOver = false; // Reset the flag
         Debug.Log("PopUp Closed");
     }

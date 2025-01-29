@@ -10,7 +10,7 @@ using System;
 public class TurnBasedSystem : MonoBehaviour
 {
     public List<Turn> turns; // List of turns, serialized for Unity Editor
-    public  Turn ActiveTurn; // Property to access the active turn
+    public Turn ActiveTurn; // Property to access the active turn
     private int activeTurnIndex; //Value between 0 and Length of turns
     private int numberOfTurns = 6;
  
@@ -21,6 +21,8 @@ public class TurnBasedSystem : MonoBehaviour
     public Image image;
 
     public int diseaseLevel;
+
+    public static event Action<Turn> currentTurnBroadcast;
 
 
    
@@ -44,6 +46,7 @@ public class TurnBasedSystem : MonoBehaviour
         Debug.Log("Step 3");
         image.sprite = ActiveTurn.icon;
         Debug.Log("Step 4");
+        currentTurnBroadcast?.Invoke(ActiveTurn);
 
     }
 

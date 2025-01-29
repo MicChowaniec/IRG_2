@@ -1,8 +1,9 @@
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms.GameCenter;
 
-public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class OnHoverScript : MonoBehaviour
 {
     private string label;
     private string description;
@@ -10,13 +11,12 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObjectTypeEnum GOTE;
     private ActionTypeEnum ATE;
 
-    private bool button;
     private bool forStarling;
 
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action<string, string, bool, GameObjectTypeEnum, ActionTypeEnum> OnHoverBroadcast;
+    public static event Action<string, string, Vector3, GameObjectTypeEnum, ActionTypeEnum> OnHoverBroadcast;
     public static event Action HidePopUp;
 
     private void OnEnable()
@@ -63,6 +63,7 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void HandleHoverEnter()
     {
+        Highlight();
         if (onHoverSC == null)
         {
             Debug.LogError("onHoverSC is not assigned.");
@@ -72,24 +73,26 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         onHoverSC.AskForDetails();
         label = onHoverSC.label;
         description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
-        button = onHoverSC.button;
+        
         GOTE = onHoverSC.GetChildObjectType();
         ATE = onHoverSC.GetChildObjectColor();
 
-        OnHoverBroadcast?.Invoke(label, description, button, GOTE, ATE);
+        OnHoverBroadcast?.Invoke(label, description, transform.position, GOTE, ATE);
     }
 
     private void HandleHoverExit()
     {
+        StopHighlight();
         HidePopUp?.Invoke();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnMouseEnter()
     {
+        Debug.Log("Pointer Hover");
         HandleHoverEnter();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnMouseExit()
     {
         HandleHoverExit();
     }

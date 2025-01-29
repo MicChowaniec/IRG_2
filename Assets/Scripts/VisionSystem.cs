@@ -5,34 +5,34 @@ using System;
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
-    public float range;
+
 
     public HashSet<int> ListOfDiscoveredFields = new();
     public bool human;
     public Player owner;
 
     private PlayerManager _playerManager;
-    private Collider[] _colliderBuffer = new Collider[50]; // Adjust size as needed
+    private Collider[] _colliderBuffer = new Collider[100]; // Adjust size as needed
 
     private void OnEnable()
     {
         _playerManager = FindAnyObjectByType<PlayerManager>();
-        PlayerManager.PlayersInstantiated += ScanForVisible;
+
         StarlingSkillScript.SetNest += ScanForVisible;
 
         if (gameObject.activeInHierarchy)
         {
-            ScanForVisible();
+            ScanForVisible(transform.position,owner.eyes);
         }
     }
 
     private void OnDisable()
     {
-        PlayerManager.PlayersInstantiated -= ScanForVisible;
+
         StarlingSkillScript.SetNest -= ScanForVisible;
     }
 
-    public void ScanForVisible()
+    public void ScanForVisible(Vector3 center,int range)
     {
         if (_playerManager == null) return;
 
@@ -40,8 +40,13 @@ public class VisionSystem : MonoBehaviour
         {
             human = playerScript.player.human;
         }
+        else if (owner != null)
+        {
+            human = owner.human;
+        }
 
-        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, range, _colliderBuffer, layer);
+
+        int hitCount = Physics.OverlapSphereNonAlloc(center+new Vector3(0,1,0),range*0.7f, _colliderBuffer, layer);
 
         for (int i = 0; i < hitCount; i++)
         {

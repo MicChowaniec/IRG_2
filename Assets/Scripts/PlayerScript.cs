@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour
     private int tileId;
     public static event Action<int> UpdatePlayerPosition;
     public static event Action FinishTurn;
+    public static event Action<Player> AITurn;
 
     public void OnEnable()
     {
@@ -87,7 +88,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (!human)
         {
-            FinishTurn?.Invoke();
+            AITurn?.Invoke(player);
             Debug.Log(player.itsName + " finished the turn");
         }
     }
