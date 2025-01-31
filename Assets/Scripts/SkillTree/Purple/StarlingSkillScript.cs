@@ -9,7 +9,7 @@ public class StarlingSkillScript : AbstractSkill
 
 
     public GameObject StarlingPrefab;
-    private GameObject StarlingInstatiated;
+    public GameObject StarlingInstantiated;
     private bool birdActive;
     private Vector3 ScanningCenter;
 
@@ -46,7 +46,7 @@ public class StarlingSkillScript : AbstractSkill
         activePlayer = pm.players[id];
     }
 
-    private void CheckColorIncome(string arg1, string arg2, Vector3 position, GameObjectTypeEnum type, ActionTypeEnum color)
+    public void CheckColorIncome(string arg1, string arg2, Vector3 position, GameObjectTypeEnum type, ActionTypeEnum color)
     {
         ScanningCenter = position;
         clickedTileObject = type;
@@ -130,7 +130,7 @@ public class StarlingSkillScript : AbstractSkill
     {
         if (CheckResources(1))
         {
-            StarlingInstatiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
+            StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
 
             Cursor.visible = false; // Hide the cursor
             BirdActive?.Invoke(true);
@@ -139,10 +139,10 @@ public class StarlingSkillScript : AbstractSkill
     public void Update()
     {
         if (!birdActive) { return; }
-        else
-        {
+       
             if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
             {
+
 
                 Confirm();
             }
@@ -155,15 +155,23 @@ public class StarlingSkillScript : AbstractSkill
 
             }
             
-        }
+        
 
     }
     public void Confirm()
     {
+        Debug.Log("Confirm1");
 
-        Destroy(StarlingInstatiated); StarlingInstatiated = null;
+        if (StarlingInstantiated != null)
+        {
+            Destroy(StarlingInstantiated);
+            StarlingInstantiated = null;
+        }
+        Debug.Log("Confirm2");
         BirdActive?.Invoke(false);
+        Debug.Log("Confirm3");
         Cursor.visible = true;
+        Debug.Log("Confirm4");
     }
 
     public override void StatisticChange(int starling, int biomass, int water, int energy, int protein, int resistance, int eyes)

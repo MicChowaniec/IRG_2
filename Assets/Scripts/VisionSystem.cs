@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.Rendering;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class VisionSystem : MonoBehaviour
 {
     public LayerMask layer;
 
 
-    public HashSet<int> ListOfDiscoveredFields = new();
+    public List<TileScriptableObject> ListOfDiscoveredFields = new();
     public bool human;
     public Player owner;
 
@@ -55,14 +58,14 @@ public class VisionSystem : MonoBehaviour
 
             if (go.TryGetComponent<TileScript>(out TileScript ts))
             {
-                int idToAdd = ts.TSO.id;
-                if (ListOfDiscoveredFields.Add(idToAdd))
+                
+                if (ListOfDiscoveredFields.Contains(ts.TSO))
                 {
                     if (owner != null)
                     {
                         _playerManager.GetGameObjectFromSO(owner)
                             ?.GetComponent<VisionSystem>()
-                            ?.ListOfDiscoveredFields.Add(idToAdd);
+                            ?.ListOfDiscoveredFields.Add(ts.TSO);
                     }
                 }
             }
@@ -89,4 +92,93 @@ public class VisionSystem : MonoBehaviour
             }
         }
     }
-}
+    public TileScriptableObject FindAttractiveField(string skill, GameObjectTypeEnum gote, ActionTypeEnum ate)
+    {
+
+
+        List<TileScriptableObject> ListToWorkOn = new();
+
+        //Dictionary<TileScriptableObject>
+        foreach (var tso in ListOfDiscoveredFields)
+        {
+            if (tso.childType == gote)
+            {
+                if (tso.childColor == ate)
+                {
+                    ListToWorkOn.Add(tso);
+                }
+            }
+        }
+        switch (skill)
+        {
+            case "Starling":
+
+                if (gote == GameObjectTypeEnum.Rock)
+                {
+                    Dictionary<TileScriptableObject, int> valueOfTheTile = new();
+                    foreach (var tso in ListToWorkOn)
+                    {
+                        int fieldValue = 6;
+                        foreach (var neighbour in tso.neighbours)
+                        {
+                            if (ListOfDiscoveredFields.Contains(neighbour))
+                            {
+                                fieldValue--;
+                            }
+                        }
+                        valueOfTheTile.Add(tso, fieldValue);
+
+
+                    }
+                    var returnedField = valueOfTheTile.FirstOrDefault().Key;
+                    foreach (var prospect in valueOfTheTile.Keys)
+                    {
+                        if (valueOfTheTile[prospect] > valueOfTheTile[returnedField])
+                        {
+                            returnedField = prospect;
+                        }
+                    }
+                    return returnedField;
+
+                }
+                else if(gote==GameObjectTypeEnum.Bush)
+                {
+                    foreach(var tso in ListOfDiscoveredFields)
+                    {
+                        if (tso.childColor== ate)
+                        {
+                            return tso;
+                        }
+                    }
+                    return null;
+                }
+                else if (gote==GameObjectTypeEnum.Water)
+                {
+                    foreach (var tso in ListToWorkOn)
+                    {
+                        if (tso.childType==gote)
+                        {
+                            return tso;
+                        }
+                    }
+                }   return null; 
+            }
+        return null;
+    }
+    public ActionTypeEnum AskForColor()
+    {
+        foreach (var v in ListOfDiscoveredFields)
+        {
+            if(v.childColor!=ActionTypeEnum.None)
+            {
+                return v.childColor;
+            }
+            //Implement Wages
+        }
+        return ActionTypeEnum.None;
+    }
+
+ }
+
+
+

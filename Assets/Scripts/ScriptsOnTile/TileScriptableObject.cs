@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tile_SO", menuName = "Dynamic/Tile_SO")]
@@ -14,6 +15,8 @@ public class TileScriptableObject : OnHoverSC
     public TileTypesEnum tileTypes;
     public GameObjectTypeEnum childType;
     public ActionTypeEnum childColor;
+
+    public List<TileScriptableObject> neighbours = new();
 
     public override void AskForDetails()
     {

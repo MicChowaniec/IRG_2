@@ -11,8 +11,6 @@ public class TileScript : MonoBehaviour
     public TileScriptableObject TSO;
     // Update is called once per frame
     
-    public List<int> neighbours = new();
-    
     public int activePlayer;
     public TurnBasedSystem tbs;
 
@@ -56,12 +54,12 @@ public class TileScript : MonoBehaviour
 
                 else
                 {
-                    int neighborId = Neighbour(i, j);
-                    if (neighborId != -1)
+                    TileScriptableObject neighbour = Neighbour(i, j);
+                    if (neighbour!=null)
                     {
-                        if (!neighbours.Contains(neighborId))
+                        if (!TSO.neighbours.Contains(neighbour))
                         {
-                            neighbours.Add(neighborId);
+                            TSO.neighbours.Add(neighbour);
                             //Debug.Log("Neighbour Added");
                         }
                     }
@@ -71,27 +69,27 @@ public class TileScript : MonoBehaviour
         }
         if (TSO.id == MapManager.centerId)
         {
-            foreach (var n in neighbours)
+            foreach (var n in TSO.neighbours)
             {
-                mapManager.tiles[n].rootable = false;
+               TSO.rootable = false;
 
             }
         }
         
     }
-    public int Neighbour(int i, int j)
+    public TileScriptableObject Neighbour(int i, int j)
     {
         Vector2 vectorTemp = new(0, 0);
         if (mapManager == null)
         {
 
-            return -1;
+            return null;
         }
 
         if (mapManager.posAdnIds == null)
         {
 
-            return -1;
+            return null;
         }
         
         if (TSO.ijCoordinates.x < 1)
@@ -105,18 +103,20 @@ public class TileScript : MonoBehaviour
 
         if (mapManager.posAdnIds.TryGetValue(vectorTemp,out int tempId))
         {
-            if (tempId != TSO.id)
+            TileScriptableObject temp;
+            if (mapManager.tiles[tempId]!=null)
             {
-                return tempId;
+                temp = mapManager.tiles[tempId];
+                return temp;
             }
             else
             {
-                return -1;
+                return null;
             }
         }
         else
         {
-            return -1;
+            return null;
         }
     }
    

@@ -11,6 +11,8 @@ public class Day_Panel : MonoBehaviour
     public GameObject TopBar;
     public GameObject LeftBar;
     public GameObject TabButton;
+    public Player human;
+    
 
 
     public bool leftBarVisible;
@@ -60,7 +62,7 @@ public class Day_Panel : MonoBehaviour
 
         RectTransform rectTransform = LeftBar.GetComponent<RectTransform>();
         Vector3 startPosition = rectTransform.anchoredPosition;
-        Vector3 endPosition = new Vector3(signature * 300, rectTransform.anchoredPosition.y, 0);
+        Vector3 endPosition = new Vector3(signature * 200, rectTransform.anchoredPosition.y, 0);
 
         StartCoroutine(MoveTheUI(LeftBar, startPosition, endPosition, 0.5f));
     }
@@ -80,4 +82,5 @@ public class Day_Panel : MonoBehaviour
         rectTransform.anchoredPosition = end; // Ensure the final position is set
         isAnimating = false;
     }
+    
 }

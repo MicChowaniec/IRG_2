@@ -89,7 +89,7 @@ public class PlayerScript : MonoBehaviour
         if (!human)
         {
             AITurn?.Invoke(player);
-            Debug.Log(player.itsName + " finished the turn");
+           
         }
     }
 }

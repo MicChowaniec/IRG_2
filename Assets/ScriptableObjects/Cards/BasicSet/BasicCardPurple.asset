@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: BasicCardPurple
   m_EditorClassIdentifier: 
   skillNotRooted: {fileID: 2648954108819363694, guid: 585d5530b6cc78b4aa883a213c94712e, type: 3}
+  skillNotRootedSC: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
+  turnNotRooted: {fileID: 11400000, guid: 6cf28ff8b488b3c43a5f7140400fdc3e, type: 2}
+  passiveRooted: 0
   skillRooted: {fileID: 2648954108819363694, guid: e0d246994515e844c8dc02dbf16cebbf, type: 3}
-  passive: 0
-  passiveFromRooted: 0
+  skillRootedSC: {fileID: 0}
+  turnRooted: {fileID: 0}
+  passiveNotRooted: 0

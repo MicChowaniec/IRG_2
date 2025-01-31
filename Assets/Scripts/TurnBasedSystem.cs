@@ -22,7 +22,7 @@ public class TurnBasedSystem : MonoBehaviour
 
     public int diseaseLevel;
 
-    public static event Action<Turn> currentTurnBroadcast;
+    public static event Action<Turn> CurrentTurnBroadcast;
 
 
    
@@ -46,7 +46,7 @@ public class TurnBasedSystem : MonoBehaviour
         Debug.Log("Step 3");
         image.sprite = ActiveTurn.icon;
         Debug.Log("Step 4");
-        currentTurnBroadcast?.Invoke(ActiveTurn);
+        CurrentTurnBroadcast?.Invoke(ActiveTurn);
 
     }
 
