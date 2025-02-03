@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject[] playerInstances;
 
 
-    public static event Action<int> ActivePlayerBroadcast;
+    public static event Action<Player> ActivePlayerBroadcast;
     public static event Action ChangePhase;
     public static event Action PlayersInstantiated;
 
@@ -24,7 +24,8 @@ public class PlayerManager : MonoBehaviour
         EndTurn.EndTurnEvent += ChangePlayer;
         PlayerScript.FinishTurn += ChangePlayer;
         MapManager.MapGenerated += AllocatePlayers;
-      
+        AI.EndTurn += ChangePlayer;
+
 
     }
 
@@ -33,7 +34,8 @@ public class PlayerManager : MonoBehaviour
         EndTurn.EndTurnEvent -=  ChangePlayer;
         PlayerScript.FinishTurn -= ChangePlayer;
         MapManager.MapGenerated -= AllocatePlayers;
-        
+        AI.EndTurn -= ChangePlayer;
+
     }
     /// <summary>
     /// Allocate player only once, after map is created
@@ -104,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Log(activePlayer.itsName);
 
         // Safely invoke the event
-        ActivePlayerBroadcast?.Invoke(activePlayer.id);
+        ActivePlayerBroadcast?.Invoke(activePlayer);
         ActionBar.SetActive(activePlayer.human);
         
 

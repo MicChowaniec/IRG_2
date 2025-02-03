@@ -2,8 +2,9 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms.GameCenter;
+using UnityEditor.Search;
 
-public class OnHoverScript : MonoBehaviour
+public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private string label;
     private string description;
@@ -18,20 +19,9 @@ public class OnHoverScript : MonoBehaviour
 
     public static event Action<string, string, Vector3, GameObjectTypeEnum, ActionTypeEnum> OnHoverBroadcast;
     public static event Action HidePopUp;
+    public static event Action<string, string> ShowSkillDescription;
+    public static event Action HideSkillDescription;
 
-    private void OnEnable()
-    {
-        StarlingSkillScript.BirdActive += ForStarling;
-    }
-
-    private void OnDisable()
-    {
-        StarlingSkillScript.BirdActive -= ForStarling;
-
-        // Prevent memory leaks
-        HidePopUp = null;
-        OnHoverBroadcast = null;
-    }
 
     private void ForStarling(bool isActive)
     {
@@ -73,8 +63,9 @@ public class OnHoverScript : MonoBehaviour
         onHoverSC.AskForDetails();
         label = onHoverSC.label;
         description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
-        
+
         GOTE = onHoverSC.GetChildObjectType();
+        
         ATE = onHoverSC.GetChildObjectColor();
 
         OnHoverBroadcast?.Invoke(label, description, transform.position, GOTE, ATE);
@@ -96,4 +87,21 @@ public class OnHoverScript : MonoBehaviour
     {
         HandleHoverExit();
     }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+
+        HideSkillDescription();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        
+        onHoverSC.AskForDetails();
+        label = onHoverSC.label;
+        description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
+        ShowSkillDescription(label, description);
+    }
+
+
 }

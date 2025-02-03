@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System;
 
 public class StarlingPrefabScript : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class StarlingPrefabScript : MonoBehaviour
     private PlayerManager playerManager;
     private TileScriptableObject AIdestination;
 
+    public static event Action<TileScriptableObject> FinallyReachedTheDestination;
     void Start()
     {
         
@@ -70,7 +72,7 @@ public class StarlingPrefabScript : MonoBehaviour
     }
     public void AIStarlingMovememnt(TileScriptableObject tso)
     {
-        tso = AIdestination;
+        AIdestination = tso;
         Vector3 targetPosition = new Vector3(0, offset, 0) + tso.coordinates;
         // Gradually move the object towards the target position
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, followSpeed * Time.deltaTime);
@@ -81,6 +83,10 @@ public class StarlingPrefabScript : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+        if(Vector3.Distance(transform.position, targetPosition)<0.1f)
+        {
+            FinallyReachedTheDestination?.Invoke(tso);
         }
     }
 }

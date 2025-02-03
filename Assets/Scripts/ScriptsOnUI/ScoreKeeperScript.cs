@@ -152,34 +152,34 @@ public class ScoreKeeperScript : MonoBehaviour
     private void RedFieldsChange(int redFieldsChange,int rootableFields)
     {
         redFields = redFieldsChange;
-        redFieldsText.text = "Red: \n" + redFieldsChange + "/" + rootableFields + " (" + ChangeResource(redFieldsChange, rootableFields) + "%)";
+        redFieldsText.text = redFieldsChange + "/" + rootableFields + " (" + ChangeResource(redFieldsChange, rootableFields) + "%)";
     }
 
      private void OrangeFieldsChange(int orangeFieldsChange, int rootableFields)
     {
         orangeFields = orangeFieldsChange;
-        redFieldsText.text = "Orange: \n" + orangeFieldsChange + "/" + rootableFields +" ("+ ChangeResource(orangeFieldsChange, rootableFields) + "%)";
+        redFieldsText.text =  orangeFieldsChange + "/" + rootableFields +" ("+ ChangeResource(orangeFieldsChange, rootableFields) + "%)";
     }
 
     private void YellowFieldsChange(int yellowFieldsChange, int rootableFields)
     {
         yellowFields = yellowFieldsChange;
-        yellowFieldsText.text = "Yellow: \n" + yellowFieldsChange + "/" + rootableFields + " (" + ChangeResource(yellowFieldsChange, rootableFields) + "%)";
+        yellowFieldsText.text =  + yellowFieldsChange + "/" + rootableFields + " (" + ChangeResource(yellowFieldsChange, rootableFields) + "%)";
     }
     private void GreenFieldsChange(int greenFieldsChange, int rootableFields)
     {
         yellowFields = greenFieldsChange;
-        yellowFieldsText.text = "Green: \n" + greenFieldsChange + "/" + rootableFields + " (" + ChangeResource(greenFieldsChange, rootableFields) + "%)";
+        yellowFieldsText.text = + greenFieldsChange + "/" + rootableFields + " (" + ChangeResource(greenFieldsChange, rootableFields) + "%)";
     }
     private void BlueFieldsChange(int blueFieldsChange, int rootableFields)
     {
         blueFields = blueFieldsChange;
-        blueFieldsText.text = "Blue: \n" +blueFieldsChange + "/" + rootableFields + " (" + ChangeResource(blueFieldsChange, rootableFields) + "%)";
+        blueFieldsText.text = +blueFieldsChange + "/" + rootableFields + " (" + ChangeResource(blueFieldsChange, rootableFields) + "%)";
     }
     private void PurpleFieldsChange(int purpleFieldsChange, int rootableFields)
     {
         purpleFields = purpleFieldsChange;
-        purpleFieldsText.text = "Purple: \n" + purpleFieldsChange + "/" + rootableFields + "(" + ChangeResource(purpleFieldsChange, rootableFields) + "%)";
+        purpleFieldsText.text =  + purpleFieldsChange + "/" + rootableFields + "(" + ChangeResource(purpleFieldsChange, rootableFields) + "%)";
     }
     private float ChangeResource(int resourceChange)
     {

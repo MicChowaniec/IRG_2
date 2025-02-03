@@ -7,9 +7,9 @@ public class EndTurn : AbstractSkill
     public static event Action EndTurnEvent;
     public void OnClick()
     {
-        Do(0,false);
+        Do(GameObjectTypeEnum.None, ActionTypeEnum.None);
     }
-    public override void Do(int range, bool self)
+    public override void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
     {
         EndTurnEvent?.Invoke();
     }

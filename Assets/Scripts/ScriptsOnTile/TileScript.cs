@@ -10,8 +10,8 @@ public class TileScript : MonoBehaviour
     public TileType TT;
     public TileScriptableObject TSO;
     // Update is called once per frame
-    
-    public int activePlayer;
+
+    public Player activePlayer;
     public TurnBasedSystem tbs;
 
     public MapManager mapManager;
@@ -35,9 +35,9 @@ public class TileScript : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast-= ActivePlayerUpdate;
     }
 
-    private void ActivePlayerUpdate(int id)
+    private void ActivePlayerUpdate(Player player)
     {
-        activePlayer = id;
+        activePlayer = player;
     }
     private void AddNeighbours()
     {
@@ -67,12 +67,11 @@ public class TileScript : MonoBehaviour
 
             }
         }
-        if (TSO.id == MapManager.centerId)
+        if(TSO.childType==GameObjectTypeEnum.Tree)
         {
             foreach (var n in TSO.neighbours)
             {
-               TSO.rootable = false;
-
+                n.rootable = false;
             }
         }
         

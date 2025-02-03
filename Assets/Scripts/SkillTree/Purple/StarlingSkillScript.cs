@@ -10,14 +10,15 @@ public class StarlingSkillScript : AbstractSkill
 
     public GameObject StarlingPrefab;
     public GameObject StarlingInstantiated;
-    private bool birdActive;
+    private bool birdActive;    
     private Vector3 ScanningCenter;
 
-    public static event Action<bool> BirdActive;
+    
     public static event Action StarlingConsumed;
     public static event Action FishEaten;
-    public static event Action<Vector3,int> SetNest;
+    public static event Action<Player,Vector3,int> SetNest;
     public static event Action GenomChange;
+    public static event Action<Player> BirdDestroyed;
 
 
     private GameObjectTypeEnum clickedTileObject;
@@ -28,7 +29,7 @@ public class StarlingSkillScript : AbstractSkill
     private void OnEnable()
     {
         
-        BirdActive += SetActiveBird;
+        
         PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast += CheckColorIncome;
 
@@ -36,14 +37,13 @@ public class StarlingSkillScript : AbstractSkill
     private void OnDisable()
     {
         OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
-        BirdActive -= SetActiveBird;
+        
         PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
     }
-
-    private void ActivePlayerUpdate(int id)
+ 
+    private void ActivePlayerUpdate(Player player)
     {
-        PlayerManager pm = FindAnyObjectByType<PlayerManager>();
-        activePlayer = pm.players[id];
+        activePlayer = player;
     }
 
     public void CheckColorIncome(string arg1, string arg2, Vector3 position, GameObjectTypeEnum type, ActionTypeEnum color)
@@ -67,7 +67,7 @@ public class StarlingSkillScript : AbstractSkill
             OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
         }
     }
-    public override void Do(int range, bool self)
+    public override void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
     {
 
         switch (clickedTileObject)
@@ -92,7 +92,7 @@ public class StarlingSkillScript : AbstractSkill
                 }
             case GameObjectTypeEnum.Rock:
                 {
-                    SetNest?.Invoke(ScanningCenter,3);
+                    SetNest?.Invoke(activePlayer,ScanningCenter,3);
 
                     break;
                 }
@@ -100,7 +100,7 @@ public class StarlingSkillScript : AbstractSkill
                 {
                     if (clickedtileColor != ActionTypeEnum.None)
                     {
-                        SetNest?.Invoke(ScanningCenter,3);
+                        SetNest?.Invoke(activePlayer,ScanningCenter,3);
                     }
                     else
                     {
@@ -128,50 +128,51 @@ public class StarlingSkillScript : AbstractSkill
     }
     public void ClickOnButton()
     {
-        if (CheckResources(1))
+        if (CheckResources(1)&&!birdActive)
         {
             StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
-
+            
             Cursor.visible = false; // Hide the cursor
-            BirdActive?.Invoke(true);
+            birdActive = true;
         }
     }
     public void Update()
     {
         if (!birdActive) { return; }
-       
+
+        if (activePlayer.human)
+        {
+            
             if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
             {
 
-
                 Confirm();
+                birdActive = false;
             }
             if (Input.GetMouseButtonDown(0))
             {
 
 
-                Do(0, false);
+                Do(clickedTileObject, clickedtileColor);
 
 
             }
-            
-        
+        }
 
     }
     public void Confirm()
     {
-        Debug.Log("Confirm1");
+
+        birdActive = false;
 
         if (StarlingInstantiated != null)
         {
             Destroy(StarlingInstantiated);
             StarlingInstantiated = null;
         }
-        Debug.Log("Confirm2");
-        BirdActive?.Invoke(false);
-        Debug.Log("Confirm3");
         Cursor.visible = true;
-        Debug.Log("Confirm4");
+        BirdDestroyed?.Invoke(activePlayer);
+
     }
 
     public override void StatisticChange(int starling, int biomass, int water, int energy, int protein, int resistance, int eyes)

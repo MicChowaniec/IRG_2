@@ -8,8 +8,8 @@ using UnityEditor;
 public class PlayerScript : MonoBehaviour
 {
     public Player player;
+    private bool isActivePlayer;
     public Animator animator;
-    public bool isActivePlayer;
     private int tileId;
     public static event Action<int> UpdatePlayerPosition;
     public static event Action FinishTurn;
@@ -27,10 +27,10 @@ public class PlayerScript : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast -= SetActivePlayer;
     }
 
-    private void SetActivePlayer(int i)
+    private void SetActivePlayer(Player invokedPlayer)
     {
 
-        if (player.id == i)
+        if (invokedPlayer == player)
         {
             isActivePlayer = true;
             MakeAction(player.human);

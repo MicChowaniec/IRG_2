@@ -11,7 +11,6 @@ public class VisionSystem : MonoBehaviour
 
 
     public List<TileScriptableObject> ListOfDiscoveredFields = new();
-    public bool human;
     public Player owner;
 
     private PlayerManager _playerManager;
@@ -25,7 +24,21 @@ public class VisionSystem : MonoBehaviour
 
         if (gameObject.activeInHierarchy)
         {
-            ScanForVisible(transform.position,owner.eyes);
+            ScanForVisible(owner,transform.position, owner.eyes);
+        }
+        PlayerManager.PlayersInstantiated += UpdateTheVision;
+        PlayerManager.ActivePlayerBroadcast += UpdateTheVision;
+    }
+
+    private void UpdateTheVision()
+    {
+        ScanForVisible(owner, transform.position, owner.eyes);
+    }
+    private void UpdateTheVision(Player player) 
+    {
+        if (player == owner)
+        {
+            ScanForVisible(player, transform.position, owner.eyes);
         }
     }
 
@@ -33,39 +46,34 @@ public class VisionSystem : MonoBehaviour
     {
 
         StarlingSkillScript.SetNest -= ScanForVisible;
+        PlayerManager.PlayersInstantiated -= UpdateTheVision;
     }
 
-    public void ScanForVisible(Vector3 center,int range)
+
+    public void ScanForVisible(Player player, Vector3 center,int range)
     {
-        if (_playerManager == null) return;
-
-        if (TryGetComponent<PlayerScript>(out PlayerScript playerScript))
+        if (player == owner)
         {
-            human = playerScript.player.human;
-        }
-        else if (owner != null)
-        {
-            human = owner.human;
-        }
 
 
-        int hitCount = Physics.OverlapSphereNonAlloc(center+new Vector3(0,1,0),range*0.7f, _colliderBuffer, layer);
+            int hitCount = Physics.OverlapSphereNonAlloc(center + new Vector3(0, 1, 0), range * 0.7f, _colliderBuffer, layer);
 
-        for (int i = 0; i < hitCount; i++)
-        {
-            GameObject go = _colliderBuffer[i].gameObject;
-            CheckRecursively(go);
-
-            if (go.TryGetComponent<TileScript>(out TileScript ts))
+            for (int i = 0; i < hitCount; i++)
             {
-                
-                if (ListOfDiscoveredFields.Contains(ts.TSO))
+                GameObject go = _colliderBuffer[i].gameObject;
+                CheckRecursively(go);
+
+                if (go.TryGetComponent<TileScript>(out TileScript ts))
                 {
-                    if (owner != null)
+
+                    if (!ListOfDiscoveredFields.Contains(ts.TSO))
                     {
-                        _playerManager.GetGameObjectFromSO(owner)
-                            ?.GetComponent<VisionSystem>()
-                            ?.ListOfDiscoveredFields.Add(ts.TSO);
+                        if (owner != null)
+                        {
+                            _playerManager.GetGameObjectFromSO(owner)
+                                ?.GetComponent<VisionSystem>()
+                                ?.ListOfDiscoveredFields.Add(ts.TSO);
+                        }
                     }
                 }
             }
@@ -81,7 +89,7 @@ public class VisionSystem : MonoBehaviour
         {
             Transform current = queue.Dequeue();
 
-            if (human == true || (owner != null && owner.human == true))
+            if (owner.human == true || (owner != null && owner.human == true))
             {
                 current.gameObject.layer = 6;
             }
@@ -109,6 +117,7 @@ public class VisionSystem : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Found " + ListToWorkOn.Count + " interesting fields");
         switch (skill)
         {
             case "Starling":

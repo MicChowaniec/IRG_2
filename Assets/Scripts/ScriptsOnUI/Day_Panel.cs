@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.GPUSort;
 
 public class Day_Panel : MonoBehaviour
 {
@@ -11,8 +14,12 @@ public class Day_Panel : MonoBehaviour
     public GameObject TopBar;
     public GameObject LeftBar;
     public GameObject TabButton;
+    public GameObject ActionDescription;
+    public TextMeshProUGUI ActionDescriptionText;
     public Player human;
-    
+    private List<GameObject> buttonsInstantiated = new();
+    public GameObject EndTurnButton;
+
 
 
     public bool leftBarVisible;
@@ -20,15 +27,37 @@ public class Day_Panel : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnEnable()
     {
+        OnHoverScript.ShowSkillDescription += ShowActionDescription;
+        OnHoverScript.HideSkillDescription += HideActionDescription;
         leftBarVisible = false;
         SunLevel.DayEvent += DisplayCanvas;
         SunLevel.NightEvent += HideCanvas;
+        PlayerManager.ActivePlayerBroadcast += UpdateHuman;
 
     }
+
+  
+
     private void OnDisable()
     {
+        OnHoverScript.ShowSkillDescription -= ShowActionDescription;
+        OnHoverScript.HideSkillDescription -= HideActionDescription;
         SunLevel.DayEvent -= DisplayCanvas;
         SunLevel.NightEvent -= HideCanvas;
+        PlayerManager.ActivePlayerBroadcast -= UpdateHuman;
+    }
+
+    private void ShowActionDescription(string arg1, string arg2)
+    {
+
+        ActionDescription.SetActive(true);
+        ActionDescriptionText.text = arg2;
+    }
+
+    private void HideActionDescription()
+    {
+        ActionDescription.SetActive(false);
+        ActionDescriptionText.text = "";
     }
 
     private void HideCanvas()
@@ -82,5 +111,41 @@ public class Day_Panel : MonoBehaviour
         rectTransform.anchoredPosition = end; // Ensure the final position is set
         isAnimating = false;
     }
-    
+    private void AttachSkills()
+    {
+
+    }
+    private void UpdateHuman(Player player)
+    {
+        if (player.human)
+        {
+
+            human = player;
+            foreach (var s in player.cards)
+            {
+                if (player.rooted)
+                {
+                    Debug.Log(s.ToString());
+                    buttonsInstantiated.Add(Instantiate(s.skillRooted, ActionsBar.transform));
+                }
+                else
+                {
+                    buttonsInstantiated.Add(Instantiate(s.skillNotRooted, ActionsBar.transform));
+                }
+            }
+            buttonsInstantiated.Add(EndTurnButton);
+        }
+        else
+        {
+            foreach (var obj in buttonsInstantiated)
+            {
+                Destroy(obj);
+            }
+            buttonsInstantiated.Clear();
+
+        }
+
+    }
+
+
 }

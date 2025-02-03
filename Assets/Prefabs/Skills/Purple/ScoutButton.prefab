@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
   - component: {fileID: -3916900396909183784}
+  - component: {fileID: 3584288425972771112}
   m_Layer: 5
   m_Name: ScoutButton
   m_TagString: Untagged
@@ -146,3 +147,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionManager: {fileID: 0}
+--- !u!114 &3584288425972771112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648954108819363694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad557b00bf3b8a4e915c202f9bad91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHoverSC: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
+  litMaterial: {fileID: 0}

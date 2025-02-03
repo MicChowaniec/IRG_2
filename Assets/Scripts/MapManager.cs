@@ -199,6 +199,7 @@ public class MapManager : MonoBehaviour
                         tree.transform.localScale =new Vector3(0.2f, 20, 0.2f);
                         centerId = id;
                         tiles[id].childType = GameObjectTypeEnum.Tree;
+                        tiles[id].childColor = ActionTypeEnum.None;
                     }
 
                 }
@@ -206,16 +207,19 @@ public class MapManager : MonoBehaviour
                 {
                     InstatiateField(grassTileType, id, i, j);
                     tiles[id].childType = GameObjectTypeEnum.None;
+                    tiles[id].childColor = ActionTypeEnum.None;
                 }
                 else if (i == j)
                 {
                     InstatiateField(grassTileType, id, i, j);
                     tiles[id].childType = GameObjectTypeEnum.None;
+                    tiles[id].childColor = ActionTypeEnum.None;
                 }
                 else if (i == -j)
                 {
                     InstatiateField(grassTileType, id, i, j);
                     tiles[id].childType = GameObjectTypeEnum.None;
+                    tiles[id].childColor = ActionTypeEnum.None;
                 }
                 // Everything else random
                 else
@@ -230,9 +234,10 @@ public class MapManager : MonoBehaviour
                             //int random = new System.Random().Next(0, bushPrefabs.Length);
                             GameObject rock = Instantiate(rockPrefab, tiles[id].coordinates, Quaternion.identity, tiles[id].representation.transform);
                             rock.transform.localScale = new Vector3(1, 40, 1);
-                            
-                            tiles[id].childType =GameObjectTypeEnum.Rock;
-                    
+
+                            tiles[id].childType = GameObjectTypeEnum.Rock;
+                            tiles[id].childColor = ActionTypeEnum.None;
+
 
                         }
                     }
@@ -240,6 +245,7 @@ public class MapManager : MonoBehaviour
                     {
                         InstatiateField(sandTileType, id, i, j);
                         tiles[id].childType = GameObjectTypeEnum.None;
+                        tiles[id].childColor = ActionTypeEnum.None;
                     }
                     else if (rtt == TileTypesEnum.Grass)
                     {
@@ -260,6 +266,7 @@ public class MapManager : MonoBehaviour
                     {
                         InstatiateField(waterTileType, id, i, j);
                         tiles[id].childType = GameObjectTypeEnum.Water;
+                        tiles[id].childColor = ActionTypeEnum.None;
                     }
 
                 }

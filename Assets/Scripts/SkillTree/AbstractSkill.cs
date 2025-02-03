@@ -11,7 +11,7 @@ public class AbstractSkill : MonoBehaviour
     {
 
     }
-    public virtual void Do(int range, bool self)
+    public virtual void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
     {
 
     }
