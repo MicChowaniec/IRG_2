@@ -21,7 +21,7 @@ public class TileScriptableObject : OnHoverSC
     public override void AskForDetails()
     {
         label = tileTypes.ToString();
-        string standerStr = "";
+        string standerStr ="";
         string ownerStr = "";
         if (stander != null)
         {

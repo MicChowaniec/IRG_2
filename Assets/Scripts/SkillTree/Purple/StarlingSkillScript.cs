@@ -14,37 +14,12 @@ public class StarlingSkillScript : AbstractSkill
     private Vector3 ScanningCenter;
 
     
-    public static event Action StarlingConsumed;
-    public static event Action FishEaten;
     public static event Action<Player,Vector3,int> SetNest;
-    public static event Action GenomChange;
     public static event Action<Player> BirdDestroyed;
 
 
-    private GameObjectTypeEnum clickedTileObject;
-    private ActionTypeEnum clickedtileColor;
-    
 
 
-    private void OnEnable()
-    {
-        
-        
-        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-        OnHoverScript.OnHoverBroadcast += CheckColorIncome;
-
-    }
-    private void OnDisable()
-    {
-        OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
-        
-        PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
-    }
- 
-    private void ActivePlayerUpdate(Player player)
-    {
-        activePlayer = player;
-    }
 
     public void CheckColorIncome(string arg1, string arg2, Vector3 position, GameObjectTypeEnum type, ActionTypeEnum color)
     {
@@ -58,7 +33,7 @@ public class StarlingSkillScript : AbstractSkill
     private void SetActiveBird(bool b)
     {
         birdActive = b;
-        if (b)
+        if (b&&activePlayer.human)
         {
             OnHoverScript.OnHoverBroadcast += CheckColorIncome;
         }
@@ -75,7 +50,7 @@ public class StarlingSkillScript : AbstractSkill
             case GameObjectTypeEnum.Water:
                 {
                     activePlayer.Grow(2);
-                    FishEaten?.Invoke();
+                    
                     Debug.Log("Fish Eaten");
 
                     break;
@@ -84,7 +59,6 @@ public class StarlingSkillScript : AbstractSkill
                 {
                     activePlayer.AddGenom(clickedtileColor, 1);
                     activePlayer.Grow(1);
-                    GenomChange?.Invoke();
                     Debug.Log("Genom Collected: " + clickedtileColor);
 
                     break;
@@ -106,7 +80,6 @@ public class StarlingSkillScript : AbstractSkill
                     {
                         activePlayer.AddGenom(clickedtileColor, 1);
                         activePlayer.Grow(1);
-                        GenomChange?.Invoke();
                         Debug.Log("Genom Collected: " + clickedtileColor);
                     }
                     break;
@@ -123,31 +96,32 @@ public class StarlingSkillScript : AbstractSkill
 
 
         }
-        StatisticChange(-1, 0, 0, 0, 0, 0, 0);
+        StatisticChange(-1, 0, 0, 0, 0, 0);
         Confirm();
     }
     public void ClickOnButton()
     {
-        if (CheckResources(1)&&!birdActive)
+        StartListening();
+        if (CheckResources(1,0,0,0,0,0)&&!birdActive)
         {
             StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
             
             Cursor.visible = false; // Hide the cursor
-            birdActive = true;
+            SetActiveBird(true);
         }
     }
     public void Update()
     {
         if (!birdActive) { return; }
 
-        if (activePlayer.human)
+        if (activePlayer.human&&thisListen)
         {
             
             if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
             {
 
                 Confirm();
-                birdActive = false;
+                SetActiveBird(false);
             }
             if (Input.GetMouseButtonDown(0))
             {
@@ -163,7 +137,7 @@ public class StarlingSkillScript : AbstractSkill
     public void Confirm()
     {
 
-        birdActive = false;
+        SetActiveBird(false);
 
         if (StarlingInstantiated != null)
         {
@@ -172,31 +146,13 @@ public class StarlingSkillScript : AbstractSkill
         }
         Cursor.visible = true;
         BirdDestroyed?.Invoke(activePlayer);
+        StopListening();
 
     }
 
-    public override void StatisticChange(int starling, int biomass, int water, int energy, int protein, int resistance, int eyes)
-    {
-        activePlayer.starlings += starling;
-        if (activePlayer.human == true)
-        {
-            StarlingConsumed?.Invoke();
-        }
 
-    }
 
-    public override bool CheckResources(int res)
-    {
-        if (activePlayer.starlings>=res)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
+
 
 
 }

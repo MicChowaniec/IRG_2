@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
 public class Player : ScriptableObject
@@ -100,9 +101,30 @@ public class Player : ScriptableObject
             case ActionTypeEnum.Yellow: YellowLvl += amount;    break;
             case ActionTypeEnum.Orange: OrangeLvl += amount;    break;
             case ActionTypeEnum.Red:    RedLvl += amount;       break;
-            case ActionTypeEnum.None: break;
+            case ActionTypeEnum.None:   break;
         }
     }
-    
+    public void ReceiveDamage(int amount)
+    {
+        float temp = Mathf.Sqrt((float)amount);
+        temp -= RedLvl;
+        if (temp > 0)
+        {
+            protein -= (int)temp;
+        }
+        else if (temp <= 0)
+        {
+            protein--;
+        }
+    }
+    public int DealDamage()
+    {
+        System.Random rand = new System.Random();
+        int temp = rand.Next(1, 21);
+        temp += OrangeLvl;
+        return temp;
+    }
+   
+
 
 }

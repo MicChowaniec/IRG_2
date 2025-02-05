@@ -86,9 +86,8 @@ public class ScoreKeeperScript : MonoBehaviour
     {
         SunLevel.DayEvent += SunLevelChange;
         SunLevel.NightEvent += SunLevelChange;
-        StarlingSkillScript.StarlingConsumed += Change;
-        StarlingSkillScript.FishEaten += Change;
-        StarlingSkillScript.GenomChange += Change;
+ 
+        AbstractSkill.GenomChange += Change;
 
         MapManager.PurpleRootables += PurpleFieldsChange;
         MapManager.BlueRootables += BlueFieldsChange;
@@ -105,9 +104,8 @@ public class ScoreKeeperScript : MonoBehaviour
     {
         SunLevel.DayEvent -= SunLevelChange;
         SunLevel.NightEvent -= SunLevelChange;
-        StarlingSkillScript.StarlingConsumed -= Change;
-        StarlingSkillScript.FishEaten -= Change;
-        StarlingSkillScript.GenomChange -= Change;
+
+        AbstractSkill.GenomChange -= Change;
 
         MapManager.PurpleRootables += PurpleFieldsChange;
         MapManager.BlueRootables += BlueFieldsChange;

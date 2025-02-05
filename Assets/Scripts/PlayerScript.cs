@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     private bool isActivePlayer;
     public Animator animator;
     private int tileId;
-    public static event Action<int> UpdatePlayerPosition;
+    public static event Action<TileScriptableObject> UpdatePlayerPosition;
     public static event Action FinishTurn;
     public static event Action<Player> AITurn;
 
@@ -70,6 +70,7 @@ public class PlayerScript : MonoBehaviour
             
             if (hit.collider.TryGetComponent<TileScript>(out var tile))
             {
+                Debug.Log(player.itsName + " is standing on tile:" + tile.name);
                 tile.TSO.stander = player;
                 tileId = tile.TSO.id;
                 Vector3 tempScale = transform.localScale;

@@ -16,14 +16,14 @@ MonoBehaviour:
   description: 
   forStarlingText: 
   button: 0
-  sprite: {fileID: 0}
-  actionType: 0
+  sprite: {fileID: 21300000, guid: 39f8318434833bb4b82cb77a9f0e4558, type: 3}
+  actionType: 1
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 4fd15f45003697545857b067f7d24f3e, type: 3}
   starling: 0
   biomass: 0
   water: 0
-  energy: 10
+  energy: 1
   protein: 0
   resistance: 0
   eyes: 0
