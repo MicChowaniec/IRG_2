@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using System;
 using System.Linq;
+using UnityEditor;
 
 
 
@@ -15,46 +16,45 @@ public class AI : MonoBehaviour
     public ActionManager actionManager;
     public PlayerManager playerManager;
     private SkillScriptableObject tempSkill;
-    public StarlingSkillScript sss;
-    
+
 
     public static event Action EndTurn;
+    public static event Action<Player,SkillScriptableObject> SendMeAField;
 
     private void OnEnable()
     {
 
         TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
         PlayerScript.AITurn += CalculateMove;
-        StarlingPrefabScript.FinallyReachedTheDestination += ExecuteStarlingAction;
+        StarlingPrefabScript.FinallyReachedTheDestination += ExecuteAction;
         StarlingSkillScript.BirdDestroyed += CalculateMove;
     }
     private void OnDisable()
     {
         TurnBasedSystem.CurrentTurnBroadcast -= UpdateTurn;
         PlayerScript.AITurn -= CalculateMove;
-        StarlingPrefabScript.FinallyReachedTheDestination -= ExecuteStarlingAction;
+        StarlingPrefabScript.FinallyReachedTheDestination -= ExecuteAction;
         StarlingSkillScript.BirdDestroyed += CalculateMove;
 
     }
     private void FindPossibleMoves(Player computer)
     {
-        if(computer.human)
+        SkillList.Clear();
+        if (computer.human)
         {
             return;
         }
-        SkillList.Clear();
+        
         foreach (var card in computer.cards)
         {
             if (card.turnNotRooted == ActiveTurn && !computer.rooted)
             {
                 SkillList.Add(card.skillNotRootedSC);
-                Debug.Log(SkillList.First().label);
 
             }
-            else if (card.turnRooted && computer.rooted)
+            else if (card.turnRooted ==ActiveTurn && computer.rooted)
             {
                 SkillList.Add(card.skillRootedSC);
-                Debug.Log(SkillList);
             }
         }
         
@@ -65,16 +65,16 @@ public class AI : MonoBehaviour
         {
             return;
         }
-        FindPossibleMoves(computer);
-
+        if (SkillList.Count <=0)
+        {
+            FindPossibleMoves(computer);
+        }
 
         int index = new System.Random().Next(0, SkillList.Count);
-
+        
         tempSkill = SkillList[index];
 
-        GameObjectTypeEnum tempType = GameObjectTypeEnum.None;
 
-        ActionTypeEnum tempColor = ActionTypeEnum.None;
 
 
         switch (tempSkill.label)
@@ -82,43 +82,18 @@ public class AI : MonoBehaviour
         {
             case "Starling":
                 {
-                    if (computer.starlings <= 0)
+                    if (computer.eyes<=1)
                     {
                         SkillList.Remove(tempSkill);
-                        SkipTurn();
+                        CalculateMove(computer);
                         return;
                     }
-                    tempType = GameObjectTypeEnum.Rock;
-                    TileScriptableObject destinationField = DestinationField(computer, tempSkill.label, tempType, tempColor);
-                    if (destinationField == null)
+                    else
                     {
-                        Debug.Log(computer.itsName + "Don't see a rock");
-                        tempType = GameObjectTypeEnum.Bush;
-                        tempColor = AskForColor(computer);
-
-                        destinationField = DestinationField(computer, tempSkill.label, tempType, tempColor);
-                        if (destinationField == null)
-                        {
-                            Debug.Log(computer.itsName + "Don't see a bush");
-                            tempType = GameObjectTypeEnum.Water;
-
-                            destinationField = DestinationField(computer, tempSkill.label, tempType, tempColor);
-                            if (destinationField == null)
-                            {
-                                Debug.Log(computer.itsName + "Don't see a shit");
-                                // Add attack behaviour
-                                SkipTurn();
-
-
-                                return;
-
-                            }
-                        }
+                        SendMeAField?.Invoke(computer,tempSkill);
                     }
 
-                    sss = actionManager.GetComponent<StarlingSkillScript>();
-                    sss.ClickOnButton();
-                    sss.StarlingInstantiated.GetComponent<StarlingPrefabScript>().AIStarlingMovememnt(destinationField);
+
                     break;
                 }
                 case "Bite":
@@ -135,37 +110,18 @@ public class AI : MonoBehaviour
         }
         
     }
-    private void ExecuteStarlingAction(TileScriptableObject tso)
+    private void ExecuteAction(TileScriptableObject tso)
     {
         
-        sss.Do(tso.childType, tso.childColor);
+        
         Debug.Log(playerManager.activePlayer.itsName + " used " + tempSkill.label + " on " + tso.label + ", " + tso.childType.ToString() + ", " + tso.childColor.ToString());
         
     }
 
-    /// <summary>
-    /// Asking Vision System To provide most attractive Field
-    /// </summary>
-    /// <param name="computer"></param>
-    /// <param name="label"></param>
-    /// <param name="gameObjectTypeEnum"></param>
-    /// <param name="actionType"></param>
-    /// <returns></returns>
-    private TileScriptableObject DestinationField(Player computer, string label, GameObjectTypeEnum gameObjectTypeEnum, ActionTypeEnum actionType)
-    {
-        Debug.Log("Asking Vision System");
-        return playerManager.GetGameObjectFromSO(computer).GetComponent<VisionSystem>().FindAttractiveField(label, gameObjectTypeEnum, actionType);
-    }
-    /// <summary>
-    /// Asking for ActionType/Color attached to the VisibleFieldList
-    /// </summary>
-    /// <param name="computer"></param>
-    /// <returns></returns>
-    private ActionTypeEnum AskForColor(Player computer)
-    {
-        return playerManager.GetGameObjectFromSO(computer).GetComponent<VisionSystem>().AskForColor();
-    }
-
+  
+        
+   
+    
 
     private void UpdateTurn(Turn turn)
     {

@@ -50,4 +50,8 @@ public class TileScriptableObject : OnHoverSC
     {
         return childColor;
     }
+    public override Vector3 GetPosition()
+    {
+        return coordinates;
+    }
 }

@@ -24,8 +24,7 @@ public class Player : ScriptableObject
         starlings = 1;
         soulLvl = 1;
         
-        fireResistance = -10;
-        toxicResistance = 0;
+       
         if (id == 0)
         {
             eyes = 3;
@@ -49,8 +48,8 @@ public class Player : ScriptableObject
     public int starlings;
     public int soulLvl;
     public int eyes;
-    public int fireResistance;
-    public int toxicResistance;
+    public int burningLvl;
+
 
     public int PurpleLvl;
     public int BlueLvl;
@@ -119,12 +118,49 @@ public class Player : ScriptableObject
     }
     public int DealDamage()
     {
-        System.Random rand = new System.Random();
+        System.Random rand = new();
         int temp = rand.Next(1, 21);
         temp += OrangeLvl;
         return temp;
     }
+    public void Disease(int diseaseLvl)
+    {
+        //Implement Disease
+        int temp = diseaseLvl - GreenLvl;
+        if (temp > 0)
+        {
+            biomass -= temp;
+        }
+    }
+    public void EnergyFromSun(int sunLvl)
+    {
+        if(energy+sunLvl>=biomass)
+        {
+            energy = biomass;
+        }
+        else 
+        {
+            energy+= sunLvl;
+        }
+    }
+
+    public void StarlingUpdate()
+    {
+        starlings = soulLvl;
+    }
+
+    public void WaterUpdate(int waterLvl)
+    {
+        if (water - waterLvl <= biomass)
+        {
+            biomass--;
+            //implement fire;
+        }
+        else
+        {
+            water-= waterLvl;
+        }
+    }
+
    
-
-
 }

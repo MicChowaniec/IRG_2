@@ -4,6 +4,7 @@ using System;
 
 public class EndTurn : AbstractSkill
 {
+    
     public static event Action EndTurnEvent;
     public void OnClick()
     {

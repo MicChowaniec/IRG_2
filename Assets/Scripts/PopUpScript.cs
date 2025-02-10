@@ -25,12 +25,12 @@ public class PopUpScript : MonoBehaviour
         OnHoverScript.HidePopUp -= HidePopUP;
     }
 
-    private void StartDisplayPopUp(string label, string description, Vector3 position, GameObjectTypeEnum gote, ActionTypeEnum color)
+    private void StartDisplayPopUp(OnHoverSC onHoverSC)
     {
         isMouseOver = true;
 
         StopAllActiveCoroutines(); // Stop any existing coroutines
-        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(label, description));
+        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(onHoverSC.label, onHoverSC.description));
     }
 
     private IEnumerator DisplayPopUpWithDelay(string label, string description)
@@ -46,12 +46,11 @@ public class PopUpScript : MonoBehaviour
         }
 
         // Calculate position relative to mouse
-        Vector2 movePos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             transform.parent.GetComponent<RectTransform>(),
             Input.mousePosition,
             parentCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : parentCanvas.worldCamera,
-            out movePos
+            out Vector2 movePos
         );
 
         transform.localPosition = movePos + new Vector2(0, 100);

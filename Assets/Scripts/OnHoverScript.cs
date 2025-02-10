@@ -6,27 +6,14 @@ using UnityEditor.Search;
 
 public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private string label;
-    private string description;
-
-    private GameObjectTypeEnum GOTE;
-    private ActionTypeEnum ATE;
-
-    private bool forStarling;
-
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action<string, string, Vector3, GameObjectTypeEnum, ActionTypeEnum> OnHoverBroadcast;
+    public static event Action<OnHoverSC> OnHoverBroadcast;
     public static event Action HidePopUp;
     public static event Action<string, string> ShowSkillDescription;
     public static event Action HideSkillDescription;
 
-
-    private void ForStarling(bool isActive)
-    {
-        forStarling = isActive;
-    }
 
     public void Highlight()
     {
@@ -56,19 +43,12 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Highlight();
         if (onHoverSC == null)
         {
-            Debug.LogError("onHoverSC is not assigned.");
+           
             return;
         }
 
-        onHoverSC.AskForDetails();
-        label = onHoverSC.label;
-        description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
-
-        GOTE = onHoverSC.GetChildObjectType();
-        
-        ATE = onHoverSC.GetChildObjectColor();
-
-        OnHoverBroadcast?.Invoke(label, description, transform.position, GOTE, ATE);
+        OnHoverBroadcast?.Invoke(onHoverSC);
+  
     }
 
     private void HandleHoverExit()
@@ -79,7 +59,7 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnMouseEnter()
     {
-        Debug.Log("Pointer Hover");
+
         HandleHoverEnter();
     }
 
@@ -98,9 +78,7 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         
         onHoverSC.AskForDetails();
-        label = onHoverSC.label;
-        description = forStarling ? onHoverSC.forStarlingText : onHoverSC.description;
-        ShowSkillDescription(label, description);
+       
     }
 
 

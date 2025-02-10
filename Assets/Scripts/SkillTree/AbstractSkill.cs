@@ -9,9 +9,28 @@ public abstract class AbstractSkill : MonoBehaviour
     public Player activePlayer;
     public static event Action ChangeResourcesStatus;
     public static event Action GenomChange;
-    public bool thisListen = false;
     public GameObjectTypeEnum clickedTileObject;
-    public ActionTypeEnum clickedtileColor;
+    public ActionTypeEnum clickedTileColor;
+    public bool thisListener;
+
+    public void ThisListener(bool b)
+    {
+        thisListener = b;
+        if (b && activePlayer.human)
+        {
+            OnHoverScript.OnHoverBroadcast += CheckColorIncome;
+        }
+        if (!b)
+        {
+            OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
+        }
+    }
+    public virtual void CheckColorIncome(OnHoverSC onHoverSC)
+    {
+        clickedTileColor = onHoverSC.GetChildObjectColor();
+        clickedTileObject = onHoverSC.GetChildObjectType();
+    }
+
     public void StatisticChange(int starling, int biomass,  int water, int protein, int energy, int eyes)
 
     {
@@ -31,7 +50,25 @@ public abstract class AbstractSkill : MonoBehaviour
     {
 
     }
+    public void OnEnable()
+    {
+
+
+        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+
+
+    }
+    public void OnDisable()
+    {
+
+
+        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+
+
+    }
     public bool CheckResources(int starling, int biomass, int water, int protein, int energy, int eyes)
+
+
     {
         bool temp =true;
         if (starling >0)
@@ -105,48 +142,53 @@ public abstract class AbstractSkill : MonoBehaviour
         }
         return temp;
     }
-    public void OnEnable()
-    {
-
-
-        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-
-
-    }
-    public void OnDisable()
-    {
-
-
-        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-
-
-    }
+   
 
 
     public void ActivePlayerUpdate(Player player)
     {
-        player = activePlayer;
+        activePlayer = player;
     }
 
     public void ChangeGenom(ActionTypeEnum ate)
     {
-        if (activePlayer.human)
-        {
+
             activePlayer.AddGenom(ate,1);
             GenomChange?.Invoke();
+ 
+    }
+    public void Update()
+    {
+        if (!thisListener) { return; }
+
+        if (activePlayer.human && thisListener)
+        {
+
+            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+            {
+
+                Confirm();
+                ThisListener(false);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+
+
+                Do(clickedTileObject, clickedTileColor);
+
+
+            }
         }
-    }
 
-    public void StartListening()
+    }
+    public virtual void Confirm()
     {
-        thisListen = true;
+
     }
-    public void StopListening()
+    public virtual void ClickOnButton()
     {
-        thisListen=false;
+
     }
-
-
 
 
 }

@@ -1,32 +1,39 @@
+using System;
 using UnityEngine;
 
 public class BiteSkillScript : AbstractSkill
 {
-    public void ClickOnButton()
-    {
 
-    }
-    public void Update()
+
+    public override void ClickOnButton()
     {
-        if (activePlayer.human&&thisListen)
+       if(CheckResources(0, 0, 0, 0, 10, 0))
         {
+            ThisListener(true);
+        }
+
+       
+    }
+    public override void CheckColorIncome(OnHoverSC tso)
+    {
+        if (tso.GetChildObjectType() != GameObjectTypeEnum.None)
+        {
+            clickedTileObject = tso.GetChildObjectType();
+            clickedTileColor = tso.GetChildObjectColor();
             
-            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
-            {
-
-                StopListening();
-                
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-
-
-                Do(clickedTileObject, clickedtileColor);
-
-
-            }
+        }
+        else
+        {
+            return;
         }
     }
 
-
+    public override void Confirm()
+    {
+        ThisListener(false);
+    }
+    public override void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
+    {
+       
+    }
 }

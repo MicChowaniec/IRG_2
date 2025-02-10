@@ -23,4 +23,8 @@ public abstract class OnHoverSC : ScriptableObject
     {
         return ActionTypeEnum.None;
     }
+    public virtual Vector3 GetPosition()
+    {
+        return Vector3.zero;
+    }
 }

@@ -4,13 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEditor.Animations;
 
 public class PlayerScript : MonoBehaviour
 {
     public Player player;
-    private bool isActivePlayer;
     public Animator animator;
     private int tileId;
+    private int sunLvl;
+    private int diseaseLvl;
     public static event Action<TileScriptableObject> UpdatePlayerPosition;
     public static event Action FinishTurn;
     public static event Action<Player> AITurn;
@@ -19,12 +21,28 @@ public class PlayerScript : MonoBehaviour
     {
         //PlayerManager.ActivePlayerBroadcast
         PlayerManager.ActivePlayerBroadcast += SetActivePlayer;
+        SunLevel.DayEvent += SunLvl;
+        PlayerManager.ChangePhase += ChangePhaseChanges;
     }
-
+    public void SunLvl(int lvl)
+    {
+        sunLvl = lvl;
+    }
 
     public void OnDisable()
     {
         PlayerManager.ActivePlayerBroadcast -= SetActivePlayer;
+        PlayerManager.ChangePhase -= ChangePhaseChanges;
+    }
+
+    private void ChangePhaseChanges()
+    {
+        player.Disease(diseaseLvl);
+        player.EnergyFromSun(sunLvl);
+        player.StarlingUpdate();
+        player.WaterUpdate(-1);
+        
+
     }
 
     private void SetActivePlayer(Player invokedPlayer)
@@ -32,12 +50,11 @@ public class PlayerScript : MonoBehaviour
 
         if (invokedPlayer == player)
         {
-            isActivePlayer = true;
             MakeAction(player.human);
         }
         else
         {
-            isActivePlayer = false;
+            return;
         }
     }
     // Start is called before the first frame update
@@ -90,7 +107,9 @@ public class PlayerScript : MonoBehaviour
         if (!human)
         {
             AITurn?.Invoke(player);
-           
+
         }
     }
+
+
 }

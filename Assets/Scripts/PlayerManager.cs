@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
     public void OnEnable()
     {
         EndTurn.EndTurnEvent += ChangePlayer;
-        PlayerScript.FinishTurn += ChangePlayer;
+
         MapManager.MapGenerated += AllocatePlayers;
         AI.EndTurn += ChangePlayer;
 
@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
     public void OnDisable()
     {
         EndTurn.EndTurnEvent -=  ChangePlayer;
-        PlayerScript.FinishTurn -= ChangePlayer;
+
         MapManager.MapGenerated -= AllocatePlayers;
         AI.EndTurn -= ChangePlayer;
 

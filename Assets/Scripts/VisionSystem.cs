@@ -4,6 +4,8 @@ using System;
 using UnityEditor.Rendering;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.TerrainTools;
+using UnityEditor;
 
 public class VisionSystem : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class VisionSystem : MonoBehaviour
     private PlayerManager _playerManager;
     private Collider[] _colliderBuffer = new Collider[100]; // Adjust size as needed
 
+    public static event Action<TileScriptableObject> FoundAttractiveField;
+
     private void OnEnable()
     {
         _playerManager = FindAnyObjectByType<PlayerManager>();
@@ -24,17 +28,18 @@ public class VisionSystem : MonoBehaviour
 
         if (gameObject.activeInHierarchy)
         {
-            ScanForVisible(owner,transform.position, owner.eyes);
+            ScanForVisible(owner, transform.position, owner.eyes);
         }
         PlayerManager.PlayersInstantiated += UpdateTheVision;
         PlayerManager.ActivePlayerBroadcast += UpdateTheVision;
+        AI.SendMeAField += FindAttractiveField;
     }
 
     private void UpdateTheVision()
     {
         ScanForVisible(owner, transform.position, owner.eyes);
     }
-    private void UpdateTheVision(Player player) 
+    private void UpdateTheVision(Player player)
     {
         if (player == owner)
         {
@@ -47,10 +52,11 @@ public class VisionSystem : MonoBehaviour
 
         StarlingSkillScript.SetNest -= ScanForVisible;
         PlayerManager.PlayersInstantiated -= UpdateTheVision;
+        AI.SendMeAField -= FindAttractiveField;
     }
 
 
-    public void ScanForVisible(Player player, Vector3 center,int range)
+    public void ScanForVisible(Player player, Vector3 center, int range)
     {
         if (player == owner)
         {
@@ -68,12 +74,7 @@ public class VisionSystem : MonoBehaviour
 
                     if (!ListOfDiscoveredFields.Contains(ts.TSO))
                     {
-                        if (owner != null)
-                        {
-                            _playerManager.GetGameObjectFromSO(owner)
-                                ?.GetComponent<VisionSystem>()
-                                ?.ListOfDiscoveredFields.Add(ts.TSO);
-                        }
+                        ListOfDiscoveredFields.Add(ts.TSO);
                     }
                 }
             }
@@ -100,91 +101,94 @@ public class VisionSystem : MonoBehaviour
             }
         }
     }
-    public TileScriptableObject FindAttractiveField(string skill, GameObjectTypeEnum gote, ActionTypeEnum ate)
+    public void FindAttractiveField(Player player, SkillScriptableObject sso)
     {
-
-
-        List<TileScriptableObject> ListToWorkOn = new();
-
-        //Dictionary<TileScriptableObject>
-        foreach (var tso in ListOfDiscoveredFields)
+        if (player == owner)
         {
-            if (tso.childType == gote)
+            List<TileScriptableObject> ListToWorkOn = new();
+
+            //Dictionary<TileScriptableObject>
+            foreach (var tso in ListOfDiscoveredFields)
             {
-                if (tso.childColor == ate)
+                if (tso.childType != GameObjectTypeEnum.None)
                 {
                     ListToWorkOn.Add(tso);
                 }
             }
-        }
-        Debug.Log("Found " + ListToWorkOn.Count + " interesting fields");
-        switch (skill)
-        {
-            case "Starling":
+            Debug.Log("Found " + ListToWorkOn.Count + " interesting fields");
 
-                if (gote == GameObjectTypeEnum.Rock)
+            Dictionary<TileScriptableObject, int> valueOfTheTile = new();
+
+            int numberOfWaterTiles = 0;
+            int numberOfGrassTilesAdjancedToWater = 0;
+            int numberOfGrassTilesAdjancedToWaterAndRock = 0;
+
+            foreach (var tso in ListToWorkOn)
+            {
+                if (tso.childType == GameObjectTypeEnum.Water)
                 {
-                    Dictionary<TileScriptableObject, int> valueOfTheTile = new();
-                    foreach (var tso in ListToWorkOn)
+                    numberOfWaterTiles++;
+                    foreach (var nei in tso.neighbours)
                     {
-                        int fieldValue = 6;
-                        foreach (var neighbour in tso.neighbours)
+                        if (nei.tileTypes == TileTypesEnum.Grass)
                         {
-                            if (ListOfDiscoveredFields.Contains(neighbour))
+                            numberOfGrassTilesAdjancedToWater++;
+
+                            foreach (var rocky in nei.neighbours)
                             {
-                                fieldValue--;
+                                if (rocky.tileTypes == TileTypesEnum.Rock)
+                                {
+                                    numberOfGrassTilesAdjancedToWaterAndRock++;
+                                    if ((sso.label == "Move") && nei.rootable)
+                                    {
+                                        FoundAttractiveField?.Invoke(nei);
+                                        return;
+                                    }
+                                    if ((sso.label == "Starling") && (rocky.childType == GameObjectTypeEnum.Rock))
+                                    {
+                                        FoundAttractiveField?.Invoke(rocky);
+                                        return;
+                                    }
+
+                                }
                             }
                         }
-                        valueOfTheTile.Add(tso, fieldValue);
-
-
                     }
-                    var returnedField = valueOfTheTile.FirstOrDefault().Key;
-                    foreach (var prospect in valueOfTheTile.Keys)
-                    {
-                        if (valueOfTheTile[prospect] > valueOfTheTile[returnedField])
-                        {
-                            returnedField = prospect;
-                        }
-                    }
-                    return returnedField;
-
                 }
-                else if(gote==GameObjectTypeEnum.Bush)
-                {
-                    foreach(var tso in ListOfDiscoveredFields)
-                    {
-                        if (tso.childColor== ate)
-                        {
-                            return tso;
-                        }
-                    }
-                    return null;
-                }
-                else if (gote==GameObjectTypeEnum.Water)
-                {
-                    foreach (var tso in ListToWorkOn)
-                    {
-                        if (tso.childType==gote)
-                        {
-                            return tso;
-                        }
-                    }
-                }   return null; 
             }
-        return null;
-    }
-    public ActionTypeEnum AskForColor()
-    {
-        foreach (var v in ListOfDiscoveredFields)
-        {
-            if(v.childColor!=ActionTypeEnum.None)
+            if (numberOfWaterTiles == 0)
             {
-                return v.childColor;
+                foreach (var obj in ListToWorkOn)
+                {
+                    valueOfTheTile.Add(obj,CheckHowManyNeibourghsAreVisible(obj));
+                }
             }
-            //Implement Wages
+            TileScriptableObject returnedField = valueOfTheTile.FirstOrDefault().Key;
+            foreach (TileScriptableObject prospect in valueOfTheTile.Keys)
+            {
+                if (valueOfTheTile[prospect] > valueOfTheTile[returnedField])
+                {
+                    returnedField = prospect;
+                }
+            }
+            FoundAttractiveField?.Invoke(returnedField);
+
         }
-        return ActionTypeEnum.None;
+
+    }
+   
+    public int CheckHowManyNeibourghsAreVisible(TileScriptableObject tso)
+    {
+                int fieldValue = 6;
+            foreach (var neighbour in tso.neighbours)
+            {
+
+                if (ListOfDiscoveredFields.Contains(neighbour))
+                {
+                    fieldValue--;
+                }
+            }
+            return fieldValue;
     }
 
  }
