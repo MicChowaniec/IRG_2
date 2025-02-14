@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 106127206316501831}
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
-  - component: {fileID: -3916900396909183784}
+  - component: {fileID: 5571405390251186980}
   - component: {fileID: 3584288425972771112}
   m_Layer: 5
   m_Name: ScoutButton
@@ -123,8 +123,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: StarlingSkillScript, Assembly-CSharp
-        m_MethodName: ClickOnButton
+        m_TargetAssemblyTypeName: StarlingButtonScript, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &-3916900396909183784
+--- !u!114 &5571405390251186980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2648954108819363694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9704613362e72fd4ebe757d1a7a953b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 56119bed1e19be340878838dcd9cbd3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionManager: {fileID: 0}
+  abstractSkill: {fileID: 0}
 --- !u!114 &3584288425972771112
 MonoBehaviour:
   m_ObjectHideFlags: 0
