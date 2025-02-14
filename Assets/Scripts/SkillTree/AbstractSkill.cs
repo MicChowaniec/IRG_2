@@ -9,9 +9,9 @@ public abstract class AbstractSkill : MonoBehaviour
     public Player activePlayer;
     public static event Action ChangeResourcesStatus;
     public static event Action GenomChange;
-    public GameObjectTypeEnum clickedTileObject;
-    public ActionTypeEnum clickedTileColor;
+
     public bool thisListener;
+    public OnHoverSC tso;
 
     public void ThisListener(bool b)
     {
@@ -25,27 +25,31 @@ public abstract class AbstractSkill : MonoBehaviour
             OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
         }
     }
-    public virtual void CheckColorIncome(OnHoverSC onHoverSC)
+    public void CheckColorIncome(OnHoverSC onHoverSC)
     {
-        clickedTileColor = onHoverSC.GetChildObjectColor();
-        clickedTileObject = onHoverSC.GetChildObjectType();
+        tso = onHoverSC;
     }
 
-    public void StatisticChange(int starling, int biomass,  int water, int protein, int energy, int eyes)
+    public void StatisticChange()
 
     {
-        activePlayer.starlings += starling;
-        activePlayer.biomass += biomass;
-        activePlayer.water += water;
-        activePlayer.protein += protein;
-        activePlayer.energy += energy;
-        activePlayer.eyes += eyes;
+        activePlayer.starlings -= skill.starling;
+        activePlayer.biomass -= skill.biomass;
+        activePlayer.water -= skill.water;
+        activePlayer.protein -= skill.protein;
+        activePlayer.energy -= skill.energy;
+        activePlayer.eyes -= skill.eyes;
         if(activePlayer.human)
         {
             ChangeResourcesStatus?.Invoke();
         }
     }
-    public virtual void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
+    public virtual void Do(OnHoverSC tso)
+
+    {
+
+    }
+    public virtual void Do()
 
     {
 
@@ -66,14 +70,14 @@ public abstract class AbstractSkill : MonoBehaviour
 
 
     }
-    public bool CheckResources(int starling, int biomass, int water, int protein, int energy, int eyes)
+    public bool CheckResources()
 
 
     {
         bool temp =true;
-        if (starling >0)
+        if (skill.starling>0)
         {
-            if (activePlayer.starlings >= starling)
+            if (activePlayer.starlings >= skill.starling)
             {
                 temp = temp && true;
             }
@@ -84,9 +88,9 @@ public abstract class AbstractSkill : MonoBehaviour
 
 
         }
-        if (biomass > 0)
+        if (skill.biomass > 0)
         {
-            if (activePlayer.biomass >= biomass)
+            if (activePlayer.biomass >= skill.biomass)
             {
                 temp = temp && true;
             }
@@ -95,9 +99,9 @@ public abstract class AbstractSkill : MonoBehaviour
                 temp = temp && false;
             }
         }
-        if (water > 0)
+        if (activePlayer.water > 0)
         {
-            if (activePlayer.water >= water)
+            if (activePlayer.water >= skill.water)
             {
                 temp = temp && true;
             }
@@ -107,9 +111,9 @@ public abstract class AbstractSkill : MonoBehaviour
             }
 
         }
-        if (protein > 0)
+        if (activePlayer.protein > 0)
         {
-            if (activePlayer.protein >= protein)
+            if (activePlayer.protein >=skill.protein)
             {
                 temp = temp && true;
             }
@@ -118,9 +122,9 @@ public abstract class AbstractSkill : MonoBehaviour
                 temp = temp && false;
             }
         }
-        if (energy > 0)
+        if (activePlayer.energy > 0)
         {
-            if (activePlayer.energy >= energy)
+            if (activePlayer.energy >= skill.energy)
             {
                 temp = temp && true;
             }
@@ -129,9 +133,9 @@ public abstract class AbstractSkill : MonoBehaviour
                 temp = temp && false;
             }
         }
-        if (eyes > 0)
+        if (activePlayer.eyes > 0)
         {
-            if (activePlayer.eyes >= eyes)
+            if (activePlayer.eyes >= skill.eyes)
             {
                 temp = temp && true;
             }
@@ -174,7 +178,7 @@ public abstract class AbstractSkill : MonoBehaviour
             {
 
 
-                Do(clickedTileObject, clickedTileColor);
+                Do(tso);
 
 
             }

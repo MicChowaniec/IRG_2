@@ -65,51 +65,22 @@ public class AI : MonoBehaviour
         {
             return;
         }
-        if (SkillList.Count <=0)
+        if (SkillList.Count <= 0)
         {
             FindPossibleMoves(computer);
         }
 
         int index = new System.Random().Next(0, SkillList.Count);
-        
+
         tempSkill = SkillList[index];
 
-
-
-
-        switch (tempSkill.label)
-            
+        if (tempSkill.self == false)
         {
-            case "Starling":
-                {
-                    if (computer.eyes<=1)
-                    {
-                        SkillList.Remove(tempSkill);
-                        CalculateMove(computer);
-                        return;
-                    }
-                    else
-                    {
-                        SendMeAField?.Invoke(computer,tempSkill);
-                    }
-
-
-                    break;
-                }
-                case "Bite":
-
-                if(computer.energy>=10)
-                {
-                   
-                }
-
-                break;
-                {
-
-                }
+            SendMeAField?.Invoke(computer, tempSkill);
         }
-        
     }
+
+
     private void ExecuteAction(TileScriptableObject tso)
     {
         
@@ -118,10 +89,6 @@ public class AI : MonoBehaviour
         
     }
 
-  
-        
-   
-    
 
     private void UpdateTurn(Turn turn)
     {

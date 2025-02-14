@@ -10,23 +10,19 @@ public class StarlingSkillScript : AbstractSkill
 
     public GameObject StarlingPrefab;
     public GameObject StarlingInstantiated;
-    private Vector3 scanningCenter;
+
 
     
     public static event Action<Player,Vector3,int> SetNest;
     public static event Action<Player> BirdDestroyed;
 
-    public override void CheckColorIncome(OnHoverSC tso)
+    public override void Do(OnHoverSC tso)
     {
-        scanningCenter = tso.GetPosition();
-        clickedTileObject = tso.GetChildObjectType();
-        clickedTileColor = tso.GetChildObjectColor();
-    }
+        GameObjectTypeEnum gote = tso.GetChildObjectType();
+        ActionTypeEnum ate = tso.GetChildObjectColor();
+        Vector3 scanningCenter = tso.GetPosition();
 
-    public override void Do(GameObjectTypeEnum gote, ActionTypeEnum ate)
-    {
-
-        switch (clickedTileObject)
+        switch (gote)
         {
             case GameObjectTypeEnum.Water:
                 {
@@ -38,9 +34,10 @@ public class StarlingSkillScript : AbstractSkill
                 }
             case GameObjectTypeEnum.Bush:
                 {
-                    activePlayer.AddGenom(clickedTileColor, 1);
+                    
+                    activePlayer.AddGenom(ate, 1);
                     activePlayer.Grow(1);
-                    Debug.Log("Genom Collected: " + clickedTileColor);
+                    Debug.Log("Genom Collected: " + ate);
 
                     break;
 
@@ -53,15 +50,15 @@ public class StarlingSkillScript : AbstractSkill
                 }
             case GameObjectTypeEnum.Tree:
                 {
-                    if (clickedTileColor != ActionTypeEnum.None)
+                    if (tso.GetChildObjectColor() != ActionTypeEnum.None)
                     {
                         SetNest?.Invoke(activePlayer,scanningCenter,3);
                     }
                     else
                     {
-                        activePlayer.AddGenom(clickedTileColor, 1);
+                        activePlayer.AddGenom(ate, 1);
                         activePlayer.Grow(1);
-                        Debug.Log("Genom Collected: " + clickedTileColor);
+                        Debug.Log("Genom Collected: " + ate);
                     }
                     break;
                 }
@@ -77,13 +74,13 @@ public class StarlingSkillScript : AbstractSkill
 
 
         }
-        StatisticChange(-1, 0, 0, 0, 0, 0);
+        StatisticChange();
         Confirm();
     }
     public override void ClickOnButton()
     {
        
-        if (CheckResources(1,0,0,0,0,0)&&!thisListener)
+        if (CheckResources())
         {
             StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
             

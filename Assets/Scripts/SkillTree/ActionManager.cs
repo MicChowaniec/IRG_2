@@ -25,7 +25,10 @@ public class ActionManager : MonoBehaviour
         redSkills
     };
 
+    public Dictionary<SkillScriptableObject,GameObject> SkillsDictionary = new();
+
     private Turn activeTurn;
+    public static event Action SkillsUpdated;
 
     private void OnEnable()
     {
@@ -96,6 +99,7 @@ public class ActionManager : MonoBehaviour
                 }
 
         }
+        SkillsUpdated?. Invoke();
     }
     private void Reset()
     {
