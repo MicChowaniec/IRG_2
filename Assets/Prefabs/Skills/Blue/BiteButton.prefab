@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
   - component: {fileID: 167202851340680570}
-  - component: {fileID: 8316680563166388859}
+  - component: {fileID: -5669535082185598219}
   m_Layer: 5
   m_Name: BiteButton
   m_TagString: Untagged
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onHoverSC: {fileID: 11400000, guid: 404c2ded953fe244b8fa7b9da6861f5d, type: 2}
   litMaterial: {fileID: 0}
---- !u!114 &8316680563166388859
+--- !u!114 &-5669535082185598219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,7 +157,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2648954108819363694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdf0cba6fc5e5ad4aadfc939a17c388e, type: 3}
+  m_Script: {fileID: 11500000, guid: fc90c39e7367e4042b45492236511382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 404c2ded953fe244b8fa7b9da6861f5d, type: 2}
   ActionManager: {fileID: 0}

@@ -1,0 +1,53 @@
+using System;
+using UnityEditor;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Entity", menuName = "Scriptable Objects/BaseClasses/Entity")]
+public class Entity : ScriptableObject, IDamagable
+{
+    public static event Action<int> GrowTheTree;
+    public static event Action Death;
+
+    public int biomass;
+    public int protein;
+    public int water;
+    public int waterLvl;
+
+    public int PurpleLvl;
+    public int BlueLvl;
+    public int GreenLvl;
+    public int YellowLvl;
+    public int OrangeLvl;
+    public int RedLvl;
+
+    protected TileScriptableObject tile;
+
+
+    public void Grow(int Addedprotein)
+    {
+        Addedprotein *= GreenLvl;
+        while (Addedprotein > 0)
+        {
+            if (protein < biomass)
+            {
+                protein++;
+                Addedprotein--;
+            }
+            else if (protein >= biomass)
+            {
+                biomass++;
+                Addedprotein--;
+            }
+        }
+        GrowTheTree?.Invoke(Addedprotein);
+    }
+    public void CheckForDeath()
+    {
+        if (biomass <= 0)
+        {
+            Death?.Invoke();
+        }
+    }
+
+}
+    

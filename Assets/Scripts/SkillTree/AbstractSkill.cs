@@ -3,10 +3,10 @@ using UnityEngine;
 using System;
 using UnityEditor;
 
-public abstract class AbstractSkill : MonoBehaviour
+public  class AbstractSkill : MonoBehaviour
 {
     public SkillScriptableObject skill;
-    public Player activePlayer;
+    protected Player activePlayer;
     public static event Action ChangeResourcesStatus;
     public static event Action GenomChange;
 
@@ -16,7 +16,7 @@ public abstract class AbstractSkill : MonoBehaviour
     public void ThisListener(bool b)
     {
         thisListener = b;
-        if (b && activePlayer.human)
+        if (b && activePlayer.human&&!skill.self)
         {
             OnHoverScript.OnHoverBroadcast += CheckColorIncome;
         }
@@ -177,9 +177,14 @@ public abstract class AbstractSkill : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
 
-
-                Do(tso);
-
+                if (skill.self)
+                {
+                    Do();
+                }
+                else
+                {
+                    Do(tso);
+                }
 
             }
         }

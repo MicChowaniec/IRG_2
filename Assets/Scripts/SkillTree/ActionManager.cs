@@ -25,16 +25,14 @@ public class ActionManager : MonoBehaviour
         redSkills
     };
 
-    public Dictionary<SkillScriptableObject,GameObject> SkillsDictionary = new();
+    
 
     private Turn activeTurn;
     public static event Action SkillsUpdated;
 
     private void OnEnable()
-    {
-        
+    {  
         TurnBasedSystem.CurrentTurnBroadcast += ActiveTurn;
-
     }
     private void OnDisable()
     {

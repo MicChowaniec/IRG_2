@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b7276e0b6aec84bba922faac39ca1d, type: 3}
   m_Name: PurplePlayer
   m_EditorClassIdentifier: 
-  id: 0
-  water: 12
-  energy: 12
-  biomass: 12
-  protein: 12
-  starlings: 1
-  soulLvl: 1
-  eyes: 2
-  fireResistance: -10
-  toxicResistance: 0
+  biomass: 9
+  protein: 10
+  water: 10
+  waterLvl: 0
   PurpleLvl: 2
   BlueLvl: 2
   GreenLvl: 2
   YellowLvl: 2
   OrangeLvl: 2
   RedLvl: 2
+  id: 0
+  energy: 10
+  starlings: 1
+  soulLvl: 1
+  eyes: 10
+  burningLvl: 0
   sequence: 1
   itsName: Purple
   itsDescription: Purple has 3 eyes, and is Starling-Friendly.
@@ -40,6 +40,7 @@ MonoBehaviour:
   Prefab: {fileID: 13136404289340683, guid: 88966bd8f50dd22458779dd63d0f7eea, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
   material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}
+  skills: []
   cards:
   - {fileID: 11400000, guid: 2c7a026618fd1fd4eac33f3e992c7746, type: 2}
   - {fileID: 11400000, guid: 3c751b2b919c86b4aa7c3dba4a91b5d1, type: 2}

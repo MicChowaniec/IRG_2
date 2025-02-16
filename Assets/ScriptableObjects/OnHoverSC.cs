@@ -10,9 +10,12 @@ public abstract class OnHoverSC : ScriptableObject
     public string forStarlingText;
     public bool button;
     public Sprite sprite;
-    public virtual void AskForDetails()
+    protected Player stander;
+    protected Player owner;
+    protected TreeSO treeSO;
+    public virtual string AskForDetails()
     {
-
+        return "";
     }
     public virtual GameObjectTypeEnum GetChildObjectType()
     {
@@ -27,5 +30,30 @@ public abstract class OnHoverSC : ScriptableObject
     {
         return Vector3.zero;
     }
+    public virtual Player GetStander()
+    {
+        return null;
+    }
+    public virtual TreeSO GetStandingTree()
+    {
+        if (treeSO != null)
+        {
+            return treeSO;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public virtual Player GetOwner()
+    {
+        if (owner != null)
+        return owner;
+        else
+        {
+            return null;
+        }
+    }
     
+
 }

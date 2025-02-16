@@ -40,7 +40,7 @@ public class PlayerScript : MonoBehaviour
         player.Disease(diseaseLvl);
         player.EnergyFromSun(sunLvl);
         player.StarlingUpdate();
-        player.WaterUpdate(-1);
+        player.WaterLoss(1);
         
 
     }
@@ -88,7 +88,7 @@ public class PlayerScript : MonoBehaviour
             if (hit.collider.TryGetComponent<TileScript>(out var tile))
             {
                 Debug.Log(player.itsName + " is standing on tile:" + tile.name);
-                tile.TSO.stander = player;
+                tile.TSO.SetStander(player);
                 tileId = tile.TSO.id;
                 Vector3 tempScale = transform.localScale;
                 transform.parent = tile.transform;

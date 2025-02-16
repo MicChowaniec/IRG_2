@@ -10,17 +10,18 @@ public class TileHoverSC : OnHoverSC
     public TileScriptableObject tso;
 
 
-    public override void AskForDetails()
+    public override string AskForDetails()
     {
         tso = this.GetComponent<TileScript>().TSO;
         label = tso.id.ToString();
-        description = tso.stander.ToString() +
-            "\n Owner: " + tso.owner.ToString() +
+        description = tso.GetStander().ToString() +
+            "\n Owner: " + tso.GetOwner().itsName +
             "\n Passable: " + tso.passable.ToString() +
             "\n Rootable: " + tso.rootable.ToString() +
-            "\n Stander: " + tso.stander.ToString();
+            "\n Stander: " + tso.GetStander().ToString();
         forStarlingText = ForStarlingText();
         button = false;
+        return description;
     }
     public string ForStarlingText()
     {
@@ -40,6 +41,7 @@ public class TileHoverSC : OnHoverSC
             case GameObjectTypeEnum.Tree:
                     temp = "Pick fruit from this tree, type: "+tso.childColor.ToString();
                 break;
+                
         }
 
         return temp;

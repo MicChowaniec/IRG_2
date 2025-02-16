@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
-public class Player : ScriptableObject
+public class Player : Entity
 {
     public int id;
 
@@ -40,23 +40,12 @@ public class Player : ScriptableObject
         OrangeLvl =2;
         RedLvl = 2;
 
-}
-    public int water;
+    }
     public int energy;
-    public int biomass;
-    public int protein;
     public int starlings;
     public int soulLvl;
     public int eyes;
     public int burningLvl;
-
-
-    public int PurpleLvl;
-    public int BlueLvl;
-    public int GreenLvl;
-    public int YellowLvl;
-    public int OrangeLvl;
-    public int RedLvl;
 
     public int sequence;
     public string itsName;
@@ -72,24 +61,7 @@ public class Player : ScriptableObject
     public List<SkillScriptableObject> skills;
     public List<CardScriptableObject> cards;
 
-    public void Grow(int Addedprotein)
-    {
-        Addedprotein *= GreenLvl;
-        while (Addedprotein > 0)
-        {
-            if (protein <biomass)
-            {
-                protein++;
-                Addedprotein--;
-            }
-            else if(protein>=biomass)
-            {
-                biomass++;
-                Addedprotein--;
-            }
-        }
-
-    }
+    
     public void AddGenom(ActionTypeEnum ate, int amount)
     {
         switch (ate)
@@ -115,6 +87,12 @@ public class Player : ScriptableObject
         {
             protein--;
         }
+        if (protein < 0)
+        {
+            biomass -= protein;
+            protein = 0;
+        }
+        CheckForDeath();
     }
     public int DealDamage()
     {
@@ -131,6 +109,7 @@ public class Player : ScriptableObject
         {
             biomass -= temp;
         }
+        CheckForDeath();
     }
     public void EnergyFromSun(int sunLvl)
     {
@@ -149,7 +128,7 @@ public class Player : ScriptableObject
         starlings = soulLvl;
     }
 
-    public void WaterUpdate(int waterLvl)
+    public void WaterLoss(int waterLvl)
     {
         if (water - waterLvl <= biomass)
         {
@@ -158,9 +137,10 @@ public class Player : ScriptableObject
         }
         else
         {
-            water-= waterLvl;
+            water -= waterLvl;
         }
+        CheckForDeath();
     }
 
-   
+
 }

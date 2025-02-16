@@ -9,8 +9,6 @@ public class TileScriptableObject : OnHoverSC
     public bool rootable;
     public Vector3 coordinates;
     public Vector2 ijCoordinates;
-    public Player owner;
-    public Player stander;
     public GameObject representation;
     public TileTypesEnum tileTypes;
     public GameObjectTypeEnum childType;
@@ -18,7 +16,7 @@ public class TileScriptableObject : OnHoverSC
 
     public List<TileScriptableObject> neighbours = new();
 
-    public override void AskForDetails()
+    public override string AskForDetails()
     {
         label = tileTypes.ToString();
         string standerStr ="";
@@ -40,7 +38,9 @@ public class TileScriptableObject : OnHoverSC
         "\n Passable: " + passable.ToString() +
         "\n Rootable: " + rootable.ToString() +
         "\n Object: " + childType.ToString();
+
         button = false;
+        return description;
     }
     public override GameObjectTypeEnum GetChildObjectType()
     {
@@ -54,4 +54,21 @@ public class TileScriptableObject : OnHoverSC
     {
         return coordinates;
     }
+    public override Player GetStander()
+    {
+        return stander;
+    }
+    public void SetStander(Player player)
+    {
+        stander = player;
+    }
+    public override Player GetOwner()
+    {
+        return owner;
+    }
+    public void SetOwner(Player player)
+    {
+        owner = stander;
+    }
+
 }

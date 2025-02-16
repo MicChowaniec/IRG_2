@@ -195,8 +195,8 @@ public class MapManager : MonoBehaviour
                     InstatiateField(grassTileType, id, i, j);
                     if (j==0)
                     {
-                        GameObject tree = Instantiate(originalTreePrefab, tiles[id].representation.transform);
-                        tree.transform.localScale =new Vector3(0.2f, 20, 0.2f);
+                        Instantiate(originalTreePrefab, tiles[id].representation.transform);
+
                         centerId = id;
                         tiles[id].childType = GameObjectTypeEnum.Tree;
                         tiles[id].childColor = ActionTypeEnum.None;
@@ -232,8 +232,8 @@ public class MapManager : MonoBehaviour
                         if (2 > new System.Random().Next(0, 4))
                         {
                             //int random = new System.Random().Next(0, bushPrefabs.Length);
-                            GameObject rock = Instantiate(rockPrefab, tiles[id].coordinates, Quaternion.identity, tiles[id].representation.transform);
-                            rock.transform.localScale = new Vector3(1, 40, 1);
+                            Instantiate(rockPrefab, tiles[id].coordinates, Quaternion.identity, tiles[id].representation.transform);
+
 
                             tiles[id].childType = GameObjectTypeEnum.Rock;
                             tiles[id].childColor = ActionTypeEnum.None;
@@ -315,7 +315,13 @@ public class MapManager : MonoBehaviour
         TSO.rootable = tt.rootable;
         TSO.representation = Instantiate(tilePrefab, fieldPosition, fieldRotation, tileParent.transform);
         TSO.representation.name = id.ToString();
-        TSO.representation.GetComponent<MeshRenderer>().material = tt.Material;
+        foreach (Transform child in TSO.representation.transform)
+        {
+            if (child.TryGetComponent<MeshRenderer>(out MeshRenderer component))
+            {
+                component.material = tt.Material;
+            }
+        }
         TileScript tileScript = TSO.representation.GetComponent<TileScript>();
         tileScript.TSO = TSO;
         tileScript.TT = tt;
@@ -339,7 +345,7 @@ public class MapManager : MonoBehaviour
     public void InstantiateBush(GameObject prefab, int id)
     {
         GameObject bushObject = Instantiate(prefab, fieldPosition, fieldRotation, tiles[id].representation.transform);
-        bushObject.transform.localScale = new Vector3(0.5f, 20, 0.5f);
+
         bushObject.transform.position += new Vector3(0, 0.2f, 0);
 
 
@@ -379,9 +385,9 @@ public class MapManager : MonoBehaviour
                 }
             }
             
-            if (t.owner != null)
+            if (t.GetOwner() != null)
             {
-                switch (t.owner.id)
+                switch (t.GetOwner().id)
                 {
                     case 0: purple++; break;
                     case 1: blue++; break;

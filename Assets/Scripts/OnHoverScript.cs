@@ -9,45 +9,63 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public OnHoverSC onHoverSC;
     public Material litMaterial;
 
-    public static event Action<OnHoverSC> OnHoverBroadcast;
+    public static event Action<TileScriptableObject> OnHoverBroadcast;
     public static event Action HidePopUp;
-    public static event Action<string, string> ShowSkillDescription;
+    public static event Action<SkillScriptableObject> ShowSkillDescription;
     public static event Action HideSkillDescription;
 
 
     public void Highlight()
     {
-        var meshRenderer = GetComponent<MeshRenderer>();
-        var materials = meshRenderer.materials;
+        foreach (Transform child in this.transform)
+        {
+            if (child.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+                {
+                var materials = meshRenderer.materials;
+                Array.Resize(ref materials, materials.Length + 1);
+                materials[^1] = litMaterial;
 
-        Array.Resize(ref materials, materials.Length + 1);
-        materials[^1] = litMaterial;
-
-        meshRenderer.materials = materials;
+                meshRenderer.materials = materials;
+            }
+        }
     }
 
-    public void StopHighlight()
-    {
-        var meshRenderer = GetComponent<MeshRenderer>();
-        var materials = meshRenderer.materials;
 
-        if (materials.Length > 1)
+
+        public void StopHighlight()
+    {
+        foreach (Transform child in this.transform)
         {
-            Array.Resize(ref materials, materials.Length - 1);
-            meshRenderer.materials = materials;
+
+            if (child.TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer))
+            {
+                var materials = meshRenderer.materials;
+                while (materials.Length > 1)
+                {
+                    Array.Resize(ref materials, materials.Length - 1);
+                    meshRenderer.materials = materials;
+                }
+            }
+
+
         }
     }
 
     private void HandleHoverEnter()
     {
+
         Highlight();
         if (onHoverSC == null)
         {
-           
+            Debug.Log("OnHoverSC Null as FUCK");
             return;
         }
-
-        OnHoverBroadcast?.Invoke(onHoverSC);
+        Debug.Log("ThisShouldBeInvoked");
+        if (onHoverSC is TileScriptableObject)
+        {
+            TileScriptableObject tileScriptableObject = (TileScriptableObject)onHoverSC;
+            OnHoverBroadcast?.Invoke(tileScriptableObject);
+        }
   
     }
 
@@ -59,7 +77,7 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnMouseEnter()
     {
-
+        Debug.Log("Now It Should be displayed by OnMouseEnter");
         HandleHoverEnter();
     }
 
@@ -71,15 +89,34 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
 
-        HideSkillDescription();
+        HideSkillDescription?.Invoke() ;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        Debug.Log("Now it Should be displayed by IPointer");
         onHoverSC.AskForDetails();
+
+    }
+    public void StartListeningForResponse()
+    {
        
     }
+
+    public void StopListeningForResponse(OnHoverSC eventData)
+    {
+        if (eventData is TileScriptableObject tileScriptableObject)
+        {
+            onHoverSC = tileScriptableObject;
+            OnHoverBroadcast?.Invoke(tileScriptableObject);
+        }
+        if(eventData is SkillScriptableObject skillScriptableObject)
+        {
+            onHoverSC = eventData;
+            ShowSkillDescription?.Invoke(skillScriptableObject);
+        }
+    }
+
 
 
 }

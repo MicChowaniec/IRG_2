@@ -47,11 +47,11 @@ public class Day_Panel : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast -= UpdateHuman;
     }
 
-    private void ShowActionDescription(string arg1, string arg2)
+    private void ShowActionDescription(OnHoverSC onHoverSC)
     {
 
         ActionDescription.SetActive(true);
-        ActionDescriptionText.text = arg2;
+        ActionDescriptionText.text = onHoverSC.AskForDetails();
     }
 
     private void HideActionDescription()

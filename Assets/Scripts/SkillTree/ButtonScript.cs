@@ -1,16 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonScript : MonoBehaviour 
+public abstract class ButtonScript : MonoBehaviour
 {
     public OnHoverSC skill;
+    public ActionManager ActionManager;
 
-   
-    public void OnClick()
+    public void Start()
     {
-        skill = FindAnyObjectByType<OnHoverSC>();
+        ActionManager = FindAnyObjectByType<ActionManager>();
+
         Button btn = this.GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
     }
+
+    public virtual void OnClick()
+    {
+        
+    }
+    
+    
  
 }

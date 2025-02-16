@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 106127206316501831}
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
-  - component: {fileID: 5571405390251186980}
   - component: {fileID: 3584288425972771112}
+  - component: {fileID: 5376239244000824068}
   m_Layer: 5
   m_Name: ScoutButton
   m_TagString: Untagged
@@ -134,19 +134,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5571405390251186980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2648954108819363694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56119bed1e19be340878838dcd9cbd3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abstractSkill: {fileID: 0}
 --- !u!114 &3584288425972771112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,3 +148,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onHoverSC: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
   litMaterial: {fileID: 0}
+--- !u!114 &5376239244000824068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648954108819363694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1bfbc882b029d40bdab66f7517bf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
+  ActionManager: {fileID: 0}

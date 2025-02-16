@@ -16,7 +16,7 @@ public class VisionSystem : MonoBehaviour
     public Player owner;
 
     private PlayerManager _playerManager;
-    private Collider[] _colliderBuffer = new Collider[100]; // Adjust size as needed
+    private Collider[] _colliderBuffer = new Collider[1000]; // Adjust size as needed
 
     public static event Action<TileScriptableObject> FoundAttractiveField;
 
@@ -25,6 +25,7 @@ public class VisionSystem : MonoBehaviour
         _playerManager = FindAnyObjectByType<PlayerManager>();
 
         StarlingSkillScript.SetNest += ScanForVisible;
+        
 
         if (gameObject.activeInHierarchy)
         {
@@ -49,7 +50,7 @@ public class VisionSystem : MonoBehaviour
 
     private void OnDisable()
     {
-
+        StarlingSkillScript.UpdateVision += UpdateTheVision;
         StarlingSkillScript.SetNest -= ScanForVisible;
         PlayerManager.PlayersInstantiated -= UpdateTheVision;
         AI.SendMeAField -= FindAttractiveField;
