@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Reflection.Emit;
 using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TileHoverSC", menuName = "Dynamic/TileOnHover")]

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Entity", menuName = "Scriptable Objects/BaseClasses/Entity")]
 public class Entity : ScriptableObject, IDamagable
 {
+    public int id;
+
     public static event Action<int> GrowTheTree;
     public static event Action Death;
 
@@ -19,6 +21,8 @@ public class Entity : ScriptableObject, IDamagable
     public int YellowLvl;
     public int OrangeLvl;
     public int RedLvl;
+
+    protected ActionTypeEnum Type;
 
     protected TileScriptableObject tile;
 
@@ -48,6 +52,9 @@ public class Entity : ScriptableObject, IDamagable
             Death?.Invoke();
         }
     }
-
+    public ActionTypeEnum GetPlayerType()
+    {
+        return Type;
+    }
 }
     

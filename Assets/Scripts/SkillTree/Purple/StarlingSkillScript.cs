@@ -17,7 +17,9 @@ public class StarlingSkillScript : AbstractSkill
     public static event Action<Player> BirdDestroyed;
     public static event Action<Player> UpdateVision;
 
-   
+    
+
+
     public override void Do(OnHoverSC tso)
     {
         Debug.Log("Starting Doing Skill");
@@ -111,7 +113,6 @@ public class StarlingSkillScript : AbstractSkill
             StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
             
             Cursor.visible = false; // Hide the cursor
-            ThisListener(true);
             
         }
     }
@@ -119,7 +120,7 @@ public class StarlingSkillScript : AbstractSkill
     public override void Confirm()
     {
 
-        ThisListener(false);
+
 
         if (StarlingInstantiated != null)
         {
@@ -128,7 +129,8 @@ public class StarlingSkillScript : AbstractSkill
         }
         Cursor.visible = true;
         BirdDestroyed?.Invoke(activePlayer);
-       
+        
+
 
     }
 

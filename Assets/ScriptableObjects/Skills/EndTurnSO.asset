@@ -28,7 +28,7 @@ MonoBehaviour:
   resistance: 0
   eyes: 0
   range: 0
-  self: 0
+  self: 1
   purplePassiveDescription: 
   bluePassiveDescription: 
   greenPassiveDescription: 

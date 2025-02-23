@@ -7,24 +7,17 @@ public  class AbstractSkill : MonoBehaviour
 {
     public SkillScriptableObject skill;
     protected Player activePlayer;
-    public static event Action ChangeResourcesStatus;
-    public static event Action GenomChange;
-
-    public bool thisListener;
+    public static event Action Change;
     public OnHoverSC tso;
 
-    public void ThisListener(bool b)
-    {
-        thisListener = b;
-        if (b && activePlayer.human&&!skill.self)
-        {
-            OnHoverScript.OnHoverBroadcast += CheckColorIncome;
-        }
-        if (!b)
-        {
-            OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
-        }
-    }
+
+
+
+
+
+
+
+
     public void CheckColorIncome(OnHoverSC onHoverSC)
     {
         tso = onHoverSC;
@@ -39,13 +32,14 @@ public  class AbstractSkill : MonoBehaviour
         activePlayer.protein -= skill.protein;
         activePlayer.energy -= skill.energy;
         activePlayer.eyes -= skill.eyes;
-        if(activePlayer.human)
+        activePlayer.AddGenom(skill.actionType, 1);
+        Debug.Log(skill.actionType + " used. +1 to " + skill.actionType+ " genom");
+        if (activePlayer.human)
         {
-            ChangeResourcesStatus?.Invoke();
+            Change?.Invoke();
         }
     }
     public virtual void Do(OnHoverSC tso)
-
     {
 
     }
@@ -56,18 +50,19 @@ public  class AbstractSkill : MonoBehaviour
     }
     public void OnEnable()
     {
+        AI.ExecuteSelf += Do;
+        AI.Execute += Do;
+    PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+    OnHoverScript.OnHoverBroadcast += CheckColorIncome;
 
 
-        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-
-
-    }
-    public void OnDisable()
+}
+public void OnDisable()
     {
-
-
-        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-
+        AI.ExecuteSelf -= Do;
+        AI.Execute -= Do;
+        PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
+        OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
 
     }
     public bool CheckResources()
@@ -158,21 +153,21 @@ public  class AbstractSkill : MonoBehaviour
     {
 
             activePlayer.AddGenom(ate,1);
-            GenomChange?.Invoke();
+            Change?.Invoke();
  
     }
     public void Update()
     {
-        if (!thisListener) { return; }
 
-        if (activePlayer.human && thisListener)
+
+        if (activePlayer.human)
         {
 
             if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
             {
 
                 Confirm();
-                ThisListener(false);
+        
             }
             if (Input.GetMouseButtonDown(0))
             {

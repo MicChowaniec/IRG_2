@@ -1,9 +1,7 @@
-using NUnit.Framework;
+
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
+
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
@@ -106,7 +104,7 @@ public class ActionManager : MonoBehaviour
             foreach (GameObject obj in list)
                 {
                 obj.SetActive(false);
-            }
+                }
         }
     }
 

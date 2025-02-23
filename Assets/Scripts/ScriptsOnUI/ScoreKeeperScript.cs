@@ -86,15 +86,12 @@ public class ScoreKeeperScript : MonoBehaviour
     {
         SunLevel.DayEvent += SunLevelChange;
         SunLevel.NightEvent += SunLevelChange;
- 
-        AbstractSkill.GenomChange += Change;
 
-        MapManager.PurpleRootables += PurpleFieldsChange;
-        MapManager.BlueRootables += BlueFieldsChange;
-        MapManager.GreenRootables += GreenFieldsChange;
-        MapManager.YellowRootables += YellowFieldsChange;
-        MapManager.OrangeRootables += OrangeFieldsChange;
-        MapManager.RedRootables += RedFieldsChange;
+        AbstractSkill.Change += Change;
+
+
+        MapManager.CountedRootables += FieldsChange;
+       
 
         PlayerManager.PlayersInstantiated += StartingParameters;
 
@@ -105,14 +102,9 @@ public class ScoreKeeperScript : MonoBehaviour
         SunLevel.DayEvent -= SunLevelChange;
         SunLevel.NightEvent -= SunLevelChange;
 
-        AbstractSkill.GenomChange -= Change;
+        AbstractSkill.Change -= Change;
 
-        MapManager.PurpleRootables += PurpleFieldsChange;
-        MapManager.BlueRootables += BlueFieldsChange;
-        MapManager.GreenRootables += GreenFieldsChange;
-        MapManager.YellowRootables += YellowFieldsChange;
-        MapManager.OrangeRootables += OrangeFieldsChange;
-        MapManager.RedRootables += RedFieldsChange;
+        MapManager.CountedRootables -= FieldsChange;
 
         PlayerManager.PlayersInstantiated -= StartingParameters;
     }
@@ -147,35 +139,29 @@ public class ScoreKeeperScript : MonoBehaviour
 
  
 
-    private void RedFieldsChange(int redFieldsChange,int rootableFields)
+    private void FieldsChange(int[] fieldsChange, int rootableFields)
     {
+        int redFieldsChange = fieldsChange[5];
         redFields = redFieldsChange;
         redFieldsText.text = redFieldsChange + "/" + rootableFields + " (" + ChangeResource(redFieldsChange, rootableFields) + "%)";
-    }
 
-     private void OrangeFieldsChange(int orangeFieldsChange, int rootableFields)
-    {
+        int orangeFieldsChange = fieldsChange[4];
         orangeFields = orangeFieldsChange;
         redFieldsText.text =  orangeFieldsChange + "/" + rootableFields +" ("+ ChangeResource(orangeFieldsChange, rootableFields) + "%)";
-    }
-
-    private void YellowFieldsChange(int yellowFieldsChange, int rootableFields)
-    {
+        
+        int yellowFieldsChange = fieldsChange[3];
         yellowFields = yellowFieldsChange;
         yellowFieldsText.text =  + yellowFieldsChange + "/" + rootableFields + " (" + ChangeResource(yellowFieldsChange, rootableFields) + "%)";
-    }
-    private void GreenFieldsChange(int greenFieldsChange, int rootableFields)
-    {
+
+        int greenFieldsChange =fieldsChange[2];
         yellowFields = greenFieldsChange;
         yellowFieldsText.text = + greenFieldsChange + "/" + rootableFields + " (" + ChangeResource(greenFieldsChange, rootableFields) + "%)";
-    }
-    private void BlueFieldsChange(int blueFieldsChange, int rootableFields)
-    {
+
+        int blueFieldsChange = fieldsChange[1];
         blueFields = blueFieldsChange;
         blueFieldsText.text = +blueFieldsChange + "/" + rootableFields + " (" + ChangeResource(blueFieldsChange, rootableFields) + "%)";
-    }
-    private void PurpleFieldsChange(int purpleFieldsChange, int rootableFields)
-    {
+
+        int purpleFieldsChange = fieldsChange[0];
         purpleFields = purpleFieldsChange;
         purpleFieldsText.text =  + purpleFieldsChange + "/" + rootableFields + "(" + ChangeResource(purpleFieldsChange, rootableFields) + "%)";
     }

@@ -1,13 +1,13 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using System;
+
 
 [CreateAssetMenu(fileName = "Player", menuName = "Add Player", order = 1)]
 public class Player : Entity
 {
-    public int id;
+    
 
     private void Awake()
     {
@@ -140,6 +140,10 @@ public class Player : Entity
             water -= waterLvl;
         }
         CheckForDeath();
+    }
+    public void Refill()
+    {
+        water = biomass;
     }
 
 

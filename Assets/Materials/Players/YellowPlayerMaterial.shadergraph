@@ -1051,7 +1051,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Occlusion",
     "m_StageCapability": 2,
-    "m_Value": 1.0,
+    "m_Value": 2.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }
@@ -1869,14 +1869,14 @@
             "a": 1.0
         },
         "key2": {
-            "r": 0.13114489614963532,
-            "g": 0.43584907054901125,
-            "b": 0.0,
+            "r": 0.7454044818878174,
+            "g": 0.623960554599762,
+            "b": 0.010960093699395657,
             "a": 0.0
         },
         "key3": {
-            "r": 0.0,
-            "g": 0.0,
+            "r": 0.13114489614963532,
+            "g": 0.43584907054901125,
             "b": 0.0,
             "a": 0.0
         },
@@ -1905,9 +1905,9 @@
             "a": 0.0
         },
         "ctime0": 0,
-        "ctime1": 28604,
-        "ctime2": 65535,
-        "ctime3": 0,
+        "ctime1": 4549,
+        "ctime2": 61757,
+        "ctime3": 65535,
         "ctime4": 0,
         "ctime5": 0,
         "ctime6": 0,
@@ -1922,7 +1922,7 @@
         "atime7": 0,
         "m_Mode": 2,
         "m_ColorSpace": 1,
-        "m_NumColorKeys": 3,
+        "m_NumColorKeys": 4,
         "m_NumAlphaKeys": 2
     }
 }

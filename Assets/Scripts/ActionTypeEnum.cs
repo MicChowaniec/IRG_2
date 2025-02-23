@@ -4,11 +4,12 @@ using UnityEngine;
 
 public enum ActionTypeEnum
 {
+    None,
     Purple,
     Blue,
     Green,
     Yellow,
     Orange,
-    Red,
-    None
+    Red
+    
 }

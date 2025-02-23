@@ -4,12 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using UnityEditor;
-using UnityEditor.Animations;
+
 
 public class PlayerScript : MonoBehaviour
 {
-    public Player player;
-    public Animator animator;
+    public readonly Player player;
+    public readonly Animator animator;
     private int tileId;
     private int sunLvl;
     private int diseaseLvl;
@@ -33,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     {
         PlayerManager.ActivePlayerBroadcast -= SetActivePlayer;
         PlayerManager.ChangePhase -= ChangePhaseChanges;
+        SunLevel.DayEvent -= SunLvl;
     }
 
     private void ChangePhaseChanges()

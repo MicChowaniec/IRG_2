@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.GPUSort;
+
 
 public class Day_Panel : MonoBehaviour
 {

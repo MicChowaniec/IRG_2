@@ -48,12 +48,8 @@ public class MapManager : MonoBehaviour
     public static event Action MapGenerated;
 
     public int startRootables;
-    public static event Action<int,int> RedRootables;
-    public static event Action<int,int> OrangeRootables;
-    public static event Action<int,int> YellowRootables;
-    public static event Action<int,int> GreenRootables;
-    public static event Action<int,int> BlueRootables;
-    public static event Action<int,int> PurpleRootables;
+    public static event Action<int[],int> CountedRootables;
+
 
     /// <summary>
     /// 
@@ -400,12 +396,9 @@ public class MapManager : MonoBehaviour
 
         }
         startRootables = temp;
-        PurpleRootables?.Invoke(purple, startRootables);
-        BlueRootables?.Invoke(blue, startRootables);
-        GreenRootables?.Invoke(green, startRootables);
-        YellowRootables?.Invoke(yellow, startRootables);
-        OrangeRootables?.Invoke(orange, startRootables);
-        RedRootables?.Invoke(red, startRootables);
+        int[] fields = { purple, blue, green, yellow, red, orange };
+        CountedRootables?.Invoke(fields,startRootables);
+
 
 
 

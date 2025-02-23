@@ -1051,7 +1051,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Occlusion",
     "m_StageCapability": 2,
-    "m_Value": 1.0,
+    "m_Value": 2.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }
@@ -1869,8 +1869,8 @@
             "a": 1.0
         },
         "key2": {
-            "r": 0.13114489614963532,
-            "g": 0.43584907054901125,
+            "r": 0.0,
+            "g": 0.0,
             "b": 0.0,
             "a": 0.0
         },
@@ -1905,8 +1905,8 @@
             "a": 0.0
         },
         "ctime0": 0,
-        "ctime1": 29838,
-        "ctime2": 29838,
+        "ctime1": 2082,
+        "ctime2": 0,
         "ctime3": 0,
         "ctime4": 0,
         "ctime5": 0,

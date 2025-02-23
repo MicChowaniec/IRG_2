@@ -1,8 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms.GameCenter;
-using UnityEditor.Search;
+
 
 public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -94,8 +93,15 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Now it Should be displayed by IPointer");
-        onHoverSC.AskForDetails();
+        if (onHoverSC is TileScriptableObject tileScriptableObject)
+        {
+            onHoverSC = tileScriptableObject;
+            OnHoverBroadcast?.Invoke(tileScriptableObject);
+        }
+        if (onHoverSC is SkillScriptableObject skillScriptableObject)
+        {
+            ShowSkillDescription?.Invoke(skillScriptableObject);
+        }
 
     }
     public void StartListeningForResponse()
@@ -105,18 +111,10 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void StopListeningForResponse(OnHoverSC eventData)
     {
-        if (eventData is TileScriptableObject tileScriptableObject)
-        {
-            onHoverSC = tileScriptableObject;
-            OnHoverBroadcast?.Invoke(tileScriptableObject);
-        }
-        if(eventData is SkillScriptableObject skillScriptableObject)
-        {
-            onHoverSC = eventData;
-            ShowSkillDescription?.Invoke(skillScriptableObject);
-        }
+        
     }
 
+    
 
 
 }
