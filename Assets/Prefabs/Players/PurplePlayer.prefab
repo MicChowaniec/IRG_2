@@ -1158,8 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
-  animator: {fileID: 0}
-  isActivePlayer: 0
+  animator: {fileID: 1601692875157988610}
 --- !u!114 &8781765123033158380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1175,9 +1174,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 4294967295
-  range: 1.4
-  ListOfDiscoveredFields: 
-  human: 0
+  ListOfDiscoveredFields: []
   owner: {fileID: 11400000, guid: b767a1f9f64b478448ccd9d50ad618fa, type: 2}
 --- !u!4 &2882937907647121409 stripped
 Transform:
@@ -1321,6 +1318,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: {x: 0, y: 0, z: 0}
   size: 1
+  owner: {fileID: 0}
+  activePlayer: {fileID: 0}
 --- !u!4 &8514734490175778590 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4063081998046452137, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
@@ -1688,3 +1687,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: {x: 1, y: 1, z: 1}
   size: 1
+  owner: {fileID: 0}
+  activePlayer: {fileID: 0}

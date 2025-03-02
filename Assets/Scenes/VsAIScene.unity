@@ -1874,7 +1874,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
-  thisListener: 0
   tso: {fileID: 0}
   StarlingPrefab: {fileID: 1804244517720626782, guid: afa3e7f0baa04ae469ae7816c08b88f2, type: 3}
   StarlingInstantiated: {fileID: 0}
@@ -4213,6 +4212,7 @@ MonoBehaviour:
   skipTurn: {fileID: 11400000, guid: 06d5258fc4e3e654683ef062f01dcf21, type: 2}
   actionManager: {fileID: 1149225232}
   playerManager: {fileID: 1655148547}
+  gameSeetings: {fileID: 11400000, guid: bca31676766ca3d4d87a562537bada7b, type: 2}
 --- !u!1 &541504630
 GameObject:
   m_ObjectHideFlags: 0
@@ -11684,7 +11684,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 06d5258fc4e3e654683ef062f01dcf21, type: 2}
-  thisListener: 0
   tso: {fileID: 0}
 --- !u!1 &1399710424
 GameObject:
@@ -16308,7 +16307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 404c2ded953fe244b8fa7b9da6861f5d, type: 2}
-  thisListener: 0
   tso: {fileID: 11400000, guid: 404c2ded953fe244b8fa7b9da6861f5d, type: 2}
 --- !u!1 &1980675421
 GameObject:

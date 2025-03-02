@@ -13,14 +13,16 @@ public class TileScriptableObject : OnHoverSC
     public TileTypesEnum tileTypes;
     public GameObjectTypeEnum childType;
     public ActionTypeEnum childColor;
+    public int value;
 
     public List<TileScriptableObject> neighbours = new();
 
     public override string AskForDetails()
     {
         label = tileTypes.ToString();
-        string standerStr ="";
+        string standerStr = "";
         string ownerStr = "";
+
         if (stander != null)
         {
             standerStr = stander.itsName;
@@ -68,7 +70,10 @@ public class TileScriptableObject : OnHoverSC
     }
     public void SetOwner(Player player)
     {
-        owner = stander;
+        owner = player;
     }
-
+    public void EstimateValue(int i)
+    {
+        value += i;
+    }
 }

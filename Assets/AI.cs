@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using System;
+using JetBrains.Annotations;
 
 
 
@@ -15,6 +16,8 @@ public class AI : MonoBehaviour
     public ActionManager actionManager;
     public PlayerManager playerManager;
     private SkillScriptableObject tempSkill;
+    private int rootingPressure;
+    public GameSettings gameSeetings;
 
 
     public static event Action EndTurn;
@@ -24,7 +27,7 @@ public class AI : MonoBehaviour
 
     private void OnEnable()
     {
-
+        rootingPressure = 12-gameSeetings.CyclesPerDay * 6;
         TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
         PlayerScript.AITurn += CalculateMove;
         StarlingPrefabScript.FinallyReachedTheDestination += ExecuteAction;
@@ -52,12 +55,12 @@ public class AI : MonoBehaviour
 
         foreach (var card in computer.cards)
         {
-            if (card.turnNotRooted == ActiveTurn && !computer.rooted)
+            if (!computer.rooted)
             {
                 SkillList.Add(card.skillNotRootedSC);
 
             }
-            else if (card.turnRooted == ActiveTurn && computer.rooted)
+            else if (computer.rooted)
             {
                 SkillList.Add(card.skillRootedSC);
             }
@@ -72,6 +75,7 @@ public class AI : MonoBehaviour
             return;
         }
   
+
             FindPossibleMoves(computer);
 
         if(SkillList.Count==0)
@@ -91,6 +95,7 @@ public class AI : MonoBehaviour
         {
             ExecuteAction();
         }
+        
 
     }
 
@@ -112,6 +117,8 @@ public class AI : MonoBehaviour
     private void UpdateTurn(Turn turn)
     {
         ActiveTurn = turn;
+        rootingPressure++;
+
     }
 
     private void SkipTurn()

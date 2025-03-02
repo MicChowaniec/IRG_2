@@ -8,12 +8,12 @@ using UnityEditor;
 
 public class PlayerScript : MonoBehaviour
 {
-    public readonly Player player;
-    public readonly Animator animator;
-    private int tileId;
+
+    public Player player;
+    public Animator animator;
+    private TileScriptableObject tile;
     private int sunLvl;
     private int diseaseLvl;
-    public static event Action<TileScriptableObject> UpdatePlayerPosition;
     public static event Action FinishTurn;
     public static event Action<Player> AITurn;
 
@@ -90,7 +90,6 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log(player.itsName + " is standing on tile:" + tile.name);
                 tile.TSO.SetStander(player);
-                tileId = tile.TSO.id;
                 Vector3 tempScale = transform.localScale;
                 transform.parent = tile.transform;
                 transform.localScale = tempScale;

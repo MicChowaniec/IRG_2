@@ -32,6 +32,7 @@ public  class AbstractSkill : MonoBehaviour
         activePlayer.protein -= skill.protein;
         activePlayer.energy -= skill.energy;
         activePlayer.eyes -= skill.eyes;
+        //Add Turn Dependency
         activePlayer.AddGenom(skill.actionType, 1);
         Debug.Log(skill.actionType + " used. +1 to " + skill.actionType+ " genom");
         if (activePlayer.human)
