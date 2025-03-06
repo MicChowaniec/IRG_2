@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03aeeb64d670c8548a42e7ce5ea6eb59, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  SizeOfMap: 6
+  CyclesPerDay: 1
+  Difficulty: 1

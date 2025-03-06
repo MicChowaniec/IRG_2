@@ -12,7 +12,7 @@ public class Day_Panel : MonoBehaviour
     public GameObject TabButton;
     public GameObject ActionDescription;
     public TextMeshProUGUI ActionDescriptionText;
-    public Player human;
+    public Player activePlayer;
     private List<GameObject> buttonsInstantiated = new();
     public GameObject EndTurnButton;
 
@@ -111,12 +111,23 @@ public class Day_Panel : MonoBehaviour
     {
 
     }
+    private void OnPlayerChange(Player player)
+    {
+        if (player != activePlayer)
+        {
+            activePlayer = player;
+            if (player.human)
+            {
+                UpdateHuman(player);
+            }
+        }
+    }
     private void UpdateHuman(Player player)
     {
-        if (player.human)
-        {
-
-            human = player;
+            foreach(var child in buttonsInstantiated)
+            {   
+            Destroy(child);
+            }
             foreach (var s in player.cards)
             {
                 if (player.rooted)
@@ -129,18 +140,6 @@ public class Day_Panel : MonoBehaviour
                     buttonsInstantiated.Add(Instantiate(s.skillNotRooted, ActionsBar.transform));
                 }
             }
-            buttonsInstantiated.Add(EndTurnButton);
-        }
-        else
-        {
-            foreach (var obj in buttonsInstantiated)
-            {
-                Destroy(obj);
-            }
-            buttonsInstantiated.Clear();
-
-        }
-
     }
 
 

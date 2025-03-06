@@ -17,9 +17,5 @@ public class ParametersScript : MonoBehaviour
     {
         gs.Difficulty = difficultyLevel;
     }
-    public void UpdateRootingRestriction(bool rootingNextToOwnedFields)
-    {
-        gs.RootingOnlyNextToSelf = rootingNextToOwnedFields;
-    }
 
 }

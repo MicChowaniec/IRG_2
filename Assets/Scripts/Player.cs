@@ -21,28 +21,18 @@ public class Player : Entity
         energy = 10;
         biomass = 10;
         protein = 10;
-        starlings = 1;
         soulLvl = 1;
-        
-       
-        if (id == 0)
-        {
-            eyes = 3;
-        }
-        else
-        {
-            eyes = 2;
-        }
-        PurpleLvl = 2;
-        BlueLvl = 2;
-        GreenLvl = 2;
-        YellowLvl = 2;
-        OrangeLvl =2;
-        RedLvl = 2;
+        eyes = 2;
+      
+        PurpleLvl = 0;
+        BlueLvl = 0;
+        GreenLvl = 0;
+        YellowLvl = 0;
+        OrangeLvl =0;
+        RedLvl = 0;
 
     }
     public int energy;
-    public int starlings;
     public int soulLvl;
     public int eyes;
     public int burningLvl;
@@ -61,7 +51,6 @@ public class Player : Entity
     public List<SkillScriptableObject> skills;
     public List<CardScriptableObject> cards;
 
-    
     public void AddGenom(ActionTypeEnum ate, int amount)
     {
         switch (ate)
@@ -75,6 +64,7 @@ public class Player : Entity
             case ActionTypeEnum.None:   break;
         }
     }
+
     public void ReceiveDamage(int amount)
     {
         float temp = Mathf.Sqrt((float)amount);
@@ -94,6 +84,7 @@ public class Player : Entity
         }
         CheckForDeath();
     }
+
     public int DealDamage()
     {
         System.Random rand = new();
@@ -101,6 +92,7 @@ public class Player : Entity
         temp += OrangeLvl;
         return temp;
     }
+
     public void Disease(int diseaseLvl)
     {
         //Implement Disease
@@ -111,6 +103,7 @@ public class Player : Entity
         }
         CheckForDeath();
     }
+
     public void EnergyFromSun(int sunLvl)
     {
         if(energy+sunLvl>=biomass)
@@ -123,21 +116,22 @@ public class Player : Entity
         }
     }
 
-    public void StarlingUpdate()
-    {
-        starlings = soulLvl;
-    }
+
 
     public void WaterLoss(int waterLvl)
     {
-        if (water - waterLvl <= biomass)
+        if (waterLvl>0&&water<=0)
         {
             biomass--;
             //implement fire;
         }
         else
         {
-            water -= waterLvl;
+            water--;
+            if (waterLvl > 0)
+            {
+                WaterLoss(waterLvl - 1);
+            }
         }
         CheckForDeath();
     }

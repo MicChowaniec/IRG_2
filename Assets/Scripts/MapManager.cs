@@ -233,6 +233,7 @@ public class MapManager : MonoBehaviour
 
                             tiles[id].childType = GameObjectTypeEnum.Rock;
                             tiles[id].childColor = ActionTypeEnum.None;
+                            tiles[id].passable = false;
 
 
                         }
@@ -263,6 +264,7 @@ public class MapManager : MonoBehaviour
                         InstatiateField(waterTileType, id, i, j);
                         tiles[id].childType = GameObjectTypeEnum.Water;
                         tiles[id].childColor = ActionTypeEnum.None;
+
                     }
 
                 }

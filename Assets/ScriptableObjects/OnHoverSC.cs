@@ -10,9 +10,9 @@ public abstract class OnHoverSC : ScriptableObject
     public string forStarlingText;
     public bool button;
     public Sprite sprite;
-    protected Player stander;
-    protected Player owner;
-    protected TreeSO treeSO;
+    public Player stander;
+    public Player owner;
+    public TreeSO treeSO;
     public virtual string AskForDetails()
     {
         return "";

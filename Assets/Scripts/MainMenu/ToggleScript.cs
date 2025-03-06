@@ -15,8 +15,7 @@ public class ToggleScript : MonoBehaviour
         myToggle.isOn = defaultValue;
 
         
-        myToggle.onValueChanged.AddListener((value) => { parametersScript.UpdateRootingRestriction((bool)value); });
-
+        
 
     }
 }

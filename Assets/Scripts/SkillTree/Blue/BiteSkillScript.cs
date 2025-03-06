@@ -4,16 +4,6 @@ public class BiteSkillScript : AbstractSkill
 {
 
 
-	public override void ClickOnButton()
-	{
-	  
-	}
-
-	public override void Confirm()
-	{
-
-	}
-
 	public override void Do(OnHoverSC onHoverSC)
 	{
 		if (tso!=null)

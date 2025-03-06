@@ -10,7 +10,6 @@ public class SkillScriptableObject : OnHoverSC
 
     public GameObject ButtonPrefab;
 
-    public int starling;
     public int biomass;
     public int water;
     public int energy;

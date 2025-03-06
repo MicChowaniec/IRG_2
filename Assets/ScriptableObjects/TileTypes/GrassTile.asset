@@ -16,4 +16,4 @@ MonoBehaviour:
   type: 1
   passable: 1
   rootable: 1
-  Material: {fileID: -876546973899608171, guid: 3cebda9eba5a07e4cbe0a3a93bc4e237, type: 3}
+  Material: {fileID: 2100000, guid: def7b0bee79a4fd46a2435fd2b9ae110, type: 2}

@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
 
     public Player player;
     public Animator animator;
-    private TileScriptableObject tile;
+    public readonly TileScriptableObject tile;
     private int sunLvl;
     private int diseaseLvl;
     public static event Action FinishTurn;
@@ -40,7 +40,6 @@ public class PlayerScript : MonoBehaviour
     {
         player.Disease(diseaseLvl);
         player.EnergyFromSun(sunLvl);
-        player.StarlingUpdate();
         player.WaterLoss(1);
         
 
@@ -81,22 +80,26 @@ public class PlayerScript : MonoBehaviour
 
     public void SearchForTileWithRaycast()
     {
-        Vector3 playerPosition = this.transform.position;
+        Vector3 playerPosition = transform.position;
 
-        if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit))
+        if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit) && hit.collider != null)
         {
-            
-            if (hit.collider.TryGetComponent<TileScript>(out var tile))
+            Transform parentTransform = hit.collider.transform;
+
+            if (parentTransform != null && parentTransform.TryGetComponent<TileScript>(out TileScript tile))
             {
-                Debug.Log(player.itsName + " is standing on tile:" + tile.name);
+                Debug.Log($"{player.itsName} is standing on tile: {tile.name}");
+
                 tile.TSO.SetStander(player);
+
+                // RememberScaleBeforeParentChange
                 Vector3 tempScale = transform.localScale;
                 transform.parent = tile.transform;
                 transform.localScale = tempScale;
             }
         }
     }
-   
+
     public void UpdatePosition()
     {
         player.Pos = transform.position;

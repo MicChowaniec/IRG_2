@@ -13,7 +13,7 @@ public class VisionSystem : MonoBehaviour
     public Player owner;
 
     private PlayerManager _playerManager;
-    private Collider[] _colliderBuffer = new Collider[1000]; // Adjust size as needed
+    private Collider[] _colliderBuffer = new Collider[10000]; // Adjust size as needed
 
     public static event Action<TileScriptableObject> FoundAttractiveField;
 
@@ -60,7 +60,7 @@ public class VisionSystem : MonoBehaviour
         {
 
 
-            int hitCount = Physics.OverlapSphereNonAlloc(center + new Vector3(0, 1, 0), range * 0.7f, _colliderBuffer, layer);
+            int hitCount = Physics.OverlapSphereNonAlloc(center + new Vector3(0, 1, 0), range*0.7f, _colliderBuffer, layer);
 
             for (int i = 0; i < hitCount; i++)
             {

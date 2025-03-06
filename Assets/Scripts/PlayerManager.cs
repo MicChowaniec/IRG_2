@@ -25,6 +25,7 @@ public class PlayerManager : MonoBehaviour
 
         MapManager.MapGenerated += AllocatePlayers;
         AI.EndTurn += ChangePlayer;
+        AbstractSkill.WhoIsTheActivePlayer += BroadcastPlayer;
 
 
     }
@@ -35,6 +36,7 @@ public class PlayerManager : MonoBehaviour
 
         MapManager.MapGenerated -= AllocatePlayers;
         AI.EndTurn -= ChangePlayer;
+        AbstractSkill.WhoIsTheActivePlayer -= BroadcastPlayer;
 
     }
     /// <summary>
@@ -106,10 +108,14 @@ public class PlayerManager : MonoBehaviour
         Debug.Log(activePlayer.itsName);
 
         // Safely invoke the event
-        ActivePlayerBroadcast?.Invoke(activePlayer);
+        BroadcastPlayer();
         ActionBar.SetActive(activePlayer.human);
         
 
+    }
+    private void BroadcastPlayer()
+    {
+        ActivePlayerBroadcast?.Invoke(activePlayer);
     }
 
 

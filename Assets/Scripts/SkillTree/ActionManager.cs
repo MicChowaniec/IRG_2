@@ -1,7 +1,8 @@
 
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class ActionManager : MonoBehaviour
     public List<GameObject> yellowSkills = new();
     public List<GameObject> orangeSkills = new();
     public List<GameObject> redSkills = new();
+    public List<GameObject> basicSkills = new();
     private List<List<GameObject>> AllSkills => new ()
     {
         purpleSkills,
@@ -20,92 +22,66 @@ public class ActionManager : MonoBehaviour
         greenSkills,
         yellowSkills,
         orangeSkills,
-        redSkills
+        redSkills,
+        basicSkills
     };
-
-    
 
     private Turn activeTurn;
     public static event Action SkillsUpdated;
 
     private void OnEnable()
-    {  
-        TurnBasedSystem.CurrentTurnBroadcast += ActiveTurn;
+    {
+
+        ButtonScript.SkillListenerActivate += ActivateSkillListener;
+        AbstractSkill.AnimationObjectDestroyed += ResetListeners;
+        DragOnScript.CallTheAction += ActivateSkillListener;
+
+
     }
     private void OnDisable()
-    {
-        TurnBasedSystem.CurrentTurnBroadcast -= ActiveTurn;
+    { 
+        ButtonScript.SkillListenerActivate -= ActivateSkillListener;
+        AbstractSkill.AnimationObjectDestroyed -= ResetListeners;
+        DragOnScript.CallTheAction += ActivateSkillListener;
     }
 
-    private void ActiveTurn(Turn turn)
-    {
-        Reset();
-        activeTurn = turn;
-        switch (activeTurn.actionType)
-        {
-            case ActionTypeEnum.Purple:
-                {
-                    
-                    foreach (GameObject obj in purpleSkills)
-                    {
-                        obj.SetActive(true);
-                    }
-                    break;
-                }
-            case ActionTypeEnum.Blue:
-                {
-                    foreach (GameObject obj in blueSkills)
-                    {
-                        obj.SetActive(true);
-                    }
-                    break;
-                }
 
-            case ActionTypeEnum.Green:
-                {
-                    foreach(GameObject obj in greenSkills)
-                    {
-                        obj.SetActive(true);
-                    }
-                    break;
-                }
-            case ActionTypeEnum.Yellow:
-                {
-                    foreach(GameObject obj in yellowSkills)
-                    {
-                            obj.SetActive(true);
-                    }
-                    break;
-                }
-            case ActionTypeEnum.Orange:
-                {
-                    foreach(GameObject obj in orangeSkills)
-                    {
-                        obj.SetActive(true);
-                    }
-                    break;
-                }
-            case ActionTypeEnum.Red:
-                {
-                    foreach(GameObject obj in redSkills)
-                    {
-                        obj.SetActive(true);
-                    }
-                    break;
-                }
-
-        }
-        SkillsUpdated?. Invoke();
-    }
-    private void Reset()
+    private void ResetListeners(Player player)
     {
         foreach (List<GameObject> list in AllSkills)
         { 
             foreach (GameObject obj in list)
                 {
-                obj.SetActive(false);
+                    obj.SetActive(false);
                 }
         }
+    }
+    private void ActivateSkillListener(SkillScriptableObject skillSO)
+    {
+        Debug.Log("Heard you " + skillSO.name);
+        foreach (List<GameObject> list in AllSkills)
+        {
+            
+            foreach (GameObject obj in list)
+            {
+
+                obj.TryGetComponent<AbstractSkill>(out var abstractSkill);
+                if (abstractSkill.skill == skillSO)
+                {
+                    Debug.Log("Found " + obj.name);
+                    if (!obj.activeSelf)
+                    {
+                        Debug.Log("Activated " + obj.name);
+                        obj.SetActive(true);
+
+                        return;
+
+                    }
+
+                }
+            }
+        }
+        Debug.Log("...But didn't found");
     }
 
 

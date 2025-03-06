@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: BluePlayer
   m_EditorClassIdentifier: 
   id: 1
-  water: 12
-  energy: 12
-  biomass: 12
-  protein: 12
-  starlings: 1
-  soulLvl: 1
-  eyes: 2
-  fireResistance: -10
-  toxicResistance: 0
+  biomass: 10
+  protein: 10
+  water: 10
+  waterLvl: 0
   PurpleLvl: 2
   BlueLvl: 2
   GreenLvl: 2
   YellowLvl: 2
   OrangeLvl: 2
   RedLvl: 2
+  energy: 10
+  starlings: 1
+  soulLvl: 1
+  eyes: 2
+  burningLvl: 0
   sequence: 2
   itsName: Blue
   itsDescription: Blue is collecting more water and have unique voice skills.
@@ -40,10 +40,6 @@ MonoBehaviour:
   Prefab: {fileID: 13136404289340683, guid: 0e3e9e36d2c345841a3bca98617733c9, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 91332226a4bda2f41b8a2f487d0315b5, type: 3}
   material: {fileID: 2100000, guid: 1a0af5b6ecec2ab42b912990707702e1, type: 2}
+  skills: []
   cards:
-  - {fileID: 11400000, guid: 2c7a026618fd1fd4eac33f3e992c7746, type: 2}
-  - {fileID: 11400000, guid: 3c751b2b919c86b4aa7c3dba4a91b5d1, type: 2}
   - {fileID: 11400000, guid: 2e596fb0c2120ca418dc89d667d9151d, type: 2}
-  - {fileID: 11400000, guid: 4be30f929e1bebc4581bdcdd7808cb50, type: 2}
-  - {fileID: 11400000, guid: ed24efd9dc9581d4f8908290e9fa9704, type: 2}
-  - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

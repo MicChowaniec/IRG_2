@@ -162,3 +162,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 2335f349994b1ea4d8c87287a76e310b, type: 2}
   ActionManager: {fileID: 0}
+  holder: {fileID: 2648954108819363694}

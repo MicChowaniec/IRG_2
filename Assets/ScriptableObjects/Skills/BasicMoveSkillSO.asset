@@ -10,25 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73551e2395d02094f8b967334a9745d7, type: 3}
-  m_Name: EndTurnSO
+  m_Name: BasicMoveSkillSO
   m_EditorClassIdentifier: 
-  label: End Turn
-  description: Press to end your turn
+  label: BasicMovement
+  description: 
   forStarlingText: 
   button: 0
-  sprite: {fileID: 21300000, guid: 39f8318434833bb4b82cb77a9f0e4558, type: 3}
-  actionType: 6
+  sprite: {fileID: 21300000, guid: b170889b51fb44c43aea45c30e3d79d3, type: 3}
+  stander: {fileID: 0}
+  owner: {fileID: 0}
+  treeSO: {fileID: 0}
+  actionType: 0
   RootedSkill: 0
   ButtonPrefab: {fileID: 0}
-  starling: 0
   biomass: 0
-  water: 0
-  energy: 0
+  water: 1
+  energy: 6
   protein: 0
   resistance: 0
   eyes: 0
   range: 0
-  self: 1
+  self: 0
   purplePassiveDescription: 
   bluePassiveDescription: 
   greenPassiveDescription: 

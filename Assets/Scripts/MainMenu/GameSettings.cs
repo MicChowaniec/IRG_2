@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     public int SizeOfMap = 6;
-    public int CyclesPerDay = 2;
+    public int CyclesPerDay = 1;
     public int Difficulty = 1;
-    public bool RootingOnlyNextToSelf = false;
 }

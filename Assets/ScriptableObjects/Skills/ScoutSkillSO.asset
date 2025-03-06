@@ -18,15 +18,29 @@ MonoBehaviour:
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
-  actionType: 0
+  stander: {fileID: 0}
+  owner: {fileID: 0}
+  treeSO: {fileID: 0}
+  actionType: 1
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 585d5530b6cc78b4aa883a213c94712e, type: 3}
-  starling: 1
   biomass: 0
   water: 0
-  energy: 0
+  energy: 3
   protein: 0
   resistance: 0
-  eyes: 0
+  eyes: 1
   range: 0
   self: 0
+  purplePassiveDescription: 
+  bluePassiveDescription: 
+  greenPassiveDescription: 
+  yellowPassiveDescription: 
+  orangePassiveDescription: 
+  redPassiveDescription: 
+  purplePassive: 0
+  bluePassive: 0
+  greenPassive: 0
+  yellowPassive: 0
+  orangePassive: 0
+  redPassive: 0

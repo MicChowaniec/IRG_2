@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System;
 using JetBrains.Annotations;
 
-
-
-
 public class AI : MonoBehaviour
 {
     public Turn ActiveTurn;
@@ -22,16 +19,17 @@ public class AI : MonoBehaviour
 
     public static event Action EndTurn;
     public static event Action<Player, SkillScriptableObject> SendMeAField;
+    public static event Action Prepare;
     public static event Action<OnHoverSC> Execute;
     public static event Action ExecuteSelf;
 
     private void OnEnable()
     {
-        rootingPressure = 12-gameSeetings.CyclesPerDay * 6;
+        
         TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
         PlayerScript.AITurn += CalculateMove;
         StarlingPrefabScript.FinallyReachedTheDestination += ExecuteAction;
-        StarlingSkillScript.BirdDestroyed += CalculateMove;
+        StarlingSkillScript.AnimationObjectDestroyed += CalculateMove;
         VisionSystem.FoundAttractiveField += ExecuteAction;
     }
 
@@ -41,7 +39,7 @@ public class AI : MonoBehaviour
         TurnBasedSystem.CurrentTurnBroadcast -= UpdateTurn;
         PlayerScript.AITurn -= CalculateMove;
         StarlingPrefabScript.FinallyReachedTheDestination -= ExecuteAction;
-        StarlingSkillScript.BirdDestroyed -= CalculateMove;
+        StarlingSkillScript.AnimationObjectDestroyed -= CalculateMove;
         VisionSystem.FoundAttractiveField -= ExecuteAction;
 
     }
@@ -70,33 +68,11 @@ public class AI : MonoBehaviour
     }
     private void CalculateMove(Player computer)
     {
-        if (computer.human)
+       if(computer.human)
         {
             return;
         }
-  
-
-            FindPossibleMoves(computer);
-
-        if(SkillList.Count==0)
-        {
-            SkipTurn();
-        }
-
-        int index = new System.Random().Next(0, SkillList.Count);
-        
-        tempSkill = SkillList[index];
-
-        if (tempSkill.self == false)
-        {
-            SendMeAField?.Invoke(computer, tempSkill);
-        }
-        else if (tempSkill.self == true)
-        {
-            ExecuteAction();
-        }
-        
-
+       
     }
 
 

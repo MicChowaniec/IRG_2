@@ -205,11 +205,6 @@ public class ScoreKeeperScript : MonoBehaviour
         proteinText.text = "Protein: \n" + protein + "/" + biomass;
         proteinTank.fillAmount = ChangeResource(protein);
 
-        maxStarling = humanPlayer.soulLvl;
-        starling = humanPlayer.starlings;
-        starlingText.text = "Starlings: \n" + starling + "/" + maxStarling;
-        starlingTank.fillAmount = ChangeResource(starling, maxStarling);
-
         biomass = humanPlayer.biomass;
         biomassText.text = "Biomass: \n" + biomass;
 

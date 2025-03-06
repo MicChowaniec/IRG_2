@@ -20,7 +20,6 @@ public class MainMenuButtonsManager : MonoBehaviour
             MapSize = gameSettings.SizeOfMap,
             CyclesPerDay = gameSettings.CyclesPerDay,
             Difficulty = gameSettings.Difficulty,
-            RootRestrictions = gameSettings.RootingOnlyNextToSelf
         };
         AnalyticsService.Instance.RecordEvent(parametersEvent);
 

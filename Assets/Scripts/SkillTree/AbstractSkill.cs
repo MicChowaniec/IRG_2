@@ -2,22 +2,47 @@ using JetBrains.Annotations;
 using UnityEngine;
 using System;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public  class AbstractSkill : MonoBehaviour
 {
+    public GameObject animationObject;
+    public GameObject animationObjectInstantiated;
     public SkillScriptableObject skill;
-    protected Player activePlayer;
+    public Player activePlayer;
     public static event Action Change;
     public OnHoverSC tso;
+    public VisionSystem visionSystem;
 
+    public static event Action<Player> AnimationObjectDestroyed;
+    public static event Action WhoIsTheActivePlayer;
+    public static event Action DestroyTheButton;
 
+    public void OnEnable()
+    {
+        AI.Prepare += ClickOnButton;
+        AI.ExecuteSelf += Do;
+        AI.Execute += Do;
+        PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
+        OnHoverScript.OnHoverBroadcast += CheckColorIncome;
+        
 
+    }
+    public void OnDisable()
 
+    {
+        AI.Prepare -= ClickOnButton;
+        AI.ExecuteSelf -= Do;
+        AI.Execute -= Do;
+        PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
+        OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
+    }
 
-
-
-
-
+    
+    /// <summary>
+    /// Changing value of public value OnHoverSC tso by incoming onHoverSC Scriptable Object which is send by hovering the tile
+    /// </summary>
+    /// <param name="onHoverSC"></param>
     public void CheckColorIncome(OnHoverSC onHoverSC)
     {
         tso = onHoverSC;
@@ -26,13 +51,11 @@ public  class AbstractSkill : MonoBehaviour
     public void StatisticChange()
 
     {
-        activePlayer.starlings -= skill.starling;
         activePlayer.biomass -= skill.biomass;
         activePlayer.water -= skill.water;
         activePlayer.protein -= skill.protein;
         activePlayer.energy -= skill.energy;
         activePlayer.eyes -= skill.eyes;
-        //Add Turn Dependency
         activePlayer.AddGenom(skill.actionType, 1);
         Debug.Log(skill.actionType + " used. +1 to " + skill.actionType+ " genom");
         if (activePlayer.human)
@@ -40,70 +63,39 @@ public  class AbstractSkill : MonoBehaviour
             Change?.Invoke();
         }
     }
-    public virtual void Do(OnHoverSC tso)
-    {
-
-    }
-    public virtual void Do()
-
-    {
-
-    }
-    public void OnEnable()
-    {
-        AI.ExecuteSelf += Do;
-        AI.Execute += Do;
-    PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
-    OnHoverScript.OnHoverBroadcast += CheckColorIncome;
 
 
-}
-public void OnDisable()
-    {
-        AI.ExecuteSelf -= Do;
-        AI.Execute -= Do;
-        PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
-        OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
 
-    }
+    
+    /// <summary>
+    /// Cheching whether player resources are higher or equal than skill resource
+    /// </summary>
+    /// <returns>true if resources are higher or equal than skill demands, false if there is at least one resource which is lower than skill demand</returns>
     public bool CheckResources()
 
-
     {
-        bool temp =true;
-        if (skill.starling>0)
-        {
-            if (activePlayer.starlings >= skill.starling)
-            {
-                temp = temp && true;
-            }
-            else
-            {
-                temp = temp && false;
-            }
-
-
-        }
-        if (skill.biomass > 0)
+        bool temp = true;
+        
+        if (activePlayer.biomass > 0)
         {
             if (activePlayer.biomass >= skill.biomass)
             {
-                temp = temp && true;
+                temp = true;
             }
             else
             {
-                temp = temp && false;
+                return false;
             }
         }
         if (activePlayer.water > 0)
         {
             if (activePlayer.water >= skill.water)
             {
-                temp = temp && true;
+                temp = true;
             }
             else
             {
-                temp = temp && false;
+                return false;
             }
 
         }
@@ -111,89 +103,148 @@ public void OnDisable()
         {
             if (activePlayer.protein >=skill.protein)
             {
-                temp = temp && true;
+                temp = true;
             }
             else
             {
-                temp = temp && false;
+                return false;
             }
         }
         if (activePlayer.energy > 0)
         {
             if (activePlayer.energy >= skill.energy)
             {
-                temp = temp && true;
+                temp = true;
             }
             else
             {
-                temp = temp && false;
+                return false;
             }
         }
         if (activePlayer.eyes > 0)
         {
             if (activePlayer.eyes >= skill.eyes)
             {
-                temp = temp && true;
+                temp = true;
             }
             else
             {
-                temp = temp && false;
+                return false;
             }
         }
         return temp;
     }
    
 
-
-    public void ActivePlayerUpdate(Player player)
+    /// <summary>
+    /// Update activePlayer, and vision System
+    /// </summary>
+    /// <param name="player"></param>
+    protected void ActivePlayerUpdate(Player player)
     {
         activePlayer = player;
+        ClickOnButton();
     }
 
+    /// <summary>
+    /// Increase by one genom Lvl of ActionTypeEnum equivalent to  skill just played
+    /// </summary>
+    /// <param name="ate"></param>
     public void ChangeGenom(ActionTypeEnum ate)
     {
-
             activePlayer.AddGenom(ate,1);
             Change?.Invoke();
- 
     }
+
+    /// <summary>
+    /// Update for human player, right mouse or esc to call Confirm(), left mouse to call Do().
+    /// </summary>
     public void Update()
     {
-
-
-        if (activePlayer.human)
+        if (activePlayer)
         {
-
-            if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+            if (activePlayer.human)
             {
 
-                Confirm();
-        
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-
-                if (skill.self)
+                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
                 {
-                    Do();
-                }
-                else
-                {
-                    Do(tso);
-                }
 
+                    Confirm();
+
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                    if (skill.self)
+                    {
+                        Do();
+
+                    }
+                    else
+                    {
+                        Do(tso);
+
+                    }
+
+                    StatisticChange();
+
+                    Confirm();
+
+                    DestroyTheButton?.Invoke();
+
+                }
             }
         }
-
+        else
+        {
+            WhoIsTheActivePlayer?.Invoke();
+        }
     }
-    public virtual void Confirm()
+    /// <summary>
+    /// Start the animation of skill
+    /// </summary>
+    public void ClickOnButton()
+    {
+        if (CheckResources())
+        {
+            if (animationObject!=null)
+            {
+               animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
+               if (activePlayer.human)
+                {
+                    Cursor.visible = false; // Hide the cursor
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// Ending animation of skill
+    /// </summary>
+    public void Confirm()
+    {
+        if (animationObjectInstantiated != null)
+        {
+            Destroy(animationObjectInstantiated);
+            animationObjectInstantiated = null;
+            AnimationObjectDestroyed?.Invoke(activePlayer);
+        }
+        Cursor.visible = true;
+        
+        
+        
+    }
+   
+    /// <summary>
+    /// Function to ovverride, must consist Confirm() if it is done
+    /// </summary>
+    /// <param name="tso"></param>
+    public virtual void Do(OnHoverSC tso)
     {
 
     }
-    public virtual void ClickOnButton()
+    public virtual void Do()
     {
 
     }
-
-
+   
 }

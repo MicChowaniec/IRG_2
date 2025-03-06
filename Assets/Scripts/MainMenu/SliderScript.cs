@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SliderScript : MonoBehaviour
 {
@@ -13,10 +14,11 @@ public class SliderScript : MonoBehaviour
 
     void Start()
     {
-        mySlider=this.GetComponent<Slider>();
+        mySlider= this.GetComponent<Slider>();
         mySlider.value = defaultValue;
-        myTextMeshPro.text= staticTextLabel+defaultValue.ToString();
+        myTextMeshPro.text= staticTextLabel+ defaultValue.ToString();
         mySlider.wholeNumbers = true; // Ensure slider only outputs integers
+        myTextMeshPro.text = staticTextLabel + ((int)mySlider.value).ToString();
         mySlider.onValueChanged.AddListener((value) => {
             myTextMeshPro.text = staticTextLabel+((int)value).ToString(); // Cast and convert
         });
@@ -33,7 +35,8 @@ public class SliderScript : MonoBehaviour
             mySlider.onValueChanged.AddListener((value) => { parametersScript.UpdateDifficultyLevel((int)value); });
         }
         
+
     }
-    
+
 
 }

@@ -7,24 +7,16 @@ using UnityEditor;
 public class StarlingSkillScript : AbstractSkill
 {
 
-
-    public GameObject StarlingPrefab;
-    public GameObject StarlingInstantiated;
-
-
-    
     public static event Action<Player,Vector3,int> SetNest;
-    public static event Action<Player> BirdDestroyed;
+
     public static event Action<Player> UpdateVision;
 
     
 
-
     public override void Do(OnHoverSC tso)
     {
         Debug.Log("Starting Doing Skill");
-        if (tso is TileScriptableObject)
-        {
+      
             GameObjectTypeEnum gote = tso.GetChildObjectType();
             ActionTypeEnum ate = tso.GetChildObjectColor();
             Vector3 scanningCenter = tso.GetPosition();
@@ -89,54 +81,16 @@ public class StarlingSkillScript : AbstractSkill
 
                         }
                         break;
-
-
                     }
                 case GameObjectTypeEnum.None:
                     {
                         Debug.Log("That tile was empty!");                   
                             return;
 
-                    }
-
-
-            }
-            StatisticChange();
-            Confirm();
+                }
         }
-    }
-    public override void ClickOnButton()
-    {
-       
-        if (CheckResources())
-        {
-            StarlingInstantiated = Instantiate(StarlingPrefab, activePlayer.Pos, Quaternion.identity);
-            
-            Cursor.visible = false; // Hide the cursor
-            
-        }
-    }
-   
-    public override void Confirm()
-    {
-
-
-
-        if (StarlingInstantiated != null)
-        {
-            Destroy(StarlingInstantiated);
-            StarlingInstantiated = null;
-        }
-        Cursor.visible = true;
-        BirdDestroyed?.Invoke(activePlayer);
         
-
-
-    }
-
-
-
-
-
-
+        }
+    
 }
+
