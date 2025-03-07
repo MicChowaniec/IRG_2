@@ -15,16 +15,15 @@ MonoBehaviour:
   id: 1
   biomass: 10
   protein: 10
-  water: 10
+  water: 8
   waterLvl: 0
-  PurpleLvl: 2
-  BlueLvl: 2
-  GreenLvl: 2
-  YellowLvl: 2
-  OrangeLvl: 2
-  RedLvl: 2
+  PurpleLvl: 1
+  BlueLvl: 1
+  GreenLvl: 1
+  YellowLvl: 1
+  OrangeLvl: 1
+  RedLvl: 1
   energy: 10
-  starlings: 1
   soulLvl: 1
   eyes: 2
   burningLvl: 0
@@ -42,4 +41,4 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 1a0af5b6ecec2ab42b912990707702e1, type: 2}
   skills: []
   cards:
-  - {fileID: 11400000, guid: 2e596fb0c2120ca418dc89d667d9151d, type: 2}
+  - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

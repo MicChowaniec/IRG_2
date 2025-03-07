@@ -110,16 +110,21 @@ public class ScoreKeeperScript : MonoBehaviour
     }
 
 
-    private void StartingParameters()
+    private void StartingParameters(bool spectatorMode)
     {
         PlayerManager pm = FindAnyObjectByType<PlayerManager>();
         foreach (Player p in pm.players)
         {
-            if(p.human==true)
+            if (p.human == true)
             {
                 humanPlayer = p;
                 Change();
             }
+            if (spectatorMode)
+            {
+                Change();
+            }
+                
         }
     }
     
@@ -190,6 +195,9 @@ public class ScoreKeeperScript : MonoBehaviour
         redGenom = humanPlayer.RedLvl;
         redGenomText.text = "R:" + redGenom;
 
+        biomass = humanPlayer.biomass;
+        biomassText.text = "Biomass: \n" + biomass;
+
         eyes = humanPlayer.eyes;
         eyesText.text = "Eyes: \n" + eyes;
 
@@ -204,11 +212,6 @@ public class ScoreKeeperScript : MonoBehaviour
         protein = humanPlayer.protein;
         proteinText.text = "Protein: \n" + protein + "/" + biomass;
         proteinTank.fillAmount = ChangeResource(protein);
-
-        biomass = humanPlayer.biomass;
-        biomassText.text = "Biomass: \n" + biomass;
-
-
 
     }
 

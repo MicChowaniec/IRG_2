@@ -8,6 +8,5 @@ public class Turn : ScriptableObject
     public string nameOfTurn;
     public string description;
     public ActionTypeEnum actionType;
-
-    
+    public SkillScriptableObject SpecialSkill;
 }

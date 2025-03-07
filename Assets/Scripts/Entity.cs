@@ -29,6 +29,7 @@ public class Entity : ScriptableObject, IDamagable
 
     public void Grow(int Addedprotein)
     {
+        int _biomass = biomass;
         Addedprotein *= GreenLvl;
         while (Addedprotein > 0)
         {
@@ -43,7 +44,7 @@ public class Entity : ScriptableObject, IDamagable
                 Addedprotein--;
             }
         }
-        GrowTheTree?.Invoke(Addedprotein);
+        GrowTheTree?.Invoke(_biomass-biomass);
     }
     public void CheckForDeath()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,7 @@ public class Day_Panel : MonoBehaviour
     public Player activePlayer;
     private List<GameObject> buttonsInstantiated = new();
     public GameObject EndTurnButton;
+    public Turn activeTurn;
 
 
 
@@ -29,10 +31,11 @@ public class Day_Panel : MonoBehaviour
         SunLevel.DayEvent += DisplayCanvas;
         SunLevel.NightEvent += HideCanvas;
         PlayerManager.ActivePlayerBroadcast += UpdateHuman;
+        TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
 
     }
 
-  
+
 
     private void OnDisable()
     {
@@ -41,6 +44,15 @@ public class Day_Panel : MonoBehaviour
         SunLevel.DayEvent -= DisplayCanvas;
         SunLevel.NightEvent -= HideCanvas;
         PlayerManager.ActivePlayerBroadcast -= UpdateHuman;
+        TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
+    }
+
+    private void UpdateTurn(Turn turn)
+    {
+        if(turn!=activeTurn)
+        {
+            activeTurn = turn;
+        }
     }
 
     private void ShowActionDescription(OnHoverSC onHoverSC)
@@ -124,9 +136,13 @@ public class Day_Panel : MonoBehaviour
     }
     private void UpdateHuman(Player player)
     {
-            foreach(var child in buttonsInstantiated)
-            {   
-            Destroy(child);
+        if (activePlayer != player)
+        {
+            
+
+            foreach (var child in buttonsInstantiated)
+            {
+                Destroy(child);
             }
             foreach (var s in player.cards)
             {
@@ -140,6 +156,7 @@ public class Day_Panel : MonoBehaviour
                     buttonsInstantiated.Add(Instantiate(s.skillNotRooted, ActionsBar.transform));
                 }
             }
+        }
     }
 
 

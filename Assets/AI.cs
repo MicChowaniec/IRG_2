@@ -1,9 +1,7 @@
-
 using UnityEngine;
 using System.Collections.Generic;
-
 using System;
-using JetBrains.Annotations;
+using System.Collections;
 
 public class AI : MonoBehaviour
 {
@@ -13,98 +11,130 @@ public class AI : MonoBehaviour
     public ActionManager actionManager;
     public PlayerManager playerManager;
     private SkillScriptableObject tempSkill;
-    private int rootingPressure;
-    public GameSettings gameSeetings;
-
+    public Player computerPlayer;
+    public GameObject computerPlayerObject;
+    public SkillScriptableObject rootSkill;
+    public SkillScriptableObject moveSkill;
+    public SkillScriptableObject photoSkill;
+    public TileScriptableObject tileScripttemp;
 
     public static event Action EndTurn;
-    public static event Action<Player, SkillScriptableObject> SendMeAField;
+    public static event Action<SkillScriptableObject> PickASkill;
     public static event Action Prepare;
-    public static event Action<OnHoverSC> Execute;
+    public static event Action<TileScriptableObject> Execute;
     public static event Action ExecuteSelf;
+
+    private float actionTimer = 0f;
+    private const float actionTimeout = 10f;
+    private bool actionTaken = false;
 
     private void OnEnable()
     {
-        
         TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
-        PlayerScript.AITurn += CalculateMove;
-        StarlingPrefabScript.FinallyReachedTheDestination += ExecuteAction;
-        StarlingSkillScript.AnimationObjectDestroyed += CalculateMove;
-        VisionSystem.FoundAttractiveField += ExecuteAction;
+        PlayerManager.ActivePlayerBroadcast += UpdatePlayer;
+        PlayerScript.AITurn += WaitForFields;
+        AbstractSkill.AIButtonClicked += PrepareAction;
     }
 
-   
     private void OnDisable()
     {
         TurnBasedSystem.CurrentTurnBroadcast -= UpdateTurn;
-        PlayerScript.AITurn -= CalculateMove;
-        StarlingPrefabScript.FinallyReachedTheDestination -= ExecuteAction;
-        StarlingSkillScript.AnimationObjectDestroyed -= CalculateMove;
-        VisionSystem.FoundAttractiveField -= ExecuteAction;
-
+        PlayerManager.ActivePlayerBroadcast -= UpdatePlayer;
+        PlayerScript.AITurn -= WaitForFields;
+        AbstractSkill.AIButtonClicked -= PrepareAction;
     }
-    private void FindPossibleMoves(Player computer)
+
+    private void Update()
     {
-        SkillList.Clear();
-        if (computer.human)
+        if (!computerPlayer.human && !actionTaken)
         {
-            return;
-        }
-
-        foreach (var card in computer.cards)
-        {
-            if (!computer.rooted)
+            actionTimer += Time.deltaTime;
+            if (actionTimer >= actionTimeout)
             {
-                SkillList.Add(card.skillNotRootedSC);
-
-            }
-            else if (computer.rooted)
-            {
-                SkillList.Add(card.skillRootedSC);
+                Debug.Log("AI took too long. Skipping turn.");
+                SkipTurn();
             }
         }
-   
-
     }
+
+    public void UpdatePlayer(Player player)
+    {
+        if (player != computerPlayer)
+        {
+            computerPlayer = player;
+        }
+    }
+
+    private void WaitForFields(Player player)
+    {
+        computerPlayer = player;
+        CalculateMove(computerPlayer);
+    }
+
     private void CalculateMove(Player computer)
     {
-       if(computer.human)
+        if (computer.human) return;
+        actionTimer = 0f;
+        actionTaken = false;
+
+        if (computerPlayerObject)
         {
-            return;
+            if (computerPlayerObject.TryGetComponent<PlayerScript>(out PlayerScript ps))
+            {
+                if (ps.tile.rootable && SkillList.Contains(rootSkill))
+                {
+                    tempSkill = rootSkill;
+                    PickASkill?.Invoke(rootSkill);
+                }
+                else
+                {
+                    tempSkill = moveSkill;
+                    PickASkill?.Invoke(moveSkill);
+                }
+                actionTaken = true;
+            }
         }
-       
+        else
+        {
+            computerPlayerObject = playerManager.GetGameObjectFromSO(computer);
+            CalculateMove(computer);
+        }
     }
 
-
-    private void ExecuteAction(TileScriptableObject tso )
+    public void PrepareAction()
     {
+        if (!computerPlayer.human)
+        {
+            Prepare?.Invoke();
+            actionTimer = 0f;
+            actionTaken = true;
 
-        Execute?.Invoke(tso);
-        Debug.Log(playerManager.activePlayer.itsName + " used " + tempSkill.label + " on " + tso.label + ", " + tso.GetChildObjectType() + ", " + tso.GetChildObjectColor());
-
+            if (tempSkill.self)
+            {
+                ExecuteSelf?.Invoke();
+            }
+            else
+            {
+                Execute?.Invoke(tileScripttemp);
+            }
+        }
     }
-    private void ExecuteAction()
-    {
-        ExecuteSelf?.Invoke();
-        Debug.Log(playerManager.activePlayer.itsName + " used " + tempSkill.label);
-    }
-
 
     private void UpdateTurn(Turn turn)
     {
         ActiveTurn = turn;
-        rootingPressure++;
-
+        actionTimer = 0f;
+        actionTaken = false;
     }
 
     private void SkipTurn()
     {
-        tempSkill = null;
-        EndTurn?.Invoke();
+        if (!computerPlayer.human)
+        {
+            tempSkill = null;
+            EndTurn?.Invoke();
+            actionTimer = 0f;
+            actionTaken = true;
+        }
     }
-
-
-
-
-
 }

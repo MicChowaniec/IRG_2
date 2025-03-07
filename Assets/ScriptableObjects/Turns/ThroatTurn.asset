@@ -15,4 +15,5 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 53de92de1d566d049a9a9dca827075d9, type: 3}
   nameOfTurn: ThroatTurn
   description: Water and Speach
-  actionType: 1
+  actionType: 2
+  SpecialSkill: {fileID: 0}

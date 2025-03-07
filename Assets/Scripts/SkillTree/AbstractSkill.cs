@@ -1,8 +1,8 @@
-using JetBrains.Annotations;
+
 using UnityEngine;
 using System;
-using UnityEditor;
-using Unity.VisualScripting;
+
+using System.Collections;
 
 public  class AbstractSkill : MonoBehaviour
 {
@@ -11,21 +11,25 @@ public  class AbstractSkill : MonoBehaviour
     public SkillScriptableObject skill;
     public Player activePlayer;
     public static event Action Change;
-    public OnHoverSC tso;
+    public TileScriptableObject tso;
     public VisionSystem visionSystem;
+
+    public bool ButtonClicked;
 
     public static event Action<Player> AnimationObjectDestroyed;
     public static event Action WhoIsTheActivePlayer;
     public static event Action DestroyTheButton;
+    public static event Action AIButtonClicked;
 
     public void OnEnable()
     {
+        ButtonClicked = false;
         AI.Prepare += ClickOnButton;
         AI.ExecuteSelf += Do;
         AI.Execute += Do;
+        
         PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast += CheckColorIncome;
-        
 
     }
     public void OnDisable()
@@ -34,6 +38,7 @@ public  class AbstractSkill : MonoBehaviour
         AI.Prepare -= ClickOnButton;
         AI.ExecuteSelf -= Do;
         AI.Execute -= Do;
+
         PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
     }
@@ -43,16 +48,16 @@ public  class AbstractSkill : MonoBehaviour
     /// Changing value of public value OnHoverSC tso by incoming onHoverSC Scriptable Object which is send by hovering the tile
     /// </summary>
     /// <param name="onHoverSC"></param>
-    public void CheckColorIncome(OnHoverSC onHoverSC)
+    public void CheckColorIncome(TileScriptableObject tileScriptableObject)
     {
-        tso = onHoverSC;
+        tso = tileScriptableObject;
     }
 
     public void StatisticChange()
 
     {
         activePlayer.biomass -= skill.biomass;
-        activePlayer.water -= skill.water;
+        activePlayer.WaterLoss(skill.water);
         activePlayer.protein -= skill.protein;
         activePlayer.energy -= skill.energy;
         activePlayer.eyes -= skill.eyes;
@@ -140,7 +145,7 @@ public  class AbstractSkill : MonoBehaviour
     /// Update activePlayer, and vision System
     /// </summary>
     /// <param name="player"></param>
-    protected void ActivePlayerUpdate(Player player)
+    public void ActivePlayerUpdate(Player player)
     {
         activePlayer = player;
         ClickOnButton();
@@ -161,60 +166,83 @@ public  class AbstractSkill : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        if (activePlayer)
-        {
-            if (activePlayer.human)
+        
+            if (activePlayer)
             {
-
-                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+                if (activePlayer.human)
                 {
 
-                    Confirm();
-
-                }
-                if (Input.GetMouseButtonDown(0))
-                {
-
-                    if (skill.self)
+                    if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
                     {
-                        Do();
+
+                        Confirm();
 
                     }
-                    else
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        Do(tso);
+                        if (CheckResources())
+                        {
+                            if (skill.self)
+                        {
+
+                            Do();
+                            StartCoroutine(WaitForNSeconds(2));
+
+                        }
+                        else
+                        {
+                            Do(tso);
+                            StartCoroutine(WaitForNSeconds(2));
+
+                        }
+
+
+
+
 
                     }
-
-                    StatisticChange();
-
-                    Confirm();
-
-                    DestroyTheButton?.Invoke();
-
+                        else if(!CheckResources())
+                        {
+                        //DisplayPopUp;
+                        }
+                    
+                    }
                 }
             }
-        }
-        else
-        {
-            WhoIsTheActivePlayer?.Invoke();
-        }
+            else
+            {
+                WhoIsTheActivePlayer?.Invoke();
+            }
+        
+    }
+
+    IEnumerator WaitForNSeconds(int seconds)
+    {
+
+        yield return new WaitForSeconds((float)seconds); // Waits for 1 second
+
     }
     /// <summary>
     /// Start the animation of skill
     /// </summary>
+    /// 
+
     public void ClickOnButton()
     {
-        if (CheckResources())
+        if (CheckResources()&&!ButtonClicked)
         {
-            if (animationObject!=null)
+
+            ButtonClicked = true;
+            if (animationObject != null)
             {
-               animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
-               if (activePlayer.human)
+                animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
+                if (activePlayer.human)
                 {
                     Cursor.visible = false; // Hide the cursor
                 }
             }
+            AIButtonClicked?.Invoke();
+
         }
     }
     /// <summary>
@@ -222,23 +250,26 @@ public  class AbstractSkill : MonoBehaviour
     /// </summary>
     public void Confirm()
     {
+        ButtonClicked = false;
         if (animationObjectInstantiated != null)
         {
             Destroy(animationObjectInstantiated);
             animationObjectInstantiated = null;
-            AnimationObjectDestroyed?.Invoke(activePlayer);
+            
         }
         Cursor.visible = true;
-        
-        
-        
     }
-   
+    public void DisableFunction()
+    {
+        DestroyTheButton?.Invoke();
+        AnimationObjectDestroyed?.Invoke(activePlayer);
+    }
+
     /// <summary>
     /// Function to ovverride, must consist Confirm() if it is done
     /// </summary>
     /// <param name="tso"></param>
-    public virtual void Do(OnHoverSC tso)
+    public virtual void Do(TileScriptableObject tso)
     {
 
     }

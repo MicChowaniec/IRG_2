@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73551e2395d02094f8b967334a9745d7, type: 3}
   m_Name: BasicPhotosynthesise
   m_EditorClassIdentifier: 
-  label: Photosynthesise
+  label: BasicPhotosynthesise
   description: 
   forStarlingText: 
   button: 0
-  sprite: {fileID: 21300000, guid: 01365a75944623c4ea577eb45ec0aa52, type: 3}
+  sprite: {fileID: 21300000, guid: 0a99032b0a4424f4fa3002436ef6d088, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}

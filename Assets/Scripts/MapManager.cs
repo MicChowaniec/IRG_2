@@ -44,24 +44,35 @@ public class MapManager : MonoBehaviour
     public TurnBasedSystem tbs;
     
     public GameObject assistant;
-    public static int centerId;
+    public int centerId;
     public static event Action MapGenerated;
+
+    public static event Action AllNeighboursCounted;
 
     public int startRootables;
     public static event Action<int[],int> CountedRootables;
 
+    private int neighboursAdded;
+    public void NeighboursAdded()
+    {
+        neighboursAdded++;
+        if (neighboursAdded == tiles.Count)
+        {
+            AllNeighboursCounted?.Invoke();
+        }
+    }
 
     /// <summary>
     /// 
     /// </summary>
-    private void OnEnable()
+    public void OnEnable()
     {
         PlayerManager.PlayersInstantiated += CountRootables;
     }
     /// <summary>
     /// 
     /// </summary>
-    private void OnDisable()
+    public void OnDisable()
     {
         PlayerManager.PlayersInstantiated -=CountRootables;
     }
@@ -82,7 +93,7 @@ public class MapManager : MonoBehaviour
         }
         else if (sizeOfMap==3)
         {
-            CreateTutorialMap();
+            //eateTutorialMap();
 
             assistant.SetActive(true);
             Debug.Log(sizeOfMap);
@@ -93,80 +104,80 @@ public class MapManager : MonoBehaviour
 
     // Update is called once per frame
   
-    public void CreateTutorialMap()
-    {
-        int id = 0;
-        Debug.Log("Map Creation Started");
-        for (int i = -3 + 1; i < 3; i++)
-        {
-            x = (float)i / 3 * scale;
+    //public void CreateTutorialMap()
+    //{
+    //    int id = 0;
+    //    Debug.Log("Map Creation Started");
+    //    for (int i = -3 + 1; i < 3; i++)
+    //    {
+    //        x = (float)i / 3 * scale;
 
-            for (int j = -3 + 1; j < (3 - Mathf.Abs(i)); j++)
-            {
+    //        for (int j = -3 + 1; j < (3 - Mathf.Abs(i)); j++)
+    //        {
 
-                z = ((float)j + Mathf.Abs((float)i) / 2) * Mathf.Sqrt(3.0f) / 4 * scale;
-                fieldPosition = new Vector3(x, y, z);
-                // Grass to the center star
-                if (i == 0)
-                {
+    //            z = ((float)j + Mathf.Abs((float)i) / 2) * Mathf.Sqrt(3.0f) / 4 * scale;
+    //            fieldPosition = new Vector3(x, y, z);
+    //            // Grass to the center star
+    //            if (i == 0)
+    //            {
                     
-                    InstatiateField(grassTileType, id, i, j);
-                }
-                else if (j == 0)
-                {
-                    InstatiateField(grassTileType, id, i, j);
-                }
-                else if (i == j)
-                {
-                    InstatiateField(grassTileType, id, i, j);
-                }
-                else if (i == -j)
-                {
-                    InstatiateField(grassTileType, id, i, j);
-                }
-                else if (i == 2 && j == -1)
-                {
-                    InstatiateField(waterTileType, id, i, j);
-                }
-                else if (i == 1 && j == -2)
-                {
-                    InstatiateField(grassTileType, id,i,j);
-                    InstantiateBush(bushPrefabs[2], id);
-                    tiles[id].childType=GameObjectTypeEnum.Bush;
+    //                InstatiateField(grassTileType, id, i, j);
+    //            }
+    //            else if (j == 0)
+    //            {
+    //                InstatiateField(grassTileType, id, i, j);
+    //            }
+    //            else if (i == j)
+    //            {
+    //                InstatiateField(grassTileType, id, i, j);
+    //            }
+    //            else if (i == -j)
+    //            {
+    //                InstatiateField(grassTileType, id, i, j);
+    //            }
+    //            else if (i == 2 && j == -1)
+    //            {
+    //                InstatiateField(waterTileType, id, i, j);
+    //            }
+    //            else if (i == 1 && j == -2)
+    //            {
+    //                InstatiateField(grassTileType, id,i,j);
+    //                InstantiateBush(bushPrefabs[2], id);
+    //                tiles[id].childType=GameObjectTypeEnum.Bush;
                     
-                }
-                else
-                {
-                    TileTypesEnum rtt = RandomTileType();
-                    if (rtt == TileTypesEnum.Rock)
-                    {
-                        InstatiateField(rockTileType, id, i, j);
+    //            }
+    //            else
+    //            {
+    //                TileTypesEnum rtt = RandomTileType();
+    //                if (rtt == TileTypesEnum.Rock)
+    //                {
+    //                    InstatiateField(rockTileType, id, i, j);
 
-                    }
-                    else if (rtt == TileTypesEnum.Sand)
-                    {
-                        InstatiateField(sandTileType, id, i, j);
-                    }
-                    else if (rtt == TileTypesEnum.Grass)
-                    {
-                        InstatiateField(grassTileType, id, i, j);
-                    }
-                    else if (rtt == TileTypesEnum.Water)
-                    {
-                        InstatiateField(waterTileType, id, i, j);
-                    }
+    //                }
+    //                else if (rtt == TileTypesEnum.Sand)
+    //                {
+    //                    InstatiateField(sandTileType, id, i, j);
+    //                }
+    //                else if (rtt == TileTypesEnum.Grass)
+    //                {
+    //                    InstatiateField(grassTileType, id, i, j);
+    //                }
+    //                else if (rtt == TileTypesEnum.Water)
+    //                {
+    //                    InstatiateField(waterTileType, id, i, j);
+    //                }
 
-                }
-                id++;
-            }
-        }
+    //            }
+    //            id++;
+    //        }
+    //    }
 
         
         
 
 
 
-    }
+    //}
     /// <summary>
     /// Creating map with given size
     /// </summary>
@@ -196,6 +207,8 @@ public class MapManager : MonoBehaviour
                         centerId = id;
                         tiles[id].childType = GameObjectTypeEnum.Tree;
                         tiles[id].childColor = ActionTypeEnum.None;
+                        tiles[id].rootable = false;
+                        tiles[id].passable = false;
                     }
 
                 }
@@ -271,6 +284,7 @@ public class MapManager : MonoBehaviour
                 id++;
             }
         }
+        
 
 
 
@@ -362,10 +376,14 @@ public class MapManager : MonoBehaviour
     /// Counting rootables fields on map
     /// </summary>
     /// <returns></returns>
-    public void CountRootables()
+    public void CountRootables(bool spectatorMode)
     {
+        foreach (var tile in tiles[centerId].neighbours)
+        {
+            tile.rootable = false;
+            tile.passable = true;
+        }
         int temp = 0;
-
         int purple = 0;
         int blue = 0;
         int green = 0;
@@ -374,7 +392,11 @@ public class MapManager : MonoBehaviour
         int red = 0;
 
         foreach (TileScriptableObject t in tiles.Values)
-        {
+        {   if(spectatorMode)
+            {
+                FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = tiles[centerId].representation.transform;
+                t.MakeVisibleForSpectator();
+            }
             if (startRootables == 0)
             {
                 if (t.rootable == true)
@@ -400,9 +422,6 @@ public class MapManager : MonoBehaviour
         startRootables = temp;
         int[] fields = { purple, blue, green, yellow, red, orange };
         CountedRootables?.Invoke(fields,startRootables);
-
-
-
 
 
     }

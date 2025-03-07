@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
-using UnityEditor;
+
 
 public class StarlingSkillScript : AbstractSkill
 {
@@ -13,84 +11,85 @@ public class StarlingSkillScript : AbstractSkill
 
     
 
-    public override void Do(OnHoverSC tso)
+    public override void Do(TileScriptableObject tso)
     {
+      
         Debug.Log("Starting Doing Skill");
       
             GameObjectTypeEnum gote = tso.GetChildObjectType();
             ActionTypeEnum ate = tso.GetChildObjectColor();
             Vector3 scanningCenter = tso.GetPosition();
             Debug.Log(gote + ", " + ate);
-            switch (gote)
-            {
-                case GameObjectTypeEnum.Water:
+        switch (gote)
+        {
+            case GameObjectTypeEnum.Water:
+                {
+                    activePlayer.Grow(2);
+
+                    Debug.Log("Fish Eaten");
+
+                    break;
+                }
+            case GameObjectTypeEnum.Bush:
+                {
+
+                    activePlayer.AddGenom(ate, 1);
+                    activePlayer.Grow(1);
+                    Debug.Log("Genom Collected: " + ate);
+
+                    break;
+
+                }
+            case GameObjectTypeEnum.Rock:
+                {
+                    SetNest?.Invoke(activePlayer, scanningCenter, 3);
+                    Debug.Log("Nest Set");
+                    break;
+                }
+            case GameObjectTypeEnum.Tree:
+                {
+                    if (tso.GetChildObjectColor() != ActionTypeEnum.None)
                     {
-                        activePlayer.Grow(2);
-
-                        Debug.Log("Fish Eaten");
-
-                        break;
+                        SetNest?.Invoke(activePlayer, scanningCenter, 3);
                     }
-                case GameObjectTypeEnum.Bush:
+                    else
                     {
-
                         activePlayer.AddGenom(ate, 1);
                         activePlayer.Grow(1);
                         Debug.Log("Genom Collected: " + ate);
-
-                        break;
-
                     }
-                case GameObjectTypeEnum.Rock:
-                    {
-                        SetNest?.Invoke(activePlayer, scanningCenter, 3);
-                        Debug.Log("Nest Set");
-                        break;
-                    }
-                case GameObjectTypeEnum.Tree:
-                    {
-                        if (tso.GetChildObjectColor() != ActionTypeEnum.None)
-                        {
-                            SetNest?.Invoke(activePlayer, scanningCenter, 3);
-                        }
-                        else
-                        {
-                            activePlayer.AddGenom(ate, 1);
-                            activePlayer.Grow(1);
-                            Debug.Log("Genom Collected: " + ate);
-                        }
-                        break;
-                    }
-                case GameObjectTypeEnum.Player:
-                    {
-                        Player target = tso.GetStander();
-                        if (target != activePlayer)
-                        {
-                            if (target.eyes >= 1)
-                            {
-                                target.eyes--;
-                                Debug.Log("Player: " + ate.ToString()+" blinded.");
-                            }
-
-                        }
-                        else
-                        {
-                            target.eyes++;
-                            UpdateVision?.Invoke(activePlayer);
-                            Debug.Log("You have got an additional eye");
-
-                        }
-                        break;
-                    }
-                case GameObjectTypeEnum.None:
-                    {
-                        Debug.Log("That tile was empty!");                   
-                            return;
-
+                    break;
                 }
+            case GameObjectTypeEnum.Player:
+                {
+                    Player target = tso.GetStander();
+                    if (target != activePlayer)
+                    {
+                        if (target.eyes >= 1)
+                        {
+                            target.eyes--;
+                            Debug.Log("Player: " + ate.ToString() + " blinded.");
+                        }
+
+                    }
+                    else
+                    {
+                        target.eyes++;
+                        UpdateVision?.Invoke(activePlayer);
+                        Debug.Log("You have got an additional eye");
+
+                    }
+                    break;
+                }
+
         }
+        StatisticChange();
+
+        Confirm();
         
-        }
-    
+        DisableFunction();
+
+    }
+
 }
 

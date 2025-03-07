@@ -15,16 +15,15 @@ MonoBehaviour:
   id: 5
   biomass: 10
   protein: 10
-  water: 10
+  water: 8
   waterLvl: 0
-  PurpleLvl: 2
-  BlueLvl: 2
-  GreenLvl: 2
-  YellowLvl: 2
-  OrangeLvl: 2
-  RedLvl: 2
+  PurpleLvl: 1
+  BlueLvl: 1
+  GreenLvl: 1
+  YellowLvl: 1
+  OrangeLvl: 1
+  RedLvl: 1
   energy: 10
-  starlings: 1
   soulLvl: 1
   eyes: 2
   burningLvl: 0

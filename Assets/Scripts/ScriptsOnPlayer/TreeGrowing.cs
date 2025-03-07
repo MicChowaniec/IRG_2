@@ -17,7 +17,7 @@ public class TreeGrowing : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        PlayerManager.ActivePlayerBroadcast += UpdatePlayer;
         Entity.GrowTheTree += OnSizeChange;
         scale = new Vector3(0.05f, 0.05f, 0.05f);
         size = 1;
@@ -26,6 +26,7 @@ public class TreeGrowing : MonoBehaviour
 
     private void OnDisable()
     {
+        PlayerManager.ActivePlayerBroadcast -= UpdatePlayer;
         Entity.GrowTheTree -= OnSizeChange;
     }
 
@@ -70,5 +71,12 @@ public class TreeGrowing : MonoBehaviour
         sizeChangeCoroutine = null;
         GrowingEnded?.Invoke();
 
+    }
+    public void UpdatePlayer(Player player)
+    {
+        if(activePlayer!=player)
+        {
+            activePlayer = player;
+        }
     }
 }

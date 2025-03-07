@@ -43,7 +43,7 @@ public class SunLevel : MonoBehaviour
     private void SunSet()
     {
         solarPointer = -90;
-        NightEvent?.Invoke();
+        //NightEvent?.Invoke();
 
         Light.color = new Color(0, 0.3f, 0.6f, 1);
         

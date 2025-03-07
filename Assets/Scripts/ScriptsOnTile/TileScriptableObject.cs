@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class TileScriptableObject : OnHoverSC
     public ActionTypeEnum childColor;
     public int value;
 
+   
     public List<TileScriptableObject> neighbours = new();
 
     public override string AskForDetails()
@@ -63,6 +65,14 @@ public class TileScriptableObject : OnHoverSC
     public void SetStander(Player player)
     {
         stander = player;
+        if (player != null)
+        {
+            childType = GameObjectTypeEnum.Player;
+        }
+        else
+        {
+            childType = GameObjectTypeEnum.None;
+        }
     }
     public override Player GetOwner()
     {
@@ -75,5 +85,10 @@ public class TileScriptableObject : OnHoverSC
     public void EstimateValue(int i)
     {
         value += i;
+    }
+
+    public void MakeVisibleForSpectator()
+    {
+        representation.layer = 6;
     }
 }

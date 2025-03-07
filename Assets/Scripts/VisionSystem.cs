@@ -30,10 +30,10 @@ public class VisionSystem : MonoBehaviour
         }
         PlayerManager.PlayersInstantiated += UpdateTheVision;
         PlayerManager.ActivePlayerBroadcast += UpdateTheVision;
-        AI.SendMeAField += FindAttractiveField;
+
     }
 
-    private void UpdateTheVision()
+    private void UpdateTheVision(bool spectatorMode)
     {
         ScanForVisible(owner, transform.position, owner.eyes);
     }
@@ -50,7 +50,7 @@ public class VisionSystem : MonoBehaviour
         StarlingSkillScript.UpdateVision -= UpdateTheVision;
         StarlingSkillScript.SetNest -= ScanForVisible;
         PlayerManager.PlayersInstantiated -= UpdateTheVision;
-        AI.SendMeAField -= FindAttractiveField;
+
     }
 
 

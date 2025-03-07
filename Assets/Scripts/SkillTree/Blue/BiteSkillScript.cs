@@ -4,7 +4,7 @@ public class BiteSkillScript : AbstractSkill
 {
 
 
-	public override void Do(OnHoverSC onHoverSC)
+	public override void Do(TileScriptableObject onHoverSC)
 	{
 		if (tso!=null)
 		{

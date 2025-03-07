@@ -6,6 +6,7 @@ using UnityEditor;
 
 public class PlayerManager : MonoBehaviour
 {
+    public bool SpectatorMode;
     public Player[] players;
     public GameObject ActionBar;
 
@@ -13,19 +14,21 @@ public class PlayerManager : MonoBehaviour
     private int activePlayerIndex=-1;
 
     public GameObject[] playerInstances;
+    public Transform[] playerTransforms;
 
 
     public static event Action<Player> ActivePlayerBroadcast;
     public static event Action ChangePhase;
-    public static event Action PlayersInstantiated;
+    public static event Action<bool> PlayersInstantiated;
 
     public void OnEnable()
     {
-        EndTurn.EndTurnEvent += ChangePlayer;
-
+        
         MapManager.MapGenerated += AllocatePlayers;
         AI.EndTurn += ChangePlayer;
         AbstractSkill.WhoIsTheActivePlayer += BroadcastPlayer;
+        EndTurn.EndTurnEvent += ChangePlayer;
+
 
 
     }
@@ -54,21 +57,30 @@ public class PlayerManager : MonoBehaviour
 
         // Initialize the array with the correct size
         playerInstances = new GameObject[players.Length];
-
+        playerTransforms = new Transform[players.Length];
         int i = 0;
+        bool humanExist = false;
         foreach (Player p in players)
         {
+
             p.Reset();
 
             GameObject player = Instantiate(p.Prefab, p.Pos, p.Rot);
             player.name = p.name;
             if (p.human)
             {
+                humanExist = true;
                 FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = player.transform;
             }
             playerInstances[i] = player; // Assign instantiated player
+            playerTransforms[i] = player.GetComponent<Transform>();
             i++;
         }
+        if(!humanExist)
+        {
+            SpectatorMode = true;
+        }
+
 
         // Unsubscribe from MapGenerated event to prevent multiple allocations
         MapManager.MapGenerated -= AllocatePlayers;
@@ -77,11 +89,11 @@ public class PlayerManager : MonoBehaviour
         ChangePlayer();
 
         // Notify that players have been instantiated
-        PlayersInstantiated?.Invoke();
+        PlayersInstantiated?.Invoke(SpectatorMode);
     }
     public Transform GetTransformFromSO(Player player)
     {
-        return playerInstances[player.id].GetComponent<Transform>();
+        return playerTransforms[player.id];
     }
     public GameObject GetGameObjectFromSO(Player player)
     {

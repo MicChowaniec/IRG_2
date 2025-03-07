@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
 
     public Player player;
     public Animator animator;
-    public readonly TileScriptableObject tile;
+    public TileScriptableObject tile;
     private int sunLvl;
     private int diseaseLvl;
     public static event Action FinishTurn;
@@ -63,7 +63,6 @@ public class PlayerScript : MonoBehaviour
         
         transform.position = player.StartPos;
         this.transform.rotation = player.StartRot;
-        CheckPosition();
         animator = GetComponent<Animator>();
         animator.SetTrigger("Idle");
         if (player.human==true)
@@ -72,33 +71,8 @@ public class PlayerScript : MonoBehaviour
             scc.objectToCenterOn = transform;
         }
     }
+  
 
-    public void CheckPosition()
-    {
-        SearchForTileWithRaycast();
-    }
-
-    public void SearchForTileWithRaycast()
-    {
-        Vector3 playerPosition = transform.position;
-
-        if (Physics.Raycast(playerPosition, Vector3.down, out RaycastHit hit) && hit.collider != null)
-        {
-            Transform parentTransform = hit.collider.transform;
-
-            if (parentTransform != null && parentTransform.TryGetComponent<TileScript>(out TileScript tile))
-            {
-                Debug.Log($"{player.itsName} is standing on tile: {tile.name}");
-
-                tile.TSO.SetStander(player);
-
-                // RememberScaleBeforeParentChange
-                Vector3 tempScale = transform.localScale;
-                transform.parent = tile.transform;
-                transform.localScale = tempScale;
-            }
-        }
-    }
 
     public void UpdatePosition()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73551e2395d02094f8b967334a9745d7, type: 3}
   m_Name: MoveSkillSO
   m_EditorClassIdentifier: 
-  label: 
+  label: Move
   description: 
   forStarlingText: 
   button: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   ButtonPrefab: {fileID: 2648954108819363694, guid: 91c22e63bedab134aa376f55a8a3ba5e, type: 3}
   biomass: 0
   water: 1
-  energy: 6
+  energy: 3
   protein: 0
   resistance: 0
   eyes: 0

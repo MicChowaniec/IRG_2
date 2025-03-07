@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73551e2395d02094f8b967334a9745d7, type: 3}
+  m_Name: RootSkillSO
+  m_EditorClassIdentifier: 
+  label: 
+  description: 
+  forStarlingText: 
+  button: 0
+  sprite: {fileID: 21300000, guid: 4391aed3235d00d4eb9b1993cc618b25, type: 3}
+  stander: {fileID: 0}
+  owner: {fileID: 0}
+  treeSO: {fileID: 0}
+  actionType: 0
+  RootedSkill: 0
+  ButtonPrefab: {fileID: 0}
+  biomass: 0
+  water: 0
+  energy: 0
+  protein: 0
+  resistance: 0
+  eyes: 0
+  range: 0
+  self: 1
+  purplePassiveDescription: 
+  bluePassiveDescription: 
+  greenPassiveDescription: 
+  yellowPassiveDescription: 
+  orangePassiveDescription: 
+  redPassiveDescription: 
+  purplePassive: 0
+  bluePassive: 0
+  greenPassive: 0
+  yellowPassive: 0
+  orangePassive: 0
+  redPassive: 0

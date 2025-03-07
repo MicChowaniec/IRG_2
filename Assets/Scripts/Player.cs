@@ -24,12 +24,12 @@ public class Player : Entity
         soulLvl = 1;
         eyes = 2;
       
-        PurpleLvl = 0;
-        BlueLvl = 0;
-        GreenLvl = 0;
-        YellowLvl = 0;
-        OrangeLvl =0;
-        RedLvl = 0;
+        PurpleLvl = 1;
+        BlueLvl = 1;
+        GreenLvl = 1;
+        YellowLvl = 1;
+        OrangeLvl =1;
+        RedLvl = 1;
 
     }
     public int energy;
