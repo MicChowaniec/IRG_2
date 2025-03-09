@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 106127206316501831}
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
+  - component: {fileID: -5505231925920004999}
+  - component: {fileID: -5295331727170069064}
   m_Layer: 5
   m_Name: MoveButton
   m_TagString: Untagged
@@ -120,3 +122,38 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-5505231925920004999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648954108819363694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daee9770e15e90d4cb9fdc239ca1d126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationObject: {fileID: 0}
+  animationObjectInstantiated: {fileID: 0}
+  skill: {fileID: 11400000, guid: ca9bc8cd4dcac74468a2e97d15c0f32c, type: 2}
+  activePlayer: {fileID: 0}
+  tso: {fileID: 0}
+  visionSystem: {fileID: 0}
+  activePlayerObject: {fileID: 0}
+  tileWherePlayerStands: {fileID: 0}
+  ButtonClicked: 0
+--- !u!114 &-5295331727170069064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648954108819363694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad557b00bf3b8a4e915c202f9bad91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHoverSC: {fileID: 11400000, guid: ca9bc8cd4dcac74468a2e97d15c0f32c, type: 2}
+  litMaterial: {fileID: 0}

@@ -11,9 +11,12 @@ public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragH
     public GameObject holder;
     public PlayerManager playerManager;
     public Player activePlayer;
+    public GameObject playerGameObject;
+    public TileScriptableObject tileWherePlayerStands;
 
     public static event Action<SkillScriptableObject> SkillListenerActivate;
 
+    
     public void Start()
     {
         playerManager = FindAnyObjectByType<PlayerManager>(); 
@@ -21,19 +24,11 @@ public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragH
         Button btn = this.GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
         activePlayer = playerManager.activePlayer;
+        playerGameObject = playerManager.GetGameObjectFromSO(activePlayer);
+        tileWherePlayerStands = playerGameObject.GetComponent<PlayerScript>().tile;
 
     }
-    public void Update()
-    {
-        if(activePlayer.human)
-        {
-            if(!CheckResources())
-            {
-                this.GetComponent<Button>().interactable = false;
-            }
-        }
-        
-    }
+   
     public bool CheckResources()
 
     {
@@ -106,11 +101,16 @@ public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragH
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalPosition = transform.position;
+        if (activePlayer.energy < 6)
+        { return; }
+
+            originalPosition = transform.position;
+        
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        
         if (eventData != null)
         {
             transform.position = originalPosition;
@@ -119,6 +119,8 @@ public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragH
     }
     public void OnDrag(PointerEventData eventData)
     {
+        if (activePlayer.energy < 6)
+        { return; }
         if (eventData != null)
         {
             transform.position = Input.mousePosition;

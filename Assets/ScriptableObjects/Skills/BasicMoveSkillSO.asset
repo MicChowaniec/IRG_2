@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: BasicMoveSkillSO
   m_EditorClassIdentifier: 
   label: BasicMovement
-  description: 
+  description: 'Drag Skill Button Here to Move:
+
+    Cost: 6 energy, 1 water.
+
+    It
+    gives you ability to move 1 additional field'
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: b170889b51fb44c43aea45c30e3d79d3, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 0
+  position: {x: 0, y: 0, z: 0}
   actionType: 0
   RootedSkill: 0
   ButtonPrefab: {fileID: 0}

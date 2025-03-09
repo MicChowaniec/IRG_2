@@ -2,10 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using System;
-using JetBrains.Annotations;
-using UnityEditor;
-using Unity.VisualScripting;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 using System.Collections;
 
 public class AI : MonoBehaviour
@@ -23,6 +20,7 @@ public class AI : MonoBehaviour
     public SkillScriptableObject rootSkill;
     public SkillScriptableObject moveSkill;
     public SkillScriptableObject photoSkill;
+    public SkillScriptableObject waterSkill;
 
     public TileScriptableObject tileScripttemp;
 
@@ -45,7 +43,7 @@ public class AI : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast += UpdatePlayer;
         AbstractSkill.AnimationObjectDestroyed += SkipTurn;
         AbstractSkill.AIButtonClicked += PrepareAction;
-        
+
     }
 
 
@@ -73,7 +71,7 @@ public class AI : MonoBehaviour
         }
 
     }
-  
+
     private void FindPossibleMoves(Player computer)
     {
         SkillList.Clear();
@@ -96,7 +94,7 @@ public class AI : MonoBehaviour
         }
         SkillList.Add(ActiveTurn.SpecialSkill);
     }
-    private  IEnumerator CalculateMoveCoroutine(Player player)
+    private IEnumerator CalculateMoveCoroutine(Player player)
     {
         yield return new WaitForSeconds(1);
         CalculateMove(player);
@@ -104,7 +102,7 @@ public class AI : MonoBehaviour
     }
     private void CalculateMove(Player computer)
     {
-       
+
         Debug.Log("Started Calculating Move");
         FindPossibleMoves(computer);
         if (computer.human)
@@ -123,7 +121,8 @@ public class AI : MonoBehaviour
 
                     if (ps != null)
                     {
-                        if (ps.tile.rootable == true)
+                        tileScripttemp = ps.tile;
+                        if (tileScripttemp.rootable)
                         {
                             Debug.Log("Also found if I am standing on rootable");
                             if (SkillList.Contains(rootSkill))
@@ -131,47 +130,53 @@ public class AI : MonoBehaviour
                                 tempSkill = rootSkill;
                                 PickASkill?.Invoke(rootSkill);
 
-
-                                
-                                return;
-                            }
-                            else
-                            {
-                                
-                                tempSkill = photoSkill;
-                                PickASkill?.Invoke(photoSkill);
-
                                 return;
                             }
                         }
-
                         else
                         {
-                            Debug.Log("I found that I am not standing on rootable");
-
-                            foreach (var field in computerPlayerObject.GetComponent<PlayerScript>().tile.neighbours)
+                            if (computer.water < 5)
                             {
-                                if (field.stander == null && field.passable)
+                                
+                                foreach (var tileO in tileScripttemp.neighbours)
                                 {
-                                    tileScripttemp = field;
-                                    tempSkill = moveSkill;
-                                    PickASkill?.Invoke(moveSkill);
+                                    if (tileO.gote == GameObjectTypeEnum.Water)
+                                    {
+                                        tempSkill = waterSkill;
+                                        PickASkill?.Invoke(waterSkill);
 
-                                    return;
+                                        return;
+                                    }
                                 }
                             }
+                            tempSkill = photoSkill;
+                            PickASkill?.Invoke(photoSkill);
 
+                            return;
                         }
                     }
 
-                }
-                else
-                {
-                    Debug.Log("I don't see my object position");
-                    return;
+                    else
+                    {
+                        Debug.Log("I found that I am not standing on rootable");
+
+                        foreach (var field in computerPlayerObject.GetComponent<PlayerScript>().tile.neighbours)
+                        {
+                            if (field.stander == null && field.passable)
+                            {
+                                tileScripttemp = field;
+                                tempSkill = moveSkill;
+                                PickASkill?.Invoke(moveSkill);
+
+                                return;
+                            }
+                        }
+
+                    }
                 }
 
             }
+              
             else
             {
                 Debug.Log("I don't see my object");

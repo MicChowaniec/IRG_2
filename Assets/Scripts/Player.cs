@@ -22,7 +22,14 @@ public class Player : Entity
         biomass = 10;
         protein = 10;
         soulLvl = 1;
-        eyes = 2;
+        if (itsName == "Purple")
+        {
+            eyes = 3;
+        }
+        else
+        {
+            eyes = 2;
+        }
       
         PurpleLvl = 1;
         BlueLvl = 1;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6543712998199268116}
   - component: {fileID: 587492219946849951}
   - component: {fileID: 167202851340680570}
+  - component: {fileID: -2944993684139602422}
   m_Layer: 5
   m_Name: WaterButton
   m_TagString: Untagged
@@ -135,3 +136,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onHoverSC: {fileID: 11400000, guid: 83f0514f2c2cbb54eb3686fcd4cca816, type: 2}
   litMaterial: {fileID: 0}
+--- !u!114 &-2944993684139602422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2648954108819363694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df732e69f3ea3484b89b8dfbd9c77791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

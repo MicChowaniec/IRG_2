@@ -13,13 +13,22 @@ MonoBehaviour:
   m_Name: BasicPhotosynthesise
   m_EditorClassIdentifier: 
   label: BasicPhotosynthesise
-  description: 
+  description: 'Drag Skill Button Here to Photosynthetise:
+
+    Cost: 6 energy, 1
+    water.
+
+    It gives you Proteins, Which can convert To Biomass if Proteins are
+    full'
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: 0a99032b0a4424f4fa3002436ef6d088, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 0
+  position: {x: 0, y: 0, z: 0}
   actionType: 0
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 5e05392b41571df4b8ce756e89af7d62, type: 3}

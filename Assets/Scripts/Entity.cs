@@ -13,7 +13,7 @@ public class Entity : ScriptableObject, IDamagable
     public int biomass;
     public int protein;
     public int water;
-    public int waterLvl;
+
 
     public int PurpleLvl;
     public int BlueLvl;

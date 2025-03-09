@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: WaterSkillSO
   m_EditorClassIdentifier: 
   label: 
-  description: 'Refill
+  description: 'Refill Cost: 3 energy, 3 protein
 
-    Cost: 3 energy, 3 protein
+    Refill the water resource from
+    nearby water tile.
 
-    Refill The Water from
-    nearby water tile'
+    You will receive water equal to max, which is your biomass
+    value'
   forStarlingText: 
   button: 0
   sprite: {fileID: 0}

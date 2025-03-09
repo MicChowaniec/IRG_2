@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RootSkillSO
   m_EditorClassIdentifier: 
   label: 
-  description: 'Root, Cost: 3 Energy, 1 Water
+  description: 'Root. Cost: 3 Energy, 1 Water
 
     Cannot root next to other tree,
 

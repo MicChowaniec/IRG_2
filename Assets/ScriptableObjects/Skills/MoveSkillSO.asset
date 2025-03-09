@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: MoveSkillSO
   m_EditorClassIdentifier: 
   label: Move
-  description: 
+  description: 'Cost 3 Energy, 1 Water
+
+    Move to adjanced passable field.
+
+    Click
+    on field to confirm.'
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: 5305bf1ff189cdd41af897048ac7bba3, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 0
+  position: {x: 0, y: 0, z: 0}
   actionType: 4
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 91c22e63bedab134aa376f55a8a3ba5e, type: 3}
