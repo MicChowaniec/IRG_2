@@ -55,11 +55,11 @@ public class Day_Panel : MonoBehaviour
         }
     }
 
-    private void ShowActionDescription(OnHoverSC onHoverSC)
+    private void ShowActionDescription(SkillScriptableObject skillScriptableObject)
     {
 
         ActionDescription.SetActive(true);
-        ActionDescriptionText.text = onHoverSC.AskForDetails();
+        ActionDescriptionText.text = skillScriptableObject.Descripton();
     }
 
     private void HideActionDescription()
@@ -119,10 +119,7 @@ public class Day_Panel : MonoBehaviour
         rectTransform.anchoredPosition = end; // Ensure the final position is set
         isAnimating = false;
     }
-    private void AttachSkills()
-    {
 
-    }
     private void OnPlayerChange(Player player)
     {
         if (player != activePlayer)

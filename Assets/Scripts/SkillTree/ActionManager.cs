@@ -8,7 +8,11 @@ using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
+    public PlayerManager playerManager;
     public Player activePlayer;
+    public GameObject playerGameObject;
+    public TileScriptableObject tilewherePlayerStands;
+
     public List<GameObject> purpleSkills = new();
     public List<GameObject> blueSkills = new();
     public List<GameObject> greenSkills = new();
@@ -42,6 +46,7 @@ public class ActionManager : MonoBehaviour
         AI.PickASkill += ActivateSkillListener;
 
 
+
     }
     private void OnDisable()
     {
@@ -63,10 +68,13 @@ public class ActionManager : MonoBehaviour
 
     private void PlayerChange(Player player)
     {
+        ResetListeners();
+        Debug.Log("Listeners Reset");
         if (activePlayer != player)
         {
             activePlayer = player;
-            ResetListeners();
+            playerGameObject = playerManager.GetGameObjectFromSO(player);
+            
         }
 
     }
@@ -109,10 +117,13 @@ public class ActionManager : MonoBehaviour
                         Debug.Log("Found " + obj.name);
                         if (!obj.activeSelf)
                         {
-                            StartCoroutine(WaitOneSecond());
+                            
                             Debug.Log("Activated " + obj.name);
                             obj.SetActive(true);
-
+                            abstractSkill.ActivePlayerUpdate(activePlayer);
+                            abstractSkill.ActivePlayerObjectUpdate(playerGameObject);
+                            tilewherePlayerStands= playerGameObject.GetComponent<PlayerScript>().tile;
+                            abstractSkill.TileWherePlayerStandsUpdate(tilewherePlayerStands);
                             return;
 
                         }

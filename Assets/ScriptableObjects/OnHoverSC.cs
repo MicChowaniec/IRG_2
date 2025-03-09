@@ -1,3 +1,4 @@
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 
@@ -13,46 +14,44 @@ public abstract class OnHoverSC : ScriptableObject
     public Player stander;
     public Player owner;
     public TreeSO treeSO;
-    public virtual string AskForDetails()
+    public GameObjectTypeEnum gote;
+    public ActionTypeEnum ate;
+    public Vector3 position;
+
+    public virtual string Label()
     {
         return "";
     }
-    public virtual GameObjectTypeEnum GetChildObjectType()
+    public virtual string Descripton()
     {
-        return GameObjectTypeEnum.None;
+        return "";
+    }
+
+    public GameObjectTypeEnum GetChildObjectType()
+    {
+        return gote;
 
     }
-    public virtual ActionTypeEnum GetChildObjectColor()
+    public ActionTypeEnum GetChildObjectColor()
     {
-        return ActionTypeEnum.None;
+        return ate;
     }
-    public virtual Vector3 GetPosition()
+    public Vector3 GetPosition()
     {
-        return Vector3.zero;
+        return position;
     }
-    public virtual Player GetStander()
+    public Player GetStander()
     {
-        return null;
+        
+        return stander;
     }
-    public virtual TreeSO GetStandingTree()
+    public TreeSO GetStandingTree()
     {
-        if (treeSO != null)
-        {
-            return treeSO;
-        }
-        else
-        {
-            return null;
-        }
+        return treeSO;
     }
-    public virtual Player GetOwner()
+    public Player GetOwner()
     {
-        if (owner != null)
         return owner;
-        else
-        {
-            return null;
-        }
     }
     
 

@@ -42,3 +42,4 @@ MonoBehaviour:
   skills: []
   cards:
   - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}
+  - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: RootSkillSO
   m_EditorClassIdentifier: 
   label: 
-  description: 
+  description: 'Root, Cost: 3 Energy, 1 Water
+
+    Cannot root next to other tree,
+
+    Cannot
+    root on rock.'
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: 4391aed3235d00d4eb9b1993cc618b25, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 0
+  position: {x: 0, y: 0, z: 0}
   actionType: 0
   RootedSkill: 0
   ButtonPrefab: {fileID: 0}
   biomass: 0
-  water: 0
-  energy: 0
+  water: 1
+  energy: 3
   protein: 0
   resistance: 0
   eyes: 0

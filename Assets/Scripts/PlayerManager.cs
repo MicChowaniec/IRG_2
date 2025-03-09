@@ -19,14 +19,13 @@ public class PlayerManager : MonoBehaviour
 
     public static event Action<Player> ActivePlayerBroadcast;
     public static event Action ChangePhase;
-    public static event Action<bool> PlayersInstantiated;
+    public static event Action PlayersInstantiated;
 
     public void OnEnable()
     {
         
         MapManager.MapGenerated += AllocatePlayers;
         AI.EndTurn += ChangePlayer;
-        AbstractSkill.WhoIsTheActivePlayer += BroadcastPlayer;
         EndTurn.EndTurnEvent += ChangePlayer;
 
 
@@ -38,8 +37,6 @@ public class PlayerManager : MonoBehaviour
         EndTurn.EndTurnEvent -=  ChangePlayer;
 
         MapManager.MapGenerated -= AllocatePlayers;
-        AI.EndTurn -= ChangePlayer;
-        AbstractSkill.WhoIsTheActivePlayer -= BroadcastPlayer;
 
     }
     /// <summary>
@@ -89,7 +86,7 @@ public class PlayerManager : MonoBehaviour
         ChangePlayer();
 
         // Notify that players have been instantiated
-        PlayersInstantiated?.Invoke(SpectatorMode);
+        PlayersInstantiated?.Invoke();
     }
     public Transform GetTransformFromSO(Player player)
     {

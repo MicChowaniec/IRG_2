@@ -9,6 +9,8 @@ public class ScoreKeeperScript : MonoBehaviour
 {
     public Player humanPlayer;
 
+    public string winner;
+
     public int eyes;
     public TextMeshProUGUI eyesText;
 
@@ -19,11 +21,6 @@ public class ScoreKeeperScript : MonoBehaviour
     public Image energyTank;
     public TextMeshProUGUI energyText;
     public int energy;
-
-    public Image starlingTank;
-    public TextMeshProUGUI starlingText;
-    public int starling;
-    public int maxStarling;
 
     public Image fireResistanceTank;
     public TextMeshProUGUI fireResistanceText;
@@ -110,7 +107,7 @@ public class ScoreKeeperScript : MonoBehaviour
     }
 
 
-    private void StartingParameters(bool spectatorMode)
+    private void StartingParameters()
     {
         PlayerManager pm = FindAnyObjectByType<PlayerManager>();
         foreach (Player p in pm.players)
@@ -120,17 +117,11 @@ public class ScoreKeeperScript : MonoBehaviour
                 humanPlayer = p;
                 Change();
             }
-            if (spectatorMode)
-            {
-                Change();
-            }
+           
                 
         }
     }
     
-
-
-
     private void SunLevelChange(int sunLevelChange)
     {
         sunLevel = sunLevelChange;
@@ -142,33 +133,54 @@ public class ScoreKeeperScript : MonoBehaviour
         sunLevelText.text = sunLevel.ToString();
     }
 
- 
 
     private void FieldsChange(int[] fieldsChange, int rootableFields)
     {
         int redFieldsChange = fieldsChange[5];
         redFields = redFieldsChange;
-        redFieldsText.text = redFieldsChange + "/" + rootableFields + " (" + ChangeResource(redFieldsChange, rootableFields) + "%)";
+        redFieldsText.text = redFieldsChange.ToString();
+
+        if (fieldsChange[5] == Mathf.Max(fieldsChange))
+        { winner = "RedPlayer"; }
+
 
         int orangeFieldsChange = fieldsChange[4];
         orangeFields = orangeFieldsChange;
-        redFieldsText.text =  orangeFieldsChange + "/" + rootableFields +" ("+ ChangeResource(orangeFieldsChange, rootableFields) + "%)";
-        
+        orangeFieldsText.text = orangeFieldsChange.ToString();
+
+        if (fieldsChange[4] == Mathf.Max(fieldsChange))
+        { winner = "OrangePlayer"; }
+
         int yellowFieldsChange = fieldsChange[3];
         yellowFields = yellowFieldsChange;
-        yellowFieldsText.text =  + yellowFieldsChange + "/" + rootableFields + " (" + ChangeResource(yellowFieldsChange, rootableFields) + "%)";
+        yellowFieldsText.text = yellowFieldsChange.ToString();
 
-        int greenFieldsChange =fieldsChange[2];
-        yellowFields = greenFieldsChange;
-        yellowFieldsText.text = + greenFieldsChange + "/" + rootableFields + " (" + ChangeResource(greenFieldsChange, rootableFields) + "%)";
+        if (fieldsChange[3] == Mathf.Max(fieldsChange))
+        { winner = "YellowPlayer"; }
+
+
+        int greenFieldsChange = fieldsChange[2];
+        greenFields = greenFieldsChange;
+        greenFieldsText.text = greenFieldsChange.ToString();
+
+        if (fieldsChange[2] == Mathf.Max(fieldsChange))
+        { winner = "GreenPlayer"; }
 
         int blueFieldsChange = fieldsChange[1];
         blueFields = blueFieldsChange;
-        blueFieldsText.text = +blueFieldsChange + "/" + rootableFields + " (" + ChangeResource(blueFieldsChange, rootableFields) + "%)";
+        blueFieldsText.text = blueFieldsChange.ToString();
+
+        if (fieldsChange[1] == Mathf.Max(fieldsChange))
+        { winner = "BluePlayer"; }
 
         int purpleFieldsChange = fieldsChange[0];
         purpleFields = purpleFieldsChange;
-        purpleFieldsText.text =  + purpleFieldsChange + "/" + rootableFields + "(" + ChangeResource(purpleFieldsChange, rootableFields) + "%)";
+        purpleFieldsText.text = purpleFieldsChange.ToString();
+
+        if (fieldsChange[0] == Mathf.Max(fieldsChange))
+        { winner = "PurplePlayer"; }
+
+
     }
     private float ChangeResource(int resourceChange)
     {
@@ -214,6 +226,11 @@ public class ScoreKeeperScript : MonoBehaviour
         proteinTank.fillAmount = ChangeResource(protein);
 
     }
+    public void Update()
+    {
+        Change();
+    }
+
 
 
 }

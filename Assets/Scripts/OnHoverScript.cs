@@ -62,6 +62,7 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         Debug.Log("ThisShouldBeInvoked");
         if (onHoverSC is TileScriptableObject)
         {
+            Debug.Log("This is TileScriptableObject");
             TileScriptableObject tileScriptableObject = (TileScriptableObject)onHoverSC;
             OnHoverBroadcast?.Invoke(tileScriptableObject);
         }
@@ -93,28 +94,21 @@ public class OnHoverScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (onHoverSC is TileScriptableObject tileScriptableObject)
+        if (onHoverSC == null)
         {
-            onHoverSC = tileScriptableObject;
-            OnHoverBroadcast?.Invoke(tileScriptableObject);
+            Debug.Log("OnHoverSC Null as FUCK");
+            return;
         }
-        if (onHoverSC is SkillScriptableObject skillScriptableObject)
+        Debug.Log("ThisShouldBeInvoked");
+        if (onHoverSC is SkillScriptableObject )
         {
+
+            Debug.Log("This is SkillScriptableObject");
+            SkillScriptableObject skillScriptableObject = (SkillScriptableObject)onHoverSC;
+            
             ShowSkillDescription?.Invoke(skillScriptableObject);
         }
 
     }
-    public void StartListeningForResponse()
-    {
-       
-    }
-
-    public void StopListeningForResponse(OnHoverSC eventData)
-    {
-        
-    }
-
-    
-
 
 }

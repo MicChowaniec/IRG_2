@@ -13,11 +13,12 @@ public  class AbstractSkill : MonoBehaviour
     public static event Action Change;
     public TileScriptableObject tso;
     public VisionSystem visionSystem;
+    public GameObject activePlayerObject;
+    public TileScriptableObject tileWherePlayerStands;
 
     public bool ButtonClicked;
 
     public static event Action<Player> AnimationObjectDestroyed;
-    public static event Action WhoIsTheActivePlayer;
     public static event Action DestroyTheButton;
     public static event Action AIButtonClicked;
 
@@ -41,9 +42,15 @@ public  class AbstractSkill : MonoBehaviour
 
         PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
+        Reset();
+
+    }
+    public void Reset()
+    {
+        activePlayer = null;
+        activePlayerObject  = null;
     }
 
-    
     /// <summary>
     /// Changing value of public value OnHoverSC tso by incoming onHoverSC Scriptable Object which is send by hovering the tile
     /// </summary>
@@ -139,7 +146,7 @@ public  class AbstractSkill : MonoBehaviour
         }
         return temp;
     }
-   
+
 
     /// <summary>
     /// Update activePlayer, and vision System
@@ -148,6 +155,19 @@ public  class AbstractSkill : MonoBehaviour
     public void ActivePlayerUpdate(Player player)
     {
         activePlayer = player;
+
+    }
+
+
+    public void ActivePlayerObjectUpdate(GameObject gameObject)
+    {
+        activePlayerObject = gameObject;
+
+    }
+
+    public void TileWherePlayerStandsUpdate(TileScriptableObject tso)
+    {
+        tileWherePlayerStands = tso;
         ClickOnButton();
     }
 
@@ -166,54 +186,40 @@ public  class AbstractSkill : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        
-            if (activePlayer)
+
+        if (activePlayer)
+        {
+            if (CheckResources())
             {
                 if (activePlayer.human)
                 {
 
-                    if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+                    if (skill.self)
                     {
 
-                        Confirm();
-
+                        Do();
                     }
-                    if (Input.GetMouseButtonDown(0))
+
+
+                    else
                     {
-                        if (CheckResources())
-                        {
-                            if (skill.self)
+                        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
                         {
 
-                            Do();
-                            StartCoroutine(WaitForNSeconds(2));
+                            Confirm();
+                            DisableFunction();
 
                         }
-                        else
+                        if (Input.GetMouseButtonDown(0))
                         {
+
                             Do(tso);
-                            StartCoroutine(WaitForNSeconds(2));
 
                         }
-
-
-
-
-
-                    }
-                        else if(!CheckResources())
-                        {
-                        //DisplayPopUp;
-                        }
-                    
                     }
                 }
             }
-            else
-            {
-                WhoIsTheActivePlayer?.Invoke();
-            }
-        
+        }       
     }
 
     IEnumerator WaitForNSeconds(int seconds)
@@ -229,6 +235,7 @@ public  class AbstractSkill : MonoBehaviour
 
     public void ClickOnButton()
     {
+        Debug.Log("ButtonClicked");
         if (CheckResources()&&!ButtonClicked)
         {
 
@@ -236,12 +243,18 @@ public  class AbstractSkill : MonoBehaviour
             if (animationObject != null)
             {
                 animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
-                if (activePlayer.human)
-                {
-                    Cursor.visible = false; // Hide the cursor
-                }
+
             }
-            AIButtonClicked?.Invoke();
+            if (activePlayer.human)
+            {
+                
+                    Cursor.visible = false; // Hide the cursor
+            }
+            else
+            {
+                AIButtonClicked?.Invoke();
+
+            }
 
         }
     }

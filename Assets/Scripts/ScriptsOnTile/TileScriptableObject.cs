@@ -19,9 +19,15 @@ public class TileScriptableObject : OnHoverSC
    
     public List<TileScriptableObject> neighbours = new();
 
-    public override string AskForDetails()
+    public override string Label()
     {
+        Debug.Log("StartedCreatingText");
         label = tileTypes.ToString();
+      
+        return label;
+    }
+    public override string Descripton()
+    {
         string standerStr = "";
         string ownerStr = "";
 
@@ -31,11 +37,8 @@ public class TileScriptableObject : OnHoverSC
         }
         if (owner != null)
         {
-            ownerStr=owner.itsName;
+            ownerStr = owner.itsName;
         }
-
-      
-       
         description =
         "Stander: " + standerStr +
         "\n Owner: " + ownerStr +
@@ -43,25 +46,11 @@ public class TileScriptableObject : OnHoverSC
         "\n Rootable: " + rootable.ToString() +
         "\n Object: " + childType.ToString();
 
-        button = false;
-        return description;
+        return description; ;
     }
-    public override GameObjectTypeEnum GetChildObjectType()
-    {
-        return childType;
-    }
-    public override ActionTypeEnum GetChildObjectColor()
-    {
-        return childColor;
-    }
-    public override Vector3 GetPosition()
-    {
-        return coordinates;
-    }
-    public override Player GetStander()
-    {
-        return stander;
-    }
+
+
+
     public void SetStander(Player player)
     {
         stander = player;
@@ -73,11 +62,14 @@ public class TileScriptableObject : OnHoverSC
         {
             childType = GameObjectTypeEnum.None;
         }
+        passable = false;
+
     }
-    public override Player GetOwner()
+    public void RemoveStander()
     {
-        return owner;
+        stander = null;
     }
+
     public void SetOwner(Player player)
     {
         owner = player;

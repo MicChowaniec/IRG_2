@@ -51,6 +51,13 @@ public class SkillScriptableObject : OnHoverSC
         }
         return temp;
         }
-
+    public override string Label()
+    {
+        return label;
+    }
+    public override string Descripton()
+    {
+        return description;
+    }
 
 }

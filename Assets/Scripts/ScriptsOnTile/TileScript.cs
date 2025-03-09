@@ -62,6 +62,7 @@ public class TileScript : MonoBehaviour
                     {
                         if (!TSO.neighbours.Contains(neighbour))
                         {
+                            Debug.Log("Neighbour Added");
                             TSO.neighbours.Add(neighbour);
                             
                         }

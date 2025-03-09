@@ -28,8 +28,8 @@ public class PopUpScript : MonoBehaviour
     {
         isMouseOver = true;
 
-        StopAllActiveCoroutines(); // Stop any existing coroutines
-        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(onHoverSC.label, onHoverSC.description));
+        StopAllActiveCoroutines(); // Stop any existing coroutine
+        displayCoroutine = StartCoroutine(DisplayPopUpWithDelay(onHoverSC.Label(), onHoverSC.Descripton()));
     }
 
     private IEnumerator DisplayPopUpWithDelay(string label, string description)
@@ -89,7 +89,9 @@ public class PopUpScript : MonoBehaviour
         isMouseOver = false; // Reset the flag
         Debug.Log("PopUp Closed");
     }
-
+    /// <summary>
+    /// Stopping all active coroutines in PopUpScript
+    /// </summary>
     private void StopAllActiveCoroutines()
     {
         if (displayCoroutine != null)

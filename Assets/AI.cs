@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+
 using System;
+using JetBrains.Annotations;
+using UnityEditor;
+using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Collections;
 
 public class AI : MonoBehaviour
@@ -11,50 +16,45 @@ public class AI : MonoBehaviour
     public ActionManager actionManager;
     public PlayerManager playerManager;
     private SkillScriptableObject tempSkill;
+    private int rootingPressure;
+    public GameSettings gameSeetings;
     public Player computerPlayer;
     public GameObject computerPlayerObject;
     public SkillScriptableObject rootSkill;
     public SkillScriptableObject moveSkill;
     public SkillScriptableObject photoSkill;
+
     public TileScriptableObject tileScripttemp;
 
+
     public static event Action EndTurn;
+    public static event Action<Player, SkillScriptableObject> SendMeAField;
     public static event Action<SkillScriptableObject> PickASkill;
     public static event Action Prepare;
     public static event Action<TileScriptableObject> Execute;
     public static event Action ExecuteSelf;
+    public static event Action AddNeighbours;
 
-    private float actionTimer = 0f;
-    private const float actionTimeout = 10f;
-    private bool actionTaken = false;
+    public bool allFieldsNeighbourized;
+
 
     private void OnEnable()
     {
+        allFieldsNeighbourized = false;
         TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
         PlayerManager.ActivePlayerBroadcast += UpdatePlayer;
-        PlayerScript.AITurn += WaitForFields;
+        AbstractSkill.AnimationObjectDestroyed += SkipTurn;
         AbstractSkill.AIButtonClicked += PrepareAction;
+        
     }
+
 
     private void OnDisable()
     {
         TurnBasedSystem.CurrentTurnBroadcast -= UpdateTurn;
         PlayerManager.ActivePlayerBroadcast -= UpdatePlayer;
-        PlayerScript.AITurn -= WaitForFields;
+        AbstractSkill.AnimationObjectDestroyed -= SkipTurn;
         AbstractSkill.AIButtonClicked -= PrepareAction;
-    }
-
-    private void Update()
-    {
-        if (!computerPlayer.human && !actionTaken)
-        {
-            actionTimer += Time.deltaTime;
-            if (actionTimer >= actionTimeout)
-            {
-                Debug.Log("AI took too long. Skipping turn.");
-                SkipTurn();
-            }
-        }
     }
 
     public void UpdatePlayer(Player player)
@@ -62,60 +62,150 @@ public class AI : MonoBehaviour
         if (player != computerPlayer)
         {
             computerPlayer = player;
+            if (!computerPlayer.human)
+            {
+                computerPlayerObject = playerManager.GetGameObjectFromSO(computerPlayer);
+                StartCoroutine(CalculateMoveCoroutine(player));
+            }
+
+
+
         }
-    }
 
-    private void WaitForFields(Player player)
+    }
+  
+    private void FindPossibleMoves(Player computer)
     {
-        computerPlayer = player;
-        CalculateMove(computerPlayer);
-    }
+        SkillList.Clear();
+        if (computer.human)
+        {
+            return;
+        }
 
+        foreach (var card in computer.cards)
+        {
+            if (!computer.rooted)
+            {
+                SkillList.Add(card.skillNotRootedSC);
+
+            }
+            else if (computer.rooted)
+            {
+                SkillList.Add(card.skillRootedSC);
+            }
+        }
+        SkillList.Add(ActiveTurn.SpecialSkill);
+    }
+    private  IEnumerator CalculateMoveCoroutine(Player player)
+    {
+        yield return new WaitForSeconds(1);
+        CalculateMove(player);
+
+    }
     private void CalculateMove(Player computer)
     {
-        if (computer.human) return;
-        actionTimer = 0f;
-        actionTaken = false;
-
-        if (computerPlayerObject)
+       
+        Debug.Log("Started Calculating Move");
+        FindPossibleMoves(computer);
+        if (computer.human)
         {
-            if (computerPlayerObject.TryGetComponent<PlayerScript>(out PlayerScript ps))
-            {
-                if (ps.tile.rootable && SkillList.Contains(rootSkill))
-                {
-                    tempSkill = rootSkill;
-                    PickASkill?.Invoke(rootSkill);
-                }
-                else
-                {
-                    tempSkill = moveSkill;
-                    PickASkill?.Invoke(moveSkill);
-                }
-                actionTaken = true;
-            }
+            Debug.Log("Sorry, human turn.");
+            return;
         }
         else
         {
-            computerPlayerObject = playerManager.GetGameObjectFromSO(computer);
-            CalculateMove(computer);
+            Debug.Log("Ok, I am computer");
+            if (computerPlayerObject)
+            {
+                Debug.Log("I have my Object");
+                if (computerPlayerObject.TryGetComponent<PlayerScript>(out PlayerScript ps))
+                {
+
+                    if (ps != null)
+                    {
+                        if (ps.tile.rootable == true)
+                        {
+                            Debug.Log("Also found if I am standing on rootable");
+                            if (SkillList.Contains(rootSkill))
+                            {
+                                tempSkill = rootSkill;
+                                PickASkill?.Invoke(rootSkill);
+
+
+                                
+                                return;
+                            }
+                            else
+                            {
+                                
+                                tempSkill = photoSkill;
+                                PickASkill?.Invoke(photoSkill);
+
+                                return;
+                            }
+                        }
+
+                        else
+                        {
+                            Debug.Log("I found that I am not standing on rootable");
+
+                            foreach (var field in computerPlayerObject.GetComponent<PlayerScript>().tile.neighbours)
+                            {
+                                if (field.stander == null && field.passable)
+                                {
+                                    tileScripttemp = field;
+                                    tempSkill = moveSkill;
+                                    PickASkill?.Invoke(moveSkill);
+
+                                    return;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+                    Debug.Log("I don't see my object position");
+                    return;
+                }
+
+            }
+            else
+            {
+                Debug.Log("I don't see my object");
+                computerPlayerObject = playerManager.GetGameObjectFromSO(computer);
+                CalculateMove(computer);
+            }
         }
+    }
+
+    IEnumerator WaitForNSeconds(int seconds)
+    {
+        yield return new WaitForSeconds((float)seconds); // Waits for N seconds
     }
 
     public void PrepareAction()
     {
+        Debug.Log("PreparingTheAction");
         if (!computerPlayer.human)
         {
+            Debug.Log("Looks Like The Player Is Not Human");
+
             Prepare?.Invoke();
-            actionTimer = 0f;
-            actionTaken = true;
 
             if (tempSkill.self)
             {
+
                 ExecuteSelf?.Invoke();
+                Debug.Log("Executed SelfSkill");
             }
-            else
+            else if (!tempSkill.self)
             {
+
                 Execute?.Invoke(tileScripttemp);
+                Debug.Log("Executed SkillOnOtherField");
             }
         }
     }
@@ -123,18 +213,30 @@ public class AI : MonoBehaviour
     private void UpdateTurn(Turn turn)
     {
         ActiveTurn = turn;
-        actionTimer = 0f;
-        actionTaken = false;
+        rootingPressure++;
+
     }
 
     private void SkipTurn()
     {
         if (!computerPlayer.human)
         {
+
             tempSkill = null;
             EndTurn?.Invoke();
-            actionTimer = 0f;
-            actionTaken = true;
         }
     }
+    private void SkipTurn(Player player)
+    {
+        if (!computerPlayer.human)
+        {
+            tempSkill = null;
+            EndTurn?.Invoke();
+        }
+    }
+
+
+
+
+
 }

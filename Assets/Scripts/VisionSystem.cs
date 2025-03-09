@@ -31,9 +31,13 @@ public class VisionSystem : MonoBehaviour
         PlayerManager.PlayersInstantiated += UpdateTheVision;
         PlayerManager.ActivePlayerBroadcast += UpdateTheVision;
 
-    }
 
-    private void UpdateTheVision(bool spectatorMode)
+    }
+    public void Update()
+    {
+        UpdateTheVision();
+    }
+    private void UpdateTheVision()
     {
         ScanForVisible(owner, transform.position, owner.eyes);
     }
@@ -47,9 +51,10 @@ public class VisionSystem : MonoBehaviour
 
     private void OnDisable()
     {
-        StarlingSkillScript.UpdateVision -= UpdateTheVision;
+  
         StarlingSkillScript.SetNest -= ScanForVisible;
         PlayerManager.PlayersInstantiated -= UpdateTheVision;
+
 
     }
 

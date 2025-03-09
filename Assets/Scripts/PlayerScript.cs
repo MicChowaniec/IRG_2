@@ -14,7 +14,6 @@ public class PlayerScript : MonoBehaviour
     public TileScriptableObject tile;
     private int sunLvl;
     private int diseaseLvl;
-    public static event Action FinishTurn;
     public static event Action<Player> AITurn;
 
     public void OnEnable()

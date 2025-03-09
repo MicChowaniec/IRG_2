@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: ScoutSkillSO
   m_EditorClassIdentifier: 
   label: Starling
-  description: "Send Starling scout to:\n-set a nest on hill,\n-pick a fruit from
-    tree,\n-or bush, \n-blind other player."
+  description: "Starling. Cost: 1 Eye, 3 Energy.\nSend Starling scout to:\n-set a
+    nest on hill,\n-pick a fruit from tree,\n-or bush, \n-blind other player."
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 0
+  position: {x: 0, y: 0, z: 0}
   actionType: 1
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 585d5530b6cc78b4aa883a213c94712e, type: 3}

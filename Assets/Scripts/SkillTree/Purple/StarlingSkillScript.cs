@@ -7,7 +7,7 @@ public class StarlingSkillScript : AbstractSkill
 
     public static event Action<Player,Vector3,int> SetNest;
 
-    public static event Action<Player> UpdateVision;
+    public static event Action<Player> UpdateTheVision;
 
     
 
@@ -75,7 +75,7 @@ public class StarlingSkillScript : AbstractSkill
                     else
                     {
                         target.eyes++;
-                        UpdateVision?.Invoke(activePlayer);
+                        UpdateTheVision?.Invoke(activePlayer);
                         Debug.Log("You have got an additional eye");
 
                     }

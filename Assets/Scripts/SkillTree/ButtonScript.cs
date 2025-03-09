@@ -6,20 +6,97 @@ using System;
 public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     public SkillScriptableObject skill;
-    public ActionManager ActionManager;
+    public ActionManager actionManager;
     protected Vector3 originalPosition;
     public GameObject holder;
+    public PlayerManager playerManager;
+    public Player activePlayer;
 
     public static event Action<SkillScriptableObject> SkillListenerActivate;
 
     public void Start()
     {
-       
-        ActionManager = FindAnyObjectByType<ActionManager>();
+        playerManager = FindAnyObjectByType<PlayerManager>(); 
+        actionManager = FindAnyObjectByType<ActionManager>();
         Button btn = this.GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
-    }
+        activePlayer = playerManager.activePlayer;
 
+    }
+    public void Update()
+    {
+        if(activePlayer.human)
+        {
+            if(!CheckResources())
+            {
+                this.GetComponent<Button>().interactable = false;
+            }
+        }
+        
+    }
+    public bool CheckResources()
+
+    {
+        bool temp = true;
+
+        if (activePlayer.biomass > 0)
+        {
+            if (activePlayer.biomass >= skill.biomass)
+            {
+                temp = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (activePlayer.water > 0)
+        {
+            if (activePlayer.water >= skill.water)
+            {
+                temp = true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        if (activePlayer.protein > 0)
+        {
+            if (activePlayer.protein >= skill.protein)
+            {
+                temp = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (activePlayer.energy > 0)
+        {
+            if (activePlayer.energy >= skill.energy)
+            {
+                temp = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (activePlayer.eyes > 0)
+        {
+            if (activePlayer.eyes >= skill.eyes)
+            {
+                temp = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return temp;
+    }
     public void OnClick()
     {
         Debug.Log("Calling " + skill.name);

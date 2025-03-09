@@ -1,10 +1,15 @@
 using UnityEditor;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class SunLevel : MonoBehaviour
 {
     public GameSettings gameSettings;
+    public ScoreKeeperScript scoreKeeperScript;
+
+    public GameObject winnerPanel;
+    public TextMeshProUGUI winnerText;
 
     public Light Light;
     public int solarPointer;
@@ -18,15 +23,16 @@ public class SunLevel : MonoBehaviour
     public static event Action NightEvent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-   
+
     private void OnEnable()
     {
         solarPointer = 0;
-        dayStep = 180.0f / ((float)gameSettings.CyclesPerDay * 6.0f);
+        dayStep = 180.0f / ((float)gameSettings.SizeOfMap * 6.0f);
         SunRise();
- 
+
         PlayerManager.ChangePhase += SolarUpdate;
-        
+        scoreKeeperScript = FindAnyObjectByType<ScoreKeeperScript>();
+
     }
     private void OnDisable()
     {
@@ -49,6 +55,9 @@ public class SunLevel : MonoBehaviour
         
         float x = solarPointer;
         Light.transform.rotation = Quaternion.Euler(new Vector3(x, x, 0));
+        winnerPanel.SetActive(true);
+        winnerText.text = "Winner is+" + scoreKeeperScript.winner;
+
     }
 
 

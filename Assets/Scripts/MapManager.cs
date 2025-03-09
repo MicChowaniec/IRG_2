@@ -68,13 +68,15 @@ public class MapManager : MonoBehaviour
     public void OnEnable()
     {
         PlayerManager.PlayersInstantiated += CountRootables;
+        RootSkill.UpdateRootables += CountRootables;
     }
     /// <summary>
     /// 
     /// </summary>
     public void OnDisable()
     {
-        PlayerManager.PlayersInstantiated -=CountRootables;
+        PlayerManager.PlayersInstantiated -= CountRootables;
+        RootSkill.UpdateRootables -= CountRootables;
     }
     /// <summary>
     /// 
@@ -376,8 +378,12 @@ public class MapManager : MonoBehaviour
     /// Counting rootables fields on map
     /// </summary>
     /// <returns></returns>
-    public void CountRootables(bool spectatorMode)
+    public void CountRootables()
     {
+        tiles[centerId].rootable = false;
+        tiles[centerId].passable = false;
+        tiles[centerId].gote = GameObjectTypeEnum.Tree;
+        tiles[centerId].ate = ActionTypeEnum.None;
         foreach (var tile in tiles[centerId].neighbours)
         {
             tile.rootable = false;
@@ -392,19 +398,9 @@ public class MapManager : MonoBehaviour
         int red = 0;
 
         foreach (TileScriptableObject t in tiles.Values)
-        {   if(spectatorMode)
-            {
-                FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = tiles[centerId].representation.transform;
-                t.MakeVisibleForSpectator();
-            }
-            if (startRootables == 0)
-            {
-                if (t.rootable == true)
-                {
-                    temp++;
-                }
-            }
-            
+        {
+           
+
             if (t.GetOwner() != null)
             {
                 switch (t.GetOwner().id)
@@ -419,7 +415,8 @@ public class MapManager : MonoBehaviour
             }
 
         }
-        startRootables = temp;
+        
+        
         int[] fields = { purple, blue, green, yellow, red, orange };
         CountedRootables?.Invoke(fields,startRootables);
 
