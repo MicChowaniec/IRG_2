@@ -19,7 +19,7 @@ MonoBehaviour:
     nearby water tile.
 
     You will receive water equal to max, which is your biomass
-    value'
+    value.'
   forStarlingText: 
   button: 0
   sprite: {fileID: 0}
@@ -27,11 +27,11 @@ MonoBehaviour:
   owner: {fileID: 0}
   treeSO: {fileID: 0}
   gote: 0
-  ate: 0
+  ate: 2
   position: {x: 0, y: 0, z: 0}
-  actionType: 0
+  actionType: 2
   RootedSkill: 0
-  ButtonPrefab: {fileID: 0}
+  ButtonPrefab: {fileID: 2648954108819363694, guid: c731b2f504670f043b30ff6f22a7c329, type: 3}
   biomass: 0
   water: 0
   energy: 3

@@ -10,26 +10,13 @@ public class ActionManager : MonoBehaviour
 {
     public PlayerManager playerManager;
     public Player activePlayer;
+    public PlayerScript playerScript;
     public GameObject playerGameObject;
     public TileScriptableObject tilewherePlayerStands;
 
-    public List<GameObject> purpleSkills = new();
-    public List<GameObject> blueSkills = new();
-    public List<GameObject> greenSkills = new();
-    public List<GameObject> yellowSkills = new();
-    public List<GameObject> orangeSkills = new();
-    public List<GameObject> redSkills = new();
-    public List<GameObject> basicSkills = new();
-    private List<List<GameObject>> AllSkills => new ()
-    {
-        purpleSkills,
-        blueSkills,
-        greenSkills,
-        yellowSkills,
-        orangeSkills,
-        redSkills,
-        basicSkills
-    };
+
+    public List<GameObject> AllSkills = new();
+  
 
     private Turn activeTurn;
     public static event Action SkillsUpdated;
@@ -43,7 +30,7 @@ public class ActionManager : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast += PlayerChange;
         DragOnScript.CallTheAction += ActivateSkillListener;
         AbstractSkill.DestroyTheButton += ResetListeners;
-        AI.PickASkill += ActivateSkillListener;
+
 
 
 
@@ -55,7 +42,7 @@ public class ActionManager : MonoBehaviour
         PlayerManager.ActivePlayerBroadcast -= PlayerChange;
         DragOnScript.CallTheAction -= ActivateSkillListener;
         AbstractSkill.DestroyTheButton -= ResetListeners;
-        AI.PickASkill -= ActivateSkillListener;
+
     }
 
     private void UpdateTurn(Turn turn)
@@ -68,48 +55,76 @@ public class ActionManager : MonoBehaviour
 
     private void PlayerChange(Player player)
     {
-        ResetListeners();
-        Debug.Log("Listeners Reset");
-        if (activePlayer != player)
+
+        if (!player.human)
+        {
+            return;
+        }
+        else
         {
             activePlayer = player;
             playerGameObject = playerManager.GetGameObjectFromSO(player);
-            
+            playerScript = playerGameObject.GetComponent<PlayerScript>();
+            InvokeRepeating(nameof(CheckTile), 0f, 0.1f); // Sprawdzaj co 0.1 sekundy
         }
-
     }
+
+        void CheckTile()
+        {
+
+            if (playerScript.tile != null)
+            {
+                tilewherePlayerStands = playerScript.tile;
+                Debug.Log("Tile zosta³o przypisane!");
+
+                // Wy³¹czamy wywo³ywanie tej metody
+                CancelInvoke(nameof(CheckTile));
+            }
+        }
+    
+
+
+
+
+  
 
     private void ResetListeners(Player player)
     {
-        foreach (List<GameObject> list in AllSkills)
-        {
-            foreach (GameObject obj in list)
+
+            foreach (GameObject obj in AllSkills)
             {
+            if (obj.activeSelf)
+            {
+                obj.GetComponent<AbstractSkill>().Confirm();
+
                 obj.SetActive(false);
             }
-        }
+            }
+        
     }
     private void ResetListeners()
     {
-        foreach (List<GameObject> list in AllSkills)
+        foreach (GameObject obj in AllSkills)
         {
-            foreach (GameObject obj in list)
+            if (obj.activeSelf)
             {
+                obj.GetComponent<AbstractSkill>().Confirm();
+
+
                 obj.SetActive(false);
             }
+         
         }
     }
     private void ActivateSkillListener(SkillScriptableObject skillSO)
     {
-        
+        ResetListeners();
         Debug.Log("Heard you " + skillSO.name);
-        foreach (List<GameObject> list in AllSkills)
-        {
 
-            foreach (GameObject obj in list)
+
+            foreach (GameObject obj in AllSkills)
             {
-
-
+               
                 if (obj.TryGetComponent<AbstractSkill>(out var abstractSkill))
                 {
                     if (abstractSkill.skill == skillSO)
@@ -131,7 +146,7 @@ public class ActionManager : MonoBehaviour
 
                 }
             }
-        }
+        
         Debug.Log("...But didn't found");
     }
     IEnumerator WaitOneSecond()

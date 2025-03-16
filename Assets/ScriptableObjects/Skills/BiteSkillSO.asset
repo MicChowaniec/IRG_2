@@ -20,6 +20,9 @@ MonoBehaviour:
   stander: {fileID: 0}
   owner: {fileID: 0}
   treeSO: {fileID: 0}
+  gote: 0
+  ate: 2
+  position: {x: 0, y: 0, z: 0}
   actionType: 2
   RootedSkill: 0
   ButtonPrefab: {fileID: 2648954108819363694, guid: 4fd15f45003697545857b067f7d24f3e, type: 3}

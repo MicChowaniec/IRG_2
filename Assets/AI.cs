@@ -1,247 +1,157 @@
+
 using UnityEngine;
-using System.Collections.Generic;
-
-using System;
-
 using System.Collections;
+using System;
+using UnityEditor;
+
 
 public class AI : MonoBehaviour
 {
-    public Turn ActiveTurn;
-    public List<SkillScriptableObject> SkillList = new();
-    public SkillScriptableObject skipTurn;
+
     public ActionManager actionManager;
+    public TurnBasedSystem turnBasedSystem;
     public PlayerManager playerManager;
-    private SkillScriptableObject tempSkill;
-    private int rootingPressure;
-    public GameSettings gameSeetings;
-    public Player computerPlayer;
-    public GameObject computerPlayerObject;
-    public SkillScriptableObject rootSkill;
-    public SkillScriptableObject moveSkill;
-    public SkillScriptableObject photoSkill;
-    public SkillScriptableObject waterSkill;
 
-    public TileScriptableObject tileScripttemp;
+    private Coroutine movementCoroutine;
 
+    public EndTurn endTurn;
+    public Player activePlayer;
+    public GameObject activePlayerGameObject;
+    public TileScriptableObject tileWherePlayerStands;
 
-    public static event Action EndTurn;
-    public static event Action<Player, SkillScriptableObject> SendMeAField;
-    public static event Action<SkillScriptableObject> PickASkill;
-    public static event Action Prepare;
-    public static event Action<TileScriptableObject> Execute;
-    public static event Action ExecuteSelf;
-    public static event Action AddNeighbours;
-
-    public bool allFieldsNeighbourized;
-
-
-    private void OnEnable()
+    public static event Action CountFields;
+    public void OnEnable()
     {
-        allFieldsNeighbourized = false;
-        TurnBasedSystem.CurrentTurnBroadcast += UpdateTurn;
-        PlayerManager.ActivePlayerBroadcast += UpdatePlayer;
-        AbstractSkill.AnimationObjectDestroyed += SkipTurn;
-        AbstractSkill.AIButtonClicked += PrepareAction;
-
+        PlayerManager.ActivePlayerBroadcast += ChangePlayer;
     }
 
-
-    private void OnDisable()
+    public void OnDisable()
     {
-        TurnBasedSystem.CurrentTurnBroadcast -= UpdateTurn;
-        PlayerManager.ActivePlayerBroadcast -= UpdatePlayer;
-        AbstractSkill.AnimationObjectDestroyed -= SkipTurn;
-        AbstractSkill.AIButtonClicked -= PrepareAction;
+        PlayerManager.ActivePlayerBroadcast -= ChangePlayer;
     }
 
-    public void UpdatePlayer(Player player)
+    
+    public void ChangePlayer(Player player)
     {
-        if (player != computerPlayer)
+        if (player.human)
         {
-            computerPlayer = player;
-            if (!computerPlayer.human)
-            {
-                computerPlayerObject = playerManager.GetGameObjectFromSO(computerPlayer);
-                StartCoroutine(CalculateMoveCoroutine(player));
-            }
-
-
-
-        }
-
-    }
-
-    private void FindPossibleMoves(Player computer)
-    {
-        SkillList.Clear();
-        if (computer.human)
-        {
-            return;
-        }
-
-        foreach (var card in computer.cards)
-        {
-            if (!computer.rooted)
-            {
-                SkillList.Add(card.skillNotRootedSC);
-
-            }
-            else if (computer.rooted)
-            {
-                SkillList.Add(card.skillRootedSC);
-            }
-        }
-        SkillList.Add(ActiveTurn.SpecialSkill);
-    }
-    private IEnumerator CalculateMoveCoroutine(Player player)
-    {
-        yield return new WaitForSeconds(1);
-        CalculateMove(player);
-
-    }
-    private void CalculateMove(Player computer)
-    {
-
-        Debug.Log("Started Calculating Move");
-        FindPossibleMoves(computer);
-        if (computer.human)
-        {
-            Debug.Log("Sorry, human turn.");
             return;
         }
         else
         {
-            Debug.Log("Ok, I am computer");
-            if (computerPlayerObject)
+            Debug.Log("Jestê Komputerê");
+            activePlayer = player;
+            activePlayerGameObject = playerManager.GetGameObjectFromSO(activePlayer);
+            tileWherePlayerStands = activePlayerGameObject.GetComponent<PlayerScript>().tile;
+            StartCoroutine(ChooseAMoveCoroutine());
+        }
+
+    }
+
+    public void ChooseAMove()
+    {
+        if (activePlayer.water < 5)
+        {
+            Debug.Log("Woda");
+            foreach (var nei in tileWherePlayerStands.neighbours)
             {
-                Debug.Log("I have my Object");
-                if (computerPlayerObject.TryGetComponent<PlayerScript>(out PlayerScript ps))
+                if (nei.gote == GameObjectTypeEnum.Water)
                 {
-
-                    if (ps != null)
-                    {
-                        tileScripttemp = ps.tile;
-                        if (tileScripttemp.rootable)
-                        {
-                            Debug.Log("Also found if I am standing on rootable");
-                            if (SkillList.Contains(rootSkill))
-                            {
-                                tempSkill = rootSkill;
-                                PickASkill?.Invoke(rootSkill);
-
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            if (computer.water < 5)
-                            {
-                                
-                                foreach (var tileO in tileScripttemp.neighbours)
-                                {
-                                    if (tileO.gote == GameObjectTypeEnum.Water)
-                                    {
-                                        tempSkill = waterSkill;
-                                        PickASkill?.Invoke(waterSkill);
-
-                                        return;
-                                    }
-                                }
-                            }
-                            tempSkill = photoSkill;
-                            PickASkill?.Invoke(photoSkill);
-
-                            return;
-                        }
-                    }
-
-                    else
-                    {
-                        Debug.Log("I found that I am not standing on rootable");
-
-                        foreach (var field in computerPlayerObject.GetComponent<PlayerScript>().tile.neighbours)
-                        {
-                            if (field.stander == null && field.passable)
-                            {
-                                tileScripttemp = field;
-                                tempSkill = moveSkill;
-                                PickASkill?.Invoke(moveSkill);
-
-                                return;
-                            }
-                        }
-
-                    }
+                    activePlayer.Refill();
+                   
                 }
-
-            }
-              
-            else
-            {
-                Debug.Log("I don't see my object");
-                computerPlayerObject = playerManager.GetGameObjectFromSO(computer);
-                CalculateMove(computer);
             }
         }
-    }
-
-    IEnumerator WaitForNSeconds(int seconds)
-    {
-        yield return new WaitForSeconds((float)seconds); // Waits for N seconds
-    }
-
-    public void PrepareAction()
-    {
-        Debug.Log("PreparingTheAction");
-        if (!computerPlayer.human)
+        if (tileWherePlayerStands.rootable)
         {
-            Debug.Log("Looks Like The Player Is Not Human");
+            Debug.Log("Ziemia");
+            Vector3 rememberLocalScale = activePlayerGameObject.transform.localScale;
+            GameObject tree = Instantiate(activePlayer.TreePrefab, activePlayerGameObject.transform.position, Quaternion.identity, tileWherePlayerStands.representation.transform);
+            tree.transform.localScale = rememberLocalScale / 5;
 
-            Prepare?.Invoke();
-
-            if (tempSkill.self)
+            tileWherePlayerStands.rootable = false;
+            tileWherePlayerStands.passable = false;
+            tileWherePlayerStands.SetOwner(activePlayer);
+            foreach (var tile in tileWherePlayerStands.neighbours)
             {
+                tile.rootable = false;
+                tile.SetOwner(activePlayer);
 
-                ExecuteSelf?.Invoke();
-                Debug.Log("Executed SelfSkill");
+
             }
-            else if (!tempSkill.self)
+            CountFields?.Invoke();
+            FinishThisTurn();
+            return;
+        }
+
+        else
+        {
+            foreach (var nei in tileWherePlayerStands.neighbours)
             {
-
-                Execute?.Invoke(tileScripttemp);
-                Debug.Log("Executed SkillOnOtherField");
+                if (nei.passable)
+                {
+                    Debug.Log("Wiatr");
+                    MoveTo(nei.coordinates);
+                }
             }
+
+
         }
+        
     }
 
-    private void UpdateTurn(Turn turn)
-    {
-        ActiveTurn = turn;
-        rootingPressure++;
 
-    }
 
-    private void SkipTurn()
+    public void MoveTo(Vector3 newDestination)
     {
-        if (!computerPlayer.human)
+       
+
+        if (movementCoroutine != null)
         {
-
-            tempSkill = null;
-            EndTurn?.Invoke();
+            StopCoroutine(movementCoroutine);
         }
+
+        movementCoroutine = StartCoroutine(SmoothlyMoveToDestination(newDestination));
     }
-    private void SkipTurn(Player player)
+
+    private IEnumerator SmoothlyMoveToDestination(Vector3 destination)
     {
-        if (!computerPlayer.human)
+
+        Transform transformOfPlayer = activePlayerGameObject.transform;
+        transformOfPlayer.LookAt(destination, Vector3.up);
+        activePlayerGameObject.GetComponent<Animator>().SetTrigger("Move");
+
+        while (Vector3.Distance(transformOfPlayer.position, destination) > 0.1f)
         {
-            tempSkill = null;
-            EndTurn?.Invoke();
+            transformOfPlayer.position = Vector3.MoveTowards(transformOfPlayer.position, destination, Time.deltaTime);
+            yield return null;
         }
+        activePlayerGameObject.GetComponent<Animator>().SetTrigger("Idle");
+        transformOfPlayer.position = destination;
+        movementCoroutine = null;
+        FinishThisTurn();
+
+    }
+    private void FinishThisTurn()
+    {
+        StartCoroutine(DelayedFinishTurn());
     }
 
+    private IEnumerator DelayedFinishTurn()
+    {
+        yield return new WaitForSeconds(1f);
+        playerManager.ChangePlayer();
+    }
 
-
-
-
+    private IEnumerator ChooseAMoveCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        ChooseAMove();
+    }
 }
+
+
+
+
+
+

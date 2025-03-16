@@ -8,7 +8,7 @@ public class Entity : ScriptableObject, IDamagable
     public int id;
 
     public static event Action<int> GrowTheTree;
-    public static event Action Death;
+    public static event Action<string> Death;
 
     public int biomass;
     public int protein;
@@ -50,7 +50,7 @@ public class Entity : ScriptableObject, IDamagable
     {
         if (biomass <= 0)
         {
-            Death?.Invoke();
+            Death?.Invoke("You died");
         }
     }
     public ActionTypeEnum GetPlayerType()

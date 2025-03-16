@@ -16,18 +16,18 @@ public  class AbstractSkill : MonoBehaviour
     public GameObject activePlayerObject;
     public TileScriptableObject tileWherePlayerStands;
 
+    public ActionManager am;
     public bool ButtonClicked;
 
     public static event Action<Player> AnimationObjectDestroyed;
     public static event Action DestroyTheButton;
     public static event Action AIButtonClicked;
+    
 
     public void OnEnable()
     {
         ButtonClicked = false;
-        AI.Prepare += ClickOnButton;
-        AI.ExecuteSelf += Do;
-        AI.Execute += Do;
+
         
         PlayerManager.ActivePlayerBroadcast += ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast += CheckColorIncome;
@@ -36,9 +36,7 @@ public  class AbstractSkill : MonoBehaviour
     public void OnDisable()
 
     {
-        AI.Prepare -= ClickOnButton;
-        AI.ExecuteSelf -= Do;
-        AI.Execute -= Do;
+
 
         PlayerManager.ActivePlayerBroadcast -= ActivePlayerUpdate;
         OnHoverScript.OnHoverBroadcast -= CheckColorIncome;
@@ -207,7 +205,7 @@ public  class AbstractSkill : MonoBehaviour
                         {
 
                             Confirm();
-                            DisableFunction();
+
 
                         }
                         if (Input.GetMouseButtonDown(0))
@@ -219,7 +217,13 @@ public  class AbstractSkill : MonoBehaviour
                     }
                 }
             }
-        }       
+        }
+        else
+        {
+            ActivePlayerUpdate(am.activePlayer);
+            ActivePlayerObjectUpdate(am.playerGameObject);
+            TileWherePlayerStandsUpdate(am.tilewherePlayerStands);
+        }
     }
 
     IEnumerator WaitForNSeconds(int seconds)
@@ -236,19 +240,20 @@ public  class AbstractSkill : MonoBehaviour
     public void ClickOnButton()
     {
         Debug.Log("ButtonClicked");
-        if (CheckResources()&&!ButtonClicked)
+        if (!ButtonClicked)
         {
 
             ButtonClicked = true;
-            if (animationObject != null)
-            {
-                animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
-
-            }
+            
             if (activePlayer.human)
             {
-                
+                if (animationObject != null)
+                {
+                    animationObjectInstantiated = Instantiate(animationObject, activePlayer.Pos, Quaternion.identity);
                     Cursor.visible = false; // Hide the cursor
+
+                }
+
             }
             else
             {
@@ -268,14 +273,15 @@ public  class AbstractSkill : MonoBehaviour
         {
             Destroy(animationObjectInstantiated);
             animationObjectInstantiated = null;
-            
+
         }
         Cursor.visible = true;
+        AnimationObjectDestroyed?.Invoke(activePlayer);
     }
     public void DisableFunction()
     {
         DestroyTheButton?.Invoke();
-        AnimationObjectDestroyed?.Invoke(activePlayer);
+
     }
 
     /// <summary>

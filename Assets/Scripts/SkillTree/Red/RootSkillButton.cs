@@ -5,7 +5,7 @@ public class RootSkillButton :ButtonScript
 {
     public void Update()
     {
-        if(tileWherePlayerStands.rootable!=true)
+        if(tileWherePlayerStands.rootable!=false||!CheckResources())
         {
             this.GetComponent<Button>().interactable = false;
         }

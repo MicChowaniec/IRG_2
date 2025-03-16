@@ -26,6 +26,7 @@ public class SunLevel : MonoBehaviour
 
     private void OnEnable()
     {
+        Entity.Death += SunSet;
         solarPointer = 0;
         dayStep = 180.0f / ((float)gameSettings.SizeOfMap * 6.0f);
         SunRise();
@@ -38,6 +39,7 @@ public class SunLevel : MonoBehaviour
     {
 
         PlayerManager.ChangePhase -= SolarUpdate;
+        Entity.Death -= SunSet;
 
     }
     private void SunRise()
@@ -46,7 +48,7 @@ public class SunLevel : MonoBehaviour
         Light.color = new Color(1, 0.8f, 0.9f, 1);
 
     }
-    private void SunSet()
+    private void SunSet(string stringer)
     {
         solarPointer = -90;
         //NightEvent?.Invoke();
@@ -56,7 +58,7 @@ public class SunLevel : MonoBehaviour
         float x = solarPointer;
         Light.transform.rotation = Quaternion.Euler(new Vector3(x, x, 0));
         winnerPanel.SetActive(true);
-        winnerText.text = "Winner is+" + scoreKeeperScript.winner;
+        winnerText.text = stringer;
 
     }
 
@@ -87,7 +89,7 @@ public class SunLevel : MonoBehaviour
         }
         else
         {
-            SunSet();
+            SunSet("Winner is+" + scoreKeeperScript.winner);
         }
     }
 }

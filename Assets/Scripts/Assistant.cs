@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Assistant : MonoBehaviour
 {
-    private string[] narration = new string[11];
-    private string[] responses = new string[11];
+    private string[] narration = new string[12];
+    private string[] responses = new string[12];
     public TextMeshProUGUI AssistantTalks;
     public TextMeshProUGUI PlayerTalks;
     public Button btn;
@@ -56,8 +57,11 @@ public class Assistant : MonoBehaviour
         narration[9] = "You may use WSAD keys or to scroll the map, or QE to change angle. If you loose yourself, press SPACEBAR to center on your character ";
         responses[9] = "Next";
 
-        narration[10] = "Good Luck.";
-        responses[10] = "Thanks";
+        narration[10] = "Be careful to be not dehydrated, once you have 0 or less water, your biomass will hurt, which eventually would cause a death.";
+        responses[10] = "Good to know";
+
+        narration[11] = "Good Luck.";
+        responses[11] = "Thanks";
 
     }
     public void NextScenario()

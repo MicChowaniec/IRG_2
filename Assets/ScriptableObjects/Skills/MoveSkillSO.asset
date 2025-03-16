@@ -26,7 +26,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   treeSO: {fileID: 0}
   gote: 0
-  ate: 0
+  ate: 4
   position: {x: 0, y: 0, z: 0}
   actionType: 4
   RootedSkill: 0

@@ -134,10 +134,10 @@ public class TileScript : MonoBehaviour
         {     
                 Debug.Log("Player Entered This Field" + TSO.id);
             TSO.SetStander(other.GetComponent<PlayerScript>().player);
-
+            
             other.GetComponent<PlayerScript>().tile = TSO;
-            other.GetComponent<VisionSystem>().ScanForVisible(activePlayer, other.transform.position, activePlayer.eyes);
-            AIMoveyoursefl?.Invoke(activePlayer);
+            
+            //other.GetComponent<VisionSystem>().ScanForVisible(activePlayer, other.transform.position, activePlayer.eyes);
 
         }
     }

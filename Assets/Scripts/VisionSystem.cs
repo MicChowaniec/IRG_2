@@ -13,7 +13,7 @@ public class VisionSystem : MonoBehaviour
     public Player owner;
 
     private PlayerManager _playerManager;
-    private Collider[] _colliderBuffer = new Collider[10000]; // Adjust size as needed
+    private Collider[] _colliderBuffer = new Collider[1000]; // Adjust size as needed
 
     public static event Action<TileScriptableObject> FoundAttractiveField;
 

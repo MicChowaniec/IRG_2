@@ -69,6 +69,7 @@ public class MapManager : MonoBehaviour
     {
         PlayerManager.PlayersInstantiated += CountRootables;
         RootSkill.UpdateRootables += CountRootables;
+        AI.CountFields += CountRootables;
     }
     /// <summary>
     /// 
@@ -77,6 +78,7 @@ public class MapManager : MonoBehaviour
     {
         PlayerManager.PlayersInstantiated -= CountRootables;
         RootSkill.UpdateRootables -= CountRootables;
+        AI.CountFields -= CountRootables;
     }
     /// <summary>
     /// 

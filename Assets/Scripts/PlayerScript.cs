@@ -39,7 +39,6 @@ public class PlayerScript : MonoBehaviour
     {
         player.Disease(diseaseLvl);
         player.EnergyFromSun(sunLvl);
-        player.WaterLoss(1);
         
 
     }

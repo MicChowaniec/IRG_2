@@ -22,22 +22,12 @@ public class ScoreKeeperScript : MonoBehaviour
     public TextMeshProUGUI energyText;
     public int energy;
 
-    public Image fireResistanceTank;
-    public TextMeshProUGUI fireResistanceText;
-    public int fireResistance;
-
-    public Image toxicResistanceTank;
-    public TextMeshProUGUI toxicResistanceText;
-    public int toxicResistance;
-
     public Image proteinTank;
     public TextMeshProUGUI proteinText;
     public int protein;
 
     public int biomass;
     public TextMeshProUGUI biomassText;
-
-
 
     public int purpleGenom;
     public TextMeshProUGUI purpleGenomText;
@@ -57,8 +47,6 @@ public class ScoreKeeperScript : MonoBehaviour
     public int redGenom;
     public TextMeshProUGUI redGenomText;
 
-
-
     public int sunLevel;
     public TextMeshProUGUI sunLevelText;
 
@@ -77,6 +65,8 @@ public class ScoreKeeperScript : MonoBehaviour
     public TextMeshProUGUI blueFieldsText;
     public int purpleFields;
     public TextMeshProUGUI purpleFieldsText;
+
+    public  PlayerManager pm;
 
 
     public void OnEnable()
@@ -103,13 +93,14 @@ public class ScoreKeeperScript : MonoBehaviour
 
         MapManager.CountedRootables -= FieldsChange;
 
+
         PlayerManager.PlayersInstantiated -= StartingParameters;
     }
 
 
     private void StartingParameters()
     {
-        PlayerManager pm = FindAnyObjectByType<PlayerManager>();
+        
         foreach (Player p in pm.players)
         {
             if (p.human == true)
@@ -194,18 +185,18 @@ public class ScoreKeeperScript : MonoBehaviour
 
     private void Change()
     {
-        purpleGenom = humanPlayer.PurpleLvl;
-        purpleGenomText.text = "P:" + purpleGenom;
-        blueGenom = humanPlayer.BlueLvl;
-        blueGenomText.text = "B:" + blueGenom;
-        greenGenom = humanPlayer.GreenLvl;
-        greenGenomText.text = "G:" + greenGenom;
-        yellowGenom = humanPlayer.YellowLvl;
-        yellowGenomText.text = "Y:" + yellowGenom;
-        orangeGenom = humanPlayer.OrangeLvl;
-        orangeGenomText.text = "O:" + orangeGenom;
-        redGenom = humanPlayer.RedLvl;
-        redGenomText.text = "R:" + redGenom;
+        //purpleGenom = humanPlayer.PurpleLvl;
+        //purpleGenomText.text = "P:" + purpleGenom;
+        //blueGenom = humanPlayer.BlueLvl;
+        //blueGenomText.text = "B:" + blueGenom;
+        //greenGenom = humanPlayer.GreenLvl;
+        //greenGenomText.text = "G:" + greenGenom;
+        //yellowGenom = humanPlayer.YellowLvl;
+        //yellowGenomText.text = "Y:" + yellowGenom;
+        //orangeGenom = humanPlayer.OrangeLvl;
+        //orangeGenomText.text = "O:" + orangeGenom;
+        //redGenom = humanPlayer.RedLvl;
+        //redGenomText.text = "R:" + redGenom;
 
         biomass = humanPlayer.biomass;
         biomassText.text = "Biomass: \n" + biomass;
@@ -228,7 +219,10 @@ public class ScoreKeeperScript : MonoBehaviour
     }
     public void Update()
     {
-        Change();
+        if (humanPlayer != null)
+        {
+            Change();
+        }
     }
 
 

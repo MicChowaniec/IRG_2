@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: ScoutSkillSO
   m_EditorClassIdentifier: 
   label: Starling
-  description: "Starling. Cost: 1 Eye, 3 Energy.\nSend Starling scout to:\n-set a
-    nest on hill,\n-pick a fruit from tree,\n-or bush, \n-blind other player."
+  description: 'Starling. Cost: 1 Eye, 3 Energy.
+
+    Send Starling scout to:
+
+    -set
+    a nest on Rock, to reveal distant part of map
+
+    -pick a fruit from tree, or
+    bush to gain some protein
+
+    -blind other player.'
   forStarlingText: 
   button: 0
   sprite: {fileID: 21300000, guid: f76d3bafa34f74d429053863e82680f9, type: 3}

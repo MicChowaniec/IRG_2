@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tile_SO", menuName = "Dynamic/Tile_SO")]
@@ -57,12 +58,14 @@ public class TileScriptableObject : OnHoverSC
         if (player != null)
         {
             childType = GameObjectTypeEnum.Player;
+            passable = false;
         }
         else
         {
             childType = GameObjectTypeEnum.None;
+            passable = true;
         }
-        passable = false;
+
 
     }
     public void RemoveStander()

@@ -144,6 +144,7 @@ public class Player : Entity
     }
     public void Refill()
     {
+        Debug.Log("Refilled");
         water = biomass;
     }
 

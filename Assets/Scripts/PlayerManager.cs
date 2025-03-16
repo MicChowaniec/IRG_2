@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     {
         
         MapManager.MapGenerated += AllocatePlayers;
-        AI.EndTurn += ChangePlayer;
+
         EndTurn.EndTurnEvent += ChangePlayer;
 
 
@@ -34,9 +34,11 @@ public class PlayerManager : MonoBehaviour
 
     public void OnDisable()
     {
-        EndTurn.EndTurnEvent -=  ChangePlayer;
+        
 
         MapManager.MapGenerated -= AllocatePlayers;
+
+        EndTurn.EndTurnEvent -= ChangePlayer;
 
     }
     /// <summary>
@@ -79,14 +81,14 @@ public class PlayerManager : MonoBehaviour
         }
 
 
-        // Unsubscribe from MapGenerated event to prevent multiple allocations
-        MapManager.MapGenerated -= AllocatePlayers;
 
-        // Change to the first active player
+        MapManager.MapGenerated -= AllocatePlayers;
+        PlayersInstantiated?.Invoke();
+
         ChangePlayer();
 
-        // Notify that players have been instantiated
-        PlayersInstantiated?.Invoke();
+    
+        
     }
     public Transform GetTransformFromSO(Player player)
     {

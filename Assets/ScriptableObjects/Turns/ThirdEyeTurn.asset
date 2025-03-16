@@ -16,4 +16,4 @@ MonoBehaviour:
   nameOfTurn: ThirdEyeTurn
   description: Manage Starlings
   actionType: 1
-  SpecialSkill: {fileID: 0}
+  SpecialSkill: {fileID: 11400000, guid: f5168492f56f3944a9bf075bd6a21ddb, type: 2}

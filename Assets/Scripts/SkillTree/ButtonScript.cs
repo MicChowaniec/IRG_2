@@ -17,18 +17,18 @@ public abstract class ButtonScript : MonoBehaviour, IBeginDragHandler, IEndDragH
     public static event Action<SkillScriptableObject> SkillListenerActivate;
 
     
+ 
     public void Start()
     {
-        playerManager = FindAnyObjectByType<PlayerManager>(); 
+        playerManager = FindAnyObjectByType<PlayerManager>();
         actionManager = FindAnyObjectByType<ActionManager>();
         Button btn = this.GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
         activePlayer = playerManager.activePlayer;
         playerGameObject = playerManager.GetGameObjectFromSO(activePlayer);
         tileWherePlayerStands = playerGameObject.GetComponent<PlayerScript>().tile;
-
     }
-   
+
     public bool CheckResources()
 
     {

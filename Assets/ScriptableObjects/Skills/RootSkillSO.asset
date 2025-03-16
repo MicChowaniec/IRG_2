@@ -30,7 +30,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   actionType: 0
   RootedSkill: 0
-  ButtonPrefab: {fileID: 0}
+  ButtonPrefab: {fileID: 2648954108819363694, guid: 6c05986a01e45444ca935cc0e488f652, type: 3}
   biomass: 0
   water: 1
   energy: 3

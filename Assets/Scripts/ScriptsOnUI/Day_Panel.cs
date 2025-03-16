@@ -52,6 +52,7 @@ public class Day_Panel : MonoBehaviour
         if(turn!=activeTurn)
         {
             activeTurn = turn;
+
         }
     }
 
@@ -135,7 +136,7 @@ public class Day_Panel : MonoBehaviour
     {
         if (activePlayer != player)
         {
-            
+
 
             foreach (var child in buttonsInstantiated)
             {
@@ -152,6 +153,10 @@ public class Day_Panel : MonoBehaviour
                 {
                     buttonsInstantiated.Add(Instantiate(s.skillNotRooted, ActionsBar.transform));
                 }
+            }
+            if (activeTurn.SpecialSkill != null)
+            {
+                buttonsInstantiated.Add(Instantiate(activeTurn.SpecialSkill.ButtonPrefab, ActionsBar.transform));
             }
         }
     }

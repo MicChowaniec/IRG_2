@@ -148,3 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df732e69f3ea3484b89b8dfbd9c77791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 83f0514f2c2cbb54eb3686fcd4cca816, type: 2}
+  actionManager: {fileID: 0}
+  holder: {fileID: 2648954108819363694}
+  playerManager: {fileID: 0}
+  activePlayer: {fileID: 0}
+  playerGameObject: {fileID: 0}
+  tileWherePlayerStands: {fileID: 0}

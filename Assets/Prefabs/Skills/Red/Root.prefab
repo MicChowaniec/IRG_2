@@ -139,6 +139,8 @@ MonoBehaviour:
   holder: {fileID: 2648954108819363694}
   playerManager: {fileID: 0}
   activePlayer: {fileID: 0}
+  playerGameObject: {fileID: 0}
+  tileWherePlayerStands: {fileID: 0}
 --- !u!114 &-1250740681756234778
 MonoBehaviour:
   m_ObjectHideFlags: 0
