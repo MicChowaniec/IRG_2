@@ -947,8 +947,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: b9bec228ff8863142b8da01c637ef23e, type: 2}
+  playerGameObject: {fileID: 13136404289340683}
   animator: {fileID: 1601692875157988610}
   tile: {fileID: 0}
+  pm: {fileID: 0}
+  GameLog: 
 --- !u!114 &-6903829643535082838
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2
   biomass: 10
   protein: 10
-  water: 10
+  water: 0
   PurpleLvl: 1
   BlueLvl: 1
   GreenLvl: 1
@@ -35,9 +35,10 @@ MonoBehaviour:
   StartRot: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   human: 0
   rooted: 0
-  Prefab: {fileID: 13136404289340683, guid: 52c23d1c9d2c65d4b8b3918594c79c85, type: 3}
+  Prefab: {fileID: 13136404289340683, guid: 494bf32c07b79694cb89a91a0690fc83, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 40a33e15f192bc343bbd32d746243508, type: 3}
   material: {fileID: 2100000, guid: 1717475dbaaa8924ea2328f699fb8a56, type: 2}
+  ownedFields: 18
   skills: []
   cards:
   - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

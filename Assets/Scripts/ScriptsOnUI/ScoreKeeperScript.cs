@@ -135,6 +135,7 @@ public class ScoreKeeperScript : MonoBehaviour
         { winner = "RedPlayer"; }
 
 
+
         int orangeFieldsChange = fieldsChange[4];
         orangeFields = orangeFieldsChange;
         orangeFieldsText.text = orangeFieldsChange.ToString();

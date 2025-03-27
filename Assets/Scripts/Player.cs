@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -35,8 +36,9 @@ public class Player : Entity
         BlueLvl = 1;
         GreenLvl = 1;
         YellowLvl = 1;
-        OrangeLvl =1;
+        OrangeLvl = 1;
         RedLvl = 1;
+        ownedFields = 0;
 
     }
     public int energy;
@@ -54,6 +56,8 @@ public class Player : Entity
     public GameObject Prefab;
     public GameObject TreePrefab;
     public Material material;
+
+    public int ownedFields;
 
     public List<SkillScriptableObject> skills;
     public List<CardScriptableObject> cards;
@@ -147,6 +151,6 @@ public class Player : Entity
         Debug.Log("Refilled");
         water = biomass;
     }
-
+  
 
 }

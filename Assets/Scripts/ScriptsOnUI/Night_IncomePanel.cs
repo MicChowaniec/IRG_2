@@ -39,7 +39,6 @@ public class Night_IncomePanel : MonoBehaviour
     {
         SunLevel.NightEvent += ShowIncome;
 
-
     }
 
     public void OnDisable()

@@ -20,6 +20,7 @@ public class Day_Panel : MonoBehaviour
 
 
 
+
     public bool leftBarVisible;
     private bool isAnimating = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -87,7 +88,7 @@ public class Day_Panel : MonoBehaviour
     }
     public void Update()
     {
-
+        
         if (Input.GetKeyDown(KeyCode.Tab) && !isAnimating) // Trigger only on key press
         {
             ToggleLeftBar();

@@ -60,17 +60,18 @@ public class TileScriptableObject : OnHoverSC
             childType = GameObjectTypeEnum.Player;
             passable = false;
         }
-        else
-        {
-            childType = GameObjectTypeEnum.None;
-            passable = true;
-        }
+      
 
 
     }
     public void RemoveStander()
     {
         stander = null;
+        if (childType != GameObjectTypeEnum.Tree)
+        {
+            childType = GameObjectTypeEnum.None;
+            passable = true;
+        }
     }
 
     public void SetOwner(Player player)

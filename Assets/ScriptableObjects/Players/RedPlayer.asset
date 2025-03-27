@@ -35,9 +35,10 @@ MonoBehaviour:
   StartRot: {x: 0, y: 0, z: 0, w: 1}
   human: 0
   rooted: 0
-  Prefab: {fileID: 13136404289340683, guid: a7eb34304fecc10409f1492240b9db05, type: 3}
+  Prefab: {fileID: 13136404289340683, guid: 4ece83f1daf322047995415777184af5, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 95cd0a9541f54cb47b5db1d7cf4eda53, type: 3}
   material: {fileID: 2100000, guid: c1846bb18311031489fe63550620be48, type: 2}
+  ownedFields: 0
   skills: []
   cards:
   - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

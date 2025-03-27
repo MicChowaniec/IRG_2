@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 using UnityEditor;
+using System.Collections.Generic;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 
 public class AI : MonoBehaviour
@@ -18,6 +20,8 @@ public class AI : MonoBehaviour
     public Player activePlayer;
     public GameObject activePlayerGameObject;
     public TileScriptableObject tileWherePlayerStands;
+
+
 
     public static event Action CountFields;
     public void OnEnable()
@@ -50,6 +54,7 @@ public class AI : MonoBehaviour
 
     public void ChooseAMove()
     {
+        
         if (activePlayer.water < 5)
         {
             Debug.Log("Woda");
@@ -72,6 +77,7 @@ public class AI : MonoBehaviour
             tileWherePlayerStands.rootable = false;
             tileWherePlayerStands.passable = false;
             tileWherePlayerStands.SetOwner(activePlayer);
+            
             foreach (var tile in tileWherePlayerStands.neighbours)
             {
                 tile.rootable = false;
@@ -86,18 +92,24 @@ public class AI : MonoBehaviour
 
         else
         {
+            List<TileScriptableObject> tileWherePlayerCouldGo = new();
             foreach (var nei in tileWherePlayerStands.neighbours)
             {
                 if (nei.passable)
                 {
+                    tileWherePlayerCouldGo.Add(nei);
                     Debug.Log("Wiatr");
-                    MoveTo(nei.coordinates);
+
                 }
             }
+            System.Random rand = new System.Random();
+
+
+            MoveTo(tileWherePlayerCouldGo[rand.Next(tileWherePlayerCouldGo.Count)].coordinates);
 
 
         }
-        
+
     }
 
 
@@ -145,7 +157,8 @@ public class AI : MonoBehaviour
 
     private IEnumerator ChooseAMoveCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitUntil(() => tileWherePlayerStands != null);
+        
         ChooseAMove();
     }
 }

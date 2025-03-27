@@ -22,7 +22,7 @@ MonoBehaviour:
   YellowLvl: 1
   OrangeLvl: 1
   RedLvl: 1
-  energy: 4
+  energy: 10
   soulLvl: 1
   eyes: 3
   burningLvl: 0
@@ -33,11 +33,12 @@ MonoBehaviour:
   StartPos: {x: -0.6666667, y: 0, z: 0.4330127}
   Rot: {x: 0, y: -0.5, z: 0, w: 0.8660254}
   StartRot: {x: 0, y: -0.5, z: 0, w: 0.8660254}
-  human: 1
+  human: 0
   rooted: 0
-  Prefab: {fileID: 13136404289340683, guid: 88966bd8f50dd22458779dd63d0f7eea, type: 3}
+  Prefab: {fileID: 13136404289340683, guid: 8011e4b5ac28c924fa9e2988b722901a, type: 3}
   TreePrefab: {fileID: 2398761042893261284, guid: 23e739ba8951dec4fb6b5b9a93d78262, type: 3}
   material: {fileID: 2100000, guid: 990bbfd661162854e86ad117070b09cc, type: 2}
+  ownedFields: 0
   skills: []
   cards:
   - {fileID: 11400000, guid: 2c0383d554529b2489d30910d1ae0256, type: 2}

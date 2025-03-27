@@ -8,7 +8,8 @@ using Unity.Services.Core;
 
 public class HonkeyBonkeySceneManager: MonoBehaviour
 {
- 
+    public GameObject WinnerPanel;
+    public int time;
 
 
     public void VsAISceneButtonClick()
@@ -20,8 +21,19 @@ public class HonkeyBonkeySceneManager: MonoBehaviour
 
         Application.Quit();
     }
+    public void Update()
+    {
+        if (WinnerPanel.activeSelf)
+        {
+            time++;
+        }
+        if(time>100)
+        {
+            VsAISceneButtonClick();
+        }
+    }
 
-   
 
-   
+
+
 }

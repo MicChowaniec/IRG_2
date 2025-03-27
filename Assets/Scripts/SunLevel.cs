@@ -19,6 +19,8 @@ public class SunLevel : MonoBehaviour
     public float nightStep;
 
 
+
+
     public static event Action<int> DayEvent;
     public static event Action NightEvent;
 
@@ -33,6 +35,7 @@ public class SunLevel : MonoBehaviour
 
         PlayerManager.ChangePhase += SolarUpdate;
         scoreKeeperScript = FindAnyObjectByType<ScoreKeeperScript>();
+        
 
     }
     private void OnDisable()
@@ -51,7 +54,7 @@ public class SunLevel : MonoBehaviour
     private void SunSet(string stringer)
     {
         solarPointer = -90;
-        //NightEvent?.Invoke();
+        NightEvent?.Invoke();
 
         Light.color = new Color(0, 0.3f, 0.6f, 1);
         

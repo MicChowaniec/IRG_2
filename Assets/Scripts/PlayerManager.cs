@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
-
 using UnityEditor;
 
 public class PlayerManager : MonoBehaviour
@@ -16,30 +15,28 @@ public class PlayerManager : MonoBehaviour
     public GameObject[] playerInstances;
     public Transform[] playerTransforms;
 
+    public MapManager mapManager;
 
     public static event Action<Player> ActivePlayerBroadcast;
     public static event Action ChangePhase;
     public static event Action PlayersInstantiated;
 
+
+
     public void OnEnable()
-    {
-        
+    {   
         MapManager.MapGenerated += AllocatePlayers;
-
         EndTurn.EndTurnEvent += ChangePlayer;
-
-
-
+        MapManager.CountedRootables += UpdatePoints;
     }
 
     public void OnDisable()
     {
-        
-
         MapManager.MapGenerated -= AllocatePlayers;
 
         EndTurn.EndTurnEvent -= ChangePlayer;
 
+        MapManager.CountedRootables -= UpdatePoints;
     }
     /// <summary>
     /// Allocate player only once, after map is created
@@ -58,7 +55,7 @@ public class PlayerManager : MonoBehaviour
         playerInstances = new GameObject[players.Length];
         playerTransforms = new Transform[players.Length];
         int i = 0;
-        bool humanExist = false;
+        bool isThereAHuman = false;
         foreach (Player p in players)
         {
 
@@ -68,27 +65,24 @@ public class PlayerManager : MonoBehaviour
             player.name = p.name;
             if (p.human)
             {
-                humanExist = true;
+                isThereAHuman = true;
                 FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = player.transform;
             }
+          
             playerInstances[i] = player; // Assign instantiated player
             playerTransforms[i] = player.GetComponent<Transform>();
             i++;
         }
-        if(!humanExist)
+        if(!isThereAHuman)
         {
-            SpectatorMode = true;
+            FindAnyObjectByType<StrategyCameraControl>().objectToCenterOn = mapManager.originalTree.transform;
         }
-
-
-
+        
         MapManager.MapGenerated -= AllocatePlayers;
         PlayersInstantiated?.Invoke();
 
         ChangePlayer();
-
-    
-        
+ 
     }
     public Transform GetTransformFromSO(Player player)
     {
@@ -128,7 +122,14 @@ public class PlayerManager : MonoBehaviour
     {
         ActivePlayerBroadcast?.Invoke(activePlayer);
     }
+    private void UpdatePoints(int[] points,int id)
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            players[i].ownedFields = points[i];
+        }
 
+    }
 
 
 }

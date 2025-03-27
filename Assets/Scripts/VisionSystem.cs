@@ -54,6 +54,7 @@ public class VisionSystem : MonoBehaviour
   
         StarlingSkillScript.SetNest -= ScanForVisible;
         PlayerManager.PlayersInstantiated -= UpdateTheVision;
+        PlayerManager.ActivePlayerBroadcast -= UpdateTheVision;
 
 
     }

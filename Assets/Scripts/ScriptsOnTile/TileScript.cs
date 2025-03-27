@@ -1,5 +1,6 @@
 
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.RenderGraphModule;
 
@@ -58,7 +59,7 @@ public class TileScript : MonoBehaviour
                 else
                 {
                     TileScriptableObject neighbour = Neighbour(i, j);
-                    if (neighbour != null)
+                    if (neighbour != null&&neighbour!=TSO)
                     {
                         if (!TSO.neighbours.Contains(neighbour))
                         {
@@ -131,12 +132,44 @@ public class TileScript : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {     
-                Debug.Log("Player Entered This Field" + TSO.id);
-            TSO.SetStander(other.GetComponent<PlayerScript>().player);
-            
-            other.GetComponent<PlayerScript>().tile = TSO;
-            
+        {
+            if (TSO.childType == GameObjectTypeEnum.None)
+            {
+                TSO.SetStander(other.GetComponent<PlayerScript>().player);
+                other.GetComponent<PlayerScript>().tile = TSO;
+            }
+            else if (TSO.childType == GameObjectTypeEnum.Bush)
+            {
+                foreach (Transform child in transform)
+                {
+                    Destroy(child.gameObject);
+                }
+                TSO.childType = GameObjectTypeEnum.None;
+                TSO.SetStander(other.GetComponent<PlayerScript>().player);
+                TSO.passable = true;
+                other.GetComponent<PlayerScript>().tile = TSO;
+
+            }
+            else if (TSO.childType == GameObjectTypeEnum.Tree || TSO.childType == GameObjectTypeEnum.Rock)
+            {
+                other.GetComponent<PlayerScript>().MoveBack();
+            }
+            else if (TSO.childType == GameObjectTypeEnum.Water)
+            {
+                Destroy(other);
+            }
+            else if (TSO.childType == GameObjectTypeEnum.Player && other.GetComponent<PlayerScript>().player != TSO.stander)
+            {
+                Debug.Log("Yout don't belong here");
+                other.GetComponent<PlayerScript>().MoveBack();
+            }
+            else
+            {
+                TSO.SetStander(other.GetComponent<PlayerScript>().player);
+                other.GetComponent<PlayerScript>().tile = TSO;
+            }
+
+
             //other.GetComponent<VisionSystem>().ScanForVisible(activePlayer, other.transform.position, activePlayer.eyes);
 
         }
@@ -146,10 +179,10 @@ public class TileScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player Exit f This Field" + TSO.id);
-            TSO.SetStander(null);
-            
+            TSO.RemoveStander();
 
         }
+        
     }
    
    

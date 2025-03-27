@@ -36,6 +36,7 @@ public class MapManager : MonoBehaviour
     public Dictionary<Vector2, int> posAdnIds = new();
     public Dictionary<int, ActionTypeEnum> colors = new();
     public GameObject originalTreePrefab;
+    public GameObject originalTree;
 
     [Range(1, 10)]
     public int scale;
@@ -69,6 +70,7 @@ public class MapManager : MonoBehaviour
     {
         PlayerManager.PlayersInstantiated += CountRootables;
         RootSkill.UpdateRootables += CountRootables;
+        PlayerScript.RootAction += CountRootables;
         AI.CountFields += CountRootables;
     }
     /// <summary>
@@ -206,7 +208,7 @@ public class MapManager : MonoBehaviour
                     InstatiateField(grassTileType, id, i, j);
                     if (j==0)
                     {
-                        Instantiate(originalTreePrefab, tiles[id].representation.transform);
+                        originalTree = Instantiate(originalTreePrefab, tiles[id].representation.transform);
 
                         centerId = id;
                         tiles[id].childType = GameObjectTypeEnum.Tree;
@@ -417,9 +419,10 @@ public class MapManager : MonoBehaviour
             }
 
         }
-        
-        
+
+
         int[] fields = { purple, blue, green, yellow, red, orange };
+        
         CountedRootables?.Invoke(fields,startRootables);
 
 
